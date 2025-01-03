@@ -57,7 +57,7 @@ const MainLayout = (props: CustomProps) => {
           sections={sections}
         />
       )}
-      <LayoutRoot>
+      <LayoutRoot sx={{paddingTop:10}}>
         <LayoutContainer>{children}</LayoutContainer>
       </LayoutRoot>
       <Footer />

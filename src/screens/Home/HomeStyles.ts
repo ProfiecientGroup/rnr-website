@@ -1,6 +1,6 @@
 import { Theme } from "@mui/material";
+import aboutBg from "../../assets/images/home/aboutBg.webp";
 import Bg from "../../assets/images/home/Bg.svg";
-// import checksbg from "assets/images/home/features-checks-bg.png";
 
 const HomeStyles = (theme: Theme) => {
   return {
@@ -8,133 +8,99 @@ const HomeStyles = (theme: Theme) => {
       background: "url(" + Bg.src + ")",
       backgroundSize: "cover",
       backgroundPosition: "center",
-      backgroundColor:theme.palette.primary.dark,
-      width:"100%",
-      height:"60vh",
-      // paddingTop: "200px",
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
-    },
-    templateBox: {
-      paddingTop: "80px",
-      paddingBottom: "80px",
-      display: "flex",
-      flexDirection: "column",
-      justifyContent: "center",
-      alignItems: "center",
-      background:
-        "linear-gradient(180deg, rgba(172, 199, 55, 0.14) 0%, #F1F5F9 100%)",
-      "@keyframes scroll-left": {
-        "0%": {
-          transform: "translate(0%)",
-        },
-        "100%": {
-          transform: "translate(-100%)",
-        },
-      },
-      "@keyframes scroll-right": {
-        "0%": {
-          transform: "translate(-100%)",
-        },
-        "100%": {
-          transform: " translate(0%)",
-        },
-      },
-    },
-    pricingBox: {
-      my: 10,
-      display: "flex",
-      flexDirection: "column",
-      justifyContent: "center",
-      alignItems: "center",
-    },
-    pricingDetails: {
-      boxShadow: "0px 2px 12px 0px #14142B14",
-      border: "1px solid #EFF0F6",
-      borderRadius: "20px",
+      backgroundColor: theme.palette.primary.darkest,
       width: "100%",
+      height: "80vh",
+      paddingTop: "200px",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
     },
-    checksBg: {
-      // background: "url(" + checksbg.src + ")",
+    experiFont: {
+      fontFamily: "Kugile",
+      fontSize: "60px",
+      fontWeight: "400",
+      textAlign: "center",
+      lineHeight: "90px",
+    },
+    contactBox: {
+      width: "414px",
+      height: "480px",
+      borderRadius: "50px",
+      backgroundColor: "#0E0E0E",
+      padding: 4,
+      background:
+        "linear-gradient(200deg, rgba(172, 199, 55, 0.14) 0%, #0E0E0E 100%)",
+    },
+    addressBox: {
+      width: "Fill (167px)px",
+      height: "Fixed (60px)px",
+      padding: "10px 30px 10px 30px",
+      borderRadius: "25px",
+      opacity: "0px",
+      border: "1px solid #DDB863 ",
+      color: "#DDB863",
+      backgroundColor: "#DDB8631A",
+    },
+    pickupBox: {
+      width: "Fill (167px)px",
+      height: "Fixed (60px)px",
+      padding: "10px 15px 10px 15px",
+      borderRadius: "25px",
+      opacity: "0px",
+      color: "#B3B3B3",
+      backgroundColor: "#1A1A1A",
+    },
+    verticalLine: {
+      background: "#DDB863",
+      width: "1px",
+      height: "50px",
+      opacity: "0px",
+    },
+    textInputField: {
+      backgroundColor: "transparent",
+      borderRadius: "100px",
+      width: "100%",
+      maxWidth: "400px",
+      border: "1px solid #655737",
+      "&.MuiTextField-root .MuiOutlinedInput-root:hover": {
+        backgroundColor: "transparent",
+      },
+      "& .css-ovna53-MuiInputBase-input-MuiOutlinedInput-input": {
+        backgroundColor: "transparent",
+        padding: "10px 10px",
+        borderRadius: "100px",
+      },
+      "& .css-fayl5t-MuiInputBase-input-MuiOutlinedInput-input": {
+        backgroundColor: "transparent",
+        color: "#FFFFFF",
+      },
+      "& .MuiInputBase-input": {
+        border: "1px solid #101010",
+      },
+      "& .MuiOutlinedInput-root": {
+        paddingRight: 0,
+        "& fieldset": {
+          borderColor: "transparent",
+          border: "100px",
+          borderTopLeftRadius: "100px",
+          borderBottomLeftRadius: "100px",
+          borderTopRightRadius: "100px",
+          borderBottomRightRadius: "100px",
+        },
+      },
+    },
+    aboutBgBox: {
+      background: "url(" + aboutBg.src + ")",
       backgroundSize: "cover",
       backgroundPosition: "center",
+      backgroundColor: theme.palette.primary.darkest,
+      width: "100%",
+      height: "100vh",
+      paddingTop: "200px",
       display: "flex",
-      flexDirection: "column",
       justifyContent: "center",
       alignItems: "center",
-      paddingTop: "150px",
-      paddingBottom: "40px",
-    },
-    darkColored: {
-      color: theme.palette.primary.darkest,
-    },
-    borderedTextBox: {
-      display: "inline-block",
-      color: theme.palette.primary.darkest,
-      backgroundColor: theme.palette.primary.contrastText,
-      border: "1px solid #D3D3D3",
-      borderRadius: "5px",
-      fontWeight: 600,
-      padding: 0,
-      width: "fit-content",
-      transition: "transform 0.3s ease",
-      "&:hover": {
-        backgroundColor: theme.palette.primary.contrastText,
-        backgroundClip: "content-box, border-box",
-        backgroundImage: `linear-gradient(${theme.palette.primary.contrastText}, ${theme.palette.primary.contrastText}), linear-gradient(180deg, #FFC663 0%, #FF34A1 56%, #346CFA 100%)`,
-        backgroundOrigin: "border-box",
-        border: "double 2px transparent",
-        transition: "transform 0.3s ease",
-        transform: "rotate(-3deg)",
-      },
-    },
-    tiltOnScroll: {
-      transition: "transform 1s ease",
-      transform: "perspective(1000px) rotateX(0deg)",
-      marginTop: "-125px",
-    },
-    tilted: {
-      transition: "transform 1s ease",
-      transform: "perspective(1000px) rotateX(-15deg)" /* Tilt on scroll */,
-      marginTop: "-125px",
-    },
-    greyBox: {
-      backgroundColor: theme.palette.primary.dark,
-      backdropFilter: "blur(22px)",
-      paddingBottom: "80px",
-    },
-    whiteText: {
-      color: theme.palette.primary.contrastText,
-    },
-    boldWhiteText: {
-      color: theme.palette.primary.contrastText,
-      fontSize: "28px !important",
-      fontWeight: 600,
-      marginTop: "40px",
-      display: "flex",
-      justifyContent: "center",
-      [theme.breakpoints.down("lg")]: {
-        fontSize: "20px !important",
-      },
-    },
-    boldText: {
-      color: theme.palette.primary.main,
-      fontSize: "28px !important",
-      fontWeight: 600,
-      marginTop: "40px",
-      display: "flex",
-      justifyContent: "center",
-    },
-    featuresDataLeftScrolling: {
-      display: "flex",
-      animation: "scroll-right 7s linear infinite",
-      whiteSpace: "nowrap",
-    },
-    featuresDataRightScrolling: {
-      display: "flex",
-      animation: "scroll-left 7s linear infinite",
-      whiteSpace: "nowrap",
     },
   };
 };

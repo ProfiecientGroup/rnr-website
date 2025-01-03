@@ -61,9 +61,9 @@ const ContactsBanner = () => {
         p={1}
         textAlign="center"
         sx={{
-          // background: "#1A1A1A"
-          background:
-            "linear-gradient(286deg, #1A1A1A 20.08%, rgb(221 184 99 / 26%) 30.5%, #1A1A1A 51.27%)",
+          background: "#1A1A1A"
+          // background:
+            // "linear-gradient(286deg, #1A1A1A 20.08%, rgb(221 184 99 / 26%) 30.5%, #1A1A1A 51.27%)",
           // "-webkit-background-clip": "text",
           // "-webkit-text-fill-color": "transparent",
         }}

@@ -111,13 +111,13 @@ const TopNav = (props: CustomProps) => {
   return (
     <Box
       component="header"
-      // position="fixed"
+      position="fixed"
       width="100%"
       top={0}
       left={0}
       sx={{
         zIndex: (theme) => theme.zIndex.appBar,
-        background: "#161616",
+        background: theme.palette.primary.darkest,
       }}
     >
       <ContactsBanner />
@@ -125,10 +125,21 @@ const TopNav = (props: CustomProps) => {
         maxWidth="lg"
         sx={{
           minHeight: TOP_NAV_HEIGHT,
-          borderBottom: "1px solid #DDB863",
+          // borderBottom:
+          //   "1px solid linear-gradient(90deg, #161616 12.08%, rgba(221, 184, 99, 0.5) 64.5%, #161616 86.27%);",
           p: 2,
           pl: lgUp ? 6 : 2,
           pr: lgUp ? 6 : 2,
+          backgroundColor: theme.palette.primary.darkest,
+          '&::after': {
+            content: '""',
+            position: 'absolute',
+            bottom: 0,
+            left: 0,
+            width: '100%',
+            height: '2px', // Adjust the height of the border
+            background: 'linear-gradient(90deg, #161616 12.08%, rgba(221, 184, 99, 0.5) 64.5%, #161616 86.27%)',
+          },
         }}
       >
         <Stack
