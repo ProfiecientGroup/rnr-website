@@ -23,7 +23,7 @@ const steps = ["Journey details", "Choose a Car", "Booking Details", "Payment"];
 
 const Booking = () => {
   const theme = useTheme();
-  const classes = BookingStyles(theme); 
+  const classes = BookingStyles(theme);
   const lgUp = useMediaQuery(theme.breakpoints.up("md"));
   const [activeStep, setActiveStep] = useState(0);
   const [skipped, setSkipped] = useState(new Set<number>());
@@ -111,7 +111,7 @@ const Booking = () => {
           ))}
         </Stepper>
         <Box>
-          {activeStep === 0 && <JourneyDetails />}
+          {activeStep === 0 && <JourneyDetails handleNext={handleNext} />}
           {activeStep === 1 && <ChooseACar />}
           {activeStep === 2 && <BookingDetails />}
           {activeStep === 3 && <Payment />}

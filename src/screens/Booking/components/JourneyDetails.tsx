@@ -12,84 +12,195 @@ import {
   StepLabel,
   Stack,
   useTheme,
-  OutlinedInput,
   Button,
 } from "@mui/material";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 import BookingStyles from "../BookingStyles";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
-import { TimePicker } from "@mui/x-date-pickers/TimePicker";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import dayjs, { Dayjs } from "dayjs";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+import { doBooking } from "./BookingService";
 
 const steps = ["Address", "Airport"];
 const tripType = ["One Way", "Round Trip", "By the Hour"];
-
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
-const MenuProps = {
-  PaperProps: {
-    style: {
-      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 250,
-    },
-  },
-};
-
-const JourneyDetails = () => {
+interface CustomProps {
+  handleNext: Function;
+}
+const JourneyDetails = (props: CustomProps) => {
   const theme = useTheme();
   const classes = BookingStyles(theme);
-  const [activeStep, setActiveStep] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [message, setMessage] = useState<string>("");
+  const [pickActiveStep, setPickActiveStep] = useState(0);
+  const [dropActiveStep, setDropActiveStep] = useState(0);
   const [tripTypeActiveStep, setTripTypeActiveStep] = useState(0);
-  const [fields, setFields] = useState([""]);
-  const [selectedValue, setSelectedValue] = useState<string>("");
-  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
-  const [selectedTime, setSelectedTime] = useState<Dayjs | null>(null);
-  const [selectedDateAndTime, setSelectedDateAndTime] = useState<Dayjs | null>(
-    null
-  );
+  const [formData, setFormData] = useState({
+    pickups: {
+      addresses: [{ address: "", in_congestion_zone: false }],
+      airports: [{ airport: "", terminal: "", in_congestion_zone: false }],
+    },
+    dropoffs: {
+      addresses: [{ address: "", in_congestion_zone: false }],
+      airports: [{ airport: "", terminal: "", in_congestion_zone: false }],
+    },
+    trip_type:
+      tripTypeActiveStep === 0
+        ? "one_way"
+        : tripTypeActiveStep === 1
+        ? "round_trip"
+        : "by_hour",
+    start_datetime: null,
+    end_datetime: null,
+    hours: 0,
+  });
 
-  const handleSelectTimeChange = (newTime: Dayjs | null) => {
-    setSelectedTime(newTime);
-  };
-  const handleDateAndTimeChange = (newTime: Dayjs | null) => {
-    setSelectedDateAndTime(newTime);
-  };
-  const handleDateChange = (newDate: Date | null) => {
-    setSelectedDate(newDate);
+  const transformLocations = (locations: any) => {
+    const addresses = locations.addresses.map((address: any) => ({
+      type: "address",
+      address: address.address,
+      in_congestion_zone: address.in_congestion_zone,
+    }));
+
+    const airports = locations.airports.map((airport: any) => ({
+      type: "airport",
+      airport: airport.airport,
+      terminal: airport.terminal,
+      in_congestion_zone: airport.in_congestion_zone,
+    }));
+
+    return [...addresses, ...airports];
   };
 
-  const handleSelectChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-    setSelectedValue(event.target.value as string);
-  };
-
-  const handleAddField = () => {
-    setFields([...fields, ""]);
-  };
-
-  const handleRemoveField = (index: number) => {
-    if (fields.length > 1) {
-      const updatedFields = fields.filter((_, i) => i !== index);
-      setFields(updatedFields);
+  const handleSubmit = async () => {
+    try {
+      setIsLoading(true);
+      const body = {
+        pickups: transformLocations(formData.pickups),
+        dropoffs: transformLocations(formData.dropoffs),
+        trip_type: formData.trip_type,
+        start_datetime: formData.start_datetime,
+        end_datetime: formData.end_datetime || null, // Only include if applicable
+        hours: formData.trip_type === "by_hour" ? formData.hours : undefined, // Only include hours if "by_hour"
+      };
+      await doBooking(body);
+      setFormData({
+        pickups: {
+          addresses: [{ address: "", in_congestion_zone: false }],
+          airports: [{ airport: "", terminal: "", in_congestion_zone: false }],
+        },
+        dropoffs: {
+          addresses: [{ address: "", in_congestion_zone: false }],
+          airports: [{ airport: "", terminal: "", in_congestion_zone: false }],
+        },
+        trip_type: "",
+        start_datetime: null,
+        end_datetime: null,
+        hours: 0,
+      });
+      props.handleNext();
+      setIsSuccess(true);
+    } catch (error: any) {
+      setMessage(error.message);
+      setIsSuccess(false);
+      setFormData({
+        pickups: {
+          addresses: [{ address: "", in_congestion_zone: false }],
+          airports: [{ airport: "", terminal: "", in_congestion_zone: false }],
+        },
+        dropoffs: {
+          addresses: [{ address: "", in_congestion_zone: false }],
+          airports: [{ airport: "", terminal: "", in_congestion_zone: false }],
+        },
+        trip_type: "",
+        start_datetime: null,
+        end_datetime: null,
+        hours: 0,
+      });
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  const handleChange = (index: number, value: string) => {
-    const updatedFields = [...fields];
-    updatedFields[index] = value;
-    setFields(updatedFields);
+  // Handle Step Click
+  const handlePickStepClick = (step: number) => {
+    setPickActiveStep(step);
   };
-
-  const handleStepClick = (step: number) => {
-    setActiveStep(step); // Set the active step to the clicked step
+  const handleDropStepClick = (step: number) => {
+    setDropActiveStep(step);
   };
 
   const handleTripTypeStepClick = (step: number) => {
-    setTripTypeActiveStep(step); // Set the active step to the clicked step
+    setTripTypeActiveStep(step);
+    const tripTypeValues = ["one_way", "round_trip", "by_hour"];
+    const updatedData = { ...formData, trip_type: tripTypeValues[step] };
+
+    // Reset fields based on trip type
+    if (step === 0) {
+      updatedData.start_datetime = null;
+      updatedData.end_datetime = null;
+      updatedData.hours = 0;
+    } else if (step === 1) {
+      updatedData.start_datetime = null;
+      updatedData.end_datetime = null;
+      updatedData.hours = 0;
+    } else if (step === 2) {
+      updatedData.start_datetime = null;
+      updatedData.end_datetime = null;
+    }
+
+    setFormData(updatedData);
+  };
+
+  const handleChange = (
+    type: "pickups" | "dropoffs",
+    field: "addresses" | "airports",
+    index: number,
+    key: string,
+    value: string | number
+  ) => {
+    const updatedData: any = { ...formData };
+    updatedData[type][field][index][key] = value;
+    setFormData(updatedData);
+  };
+
+  // Handle Add/Remove Fields
+  const handleAddField = (
+    type: "pickups" | "dropoffs",
+    field: "addresses" | "airports"
+  ) => {
+    const updatedData: any = { ...formData };
+    updatedData[type][field].push(
+      field === "addresses"
+        ? { address: "", in_congestion_zone: false }
+        : { airport: "", terminal: "", in_congestion_zone: false }
+    );
+    setFormData(updatedData);
+  };
+
+  const handleRemoveField = (
+    type: "pickups" | "dropoffs",
+    field: "addresses" | "airports",
+    index: number
+  ) => {
+    if (formData[type][field].length > 1) {
+      const updatedData = { ...formData };
+      updatedData[type][field].splice(index, 1);
+      setFormData(updatedData);
+    }
+  };
+
+  // Handle Date & Time Changes
+  const handleDateChange = (
+    field: "start_datetime" | "end_datetime",
+    newDate: Dayjs | null
+  ) => {
+    setFormData({
+      ...formData,
+      [field]: newDate ? newDate.toISOString() : null, // Convert to ISO format
+    });
   };
 
   return (
@@ -107,32 +218,20 @@ const JourneyDetails = () => {
             <span style={{ color: theme.palette.primary.main }}>Step 1.</span>{" "}
             Get a Price and Book
           </Typography>
+
+          {/* Pickup Step */}
           <Stack direction={"column"} spacing={3}>
             <Typography variant="body2">Select Pickup Location Type</Typography>
-            <Stepper activeStep={activeStep} alternativeLabel>
+            <Stepper activeStep={pickActiveStep} alternativeLabel>
               {steps.map((label, index) => (
                 <StepLabel
                   key={index}
-                  onClick={() => handleStepClick(index)} // Make StepLabel clickable
+                  onClick={() => handlePickStepClick(index)}
                   sx={{
-                    cursor: "pointer", // Add pointer cursor to indicate clickability
-                    ...(index === activeStep
-                      ? {
-                          ...classes.addressBox,
-                          marginRight: 2,
-                          "& .css-1u1yok5-MuiStepLabel-label.MuiStepLabel-alternativeLabel":
-                            {
-                              marginTop: 0,
-                            },
-                        }
-                      : {
-                          ...classes.pickupBox,
-                          marginRight: 2,
-                          "& .css-1u1yok5-MuiStepLabel-label.MuiStepLabel-alternativeLabel":
-                            {
-                              marginTop: 0,
-                            },
-                        }),
+                    cursor: "pointer",
+                    ...(index === pickActiveStep
+                      ? { ...classes.addressBox, marginRight: 2 }
+                      : { ...classes.pickupBox, marginRight: 2 }),
                   }}
                 >
                   {label}
@@ -140,38 +239,48 @@ const JourneyDetails = () => {
               ))}
             </Stepper>
 
-            {/* Conditional Content Based on Active Step */}
-            {activeStep === 0 ? (
-              // "Address" Step Content - Dynamic Input Fields
-              <>
-                {fields.map((field, index) => (
+            {/* Pickup Address or Airport Selection */}
+            {pickActiveStep === 0
+              ? formData.pickups.addresses.map((pickup, index) => (
                   <TextField
                     key={index}
-                    value={field}
-                    onChange={(e) => handleChange(index, e.target.value)}
-                    placeholder="Enter Pick Up Address"
+                    value={pickup.address}
+                    onChange={(e) =>
+                      handleChange(
+                        "pickups",
+                        "addresses",
+                        index,
+                        "address",
+                        e.target.value
+                      )
+                    }
+                    placeholder="Enter Pickup Address"
                     variant="outlined"
                     fullWidth
                     InputProps={{
                       endAdornment: (
                         <InputAdornment position="end">
-                          {/* Add Button */}
-                          {index === fields.length - 1 && (
+                          {index === formData.pickups.addresses.length - 1 && (
                             <IconButton
-                              onClick={handleAddField}
-                              sx={{ color: "#FFD700" }}
+                              onClick={() =>
+                                handleAddField("pickups", "addresses")
+                              }
                             >
-                              <AddCircleOutlineIcon />
+                              <AddCircleOutlineIcon sx={{ color: "#FFD700" }} />
                             </IconButton>
                           )}
-                          {/* Remove Button */}
-                          {fields.length > 1 && (
+                          {formData.pickups.addresses.length > 1 && (
                             <IconButton
-                              onClick={() => handleRemoveField(index)}
+                              onClick={() =>
+                                handleRemoveField("pickups", "addresses", index)
+                              }
                               sx={{
-                                color: fields.length === 1 ? "grey" : "#FFD700",
+                                color:
+                                  formData.pickups.addresses.length === 1
+                                    ? "grey"
+                                    : "#FFD700",
                               }}
-                              disabled={fields.length === 1}
+                              disabled={formData.pickups.addresses.length === 1}
                             >
                               <RemoveCircleOutlineIcon />
                             </IconButton>
@@ -181,50 +290,76 @@ const JourneyDetails = () => {
                     }}
                     sx={classes.textInputField}
                   />
+                ))
+              : formData.pickups.airports.map((pickup, index) => (
+                  <Stack direction={"row"} spacing={1} key={index}>
+                    <FormControl fullWidth sx={classes.selectInputField}>
+                      <Select
+                        value={pickup.airport}
+                        onChange={(e) =>
+                          handleChange(
+                            "pickups",
+                            "airports",
+                            index,
+                            "airport",
+                            e.target.value
+                          )
+                        }
+                        displayEmpty
+                      >
+                        <MenuItem value="" disabled>
+                          Select Airport
+                        </MenuItem>
+                        <MenuItem value="airport_option_1">
+                          Airport Option 1
+                        </MenuItem>
+                        <MenuItem value="airport_option_2">
+                          Airport Option 2
+                        </MenuItem>
+                      </Select>
+                    </FormControl>
+                    {index === formData.pickups.airports.length - 1 && (
+                      <IconButton
+                        onClick={() => handleAddField("pickups", "airports")}
+                      >
+                        <AddCircleOutlineIcon sx={{ color: "#FFD700" }} />
+                      </IconButton>
+                    )}
+                    {formData.pickups.airports.length > 1 && (
+                      <IconButton
+                        onClick={() =>
+                          handleRemoveField("pickups", "airports", index)
+                        }
+                        sx={{
+                          color:
+                            formData.pickups.airports.length === 1
+                              ? "grey"
+                              : "#FFD700",
+                        }}
+                        disabled={formData.pickups.airports.length === 1}
+                      >
+                        <RemoveCircleOutlineIcon />
+                      </IconButton>
+                    )}
+                  </Stack>
                 ))}
-              </>
-            ) : (
-              // "Airport" Step Content - Dropdown
-              <FormControl fullWidth sx={classes.selectInputField}>
-                <Select
-                  value={selectedValue}
-                  onChange={() => handleSelectChange} // Corrected the onChange
-                  label="Select Airport"
-                >
-                  <MenuItem value="airport_option_4">Airport Option 4</MenuItem>
-                  <MenuItem value="airport_option_5">Airport Option 5</MenuItem>
-                </Select>
-              </FormControl>
-            )}
           </Stack>
+
+          {/* Dropoff Step */}
           <Stack direction={"column"} spacing={3}>
             <Typography variant="body2">
               Select Drop Off Location Type
             </Typography>
-            <Stepper activeStep={activeStep} alternativeLabel>
+            <Stepper activeStep={dropActiveStep} alternativeLabel>
               {steps.map((label, index) => (
                 <StepLabel
                   key={index}
-                  onClick={() => handleStepClick(index)} // Make StepLabel clickable
+                  onClick={() => handleDropStepClick(index)}
                   sx={{
-                    cursor: "pointer", // Add pointer cursor to indicate clickability
-                    ...(index === activeStep
-                      ? {
-                          ...classes.addressBox,
-                          marginRight: 2,
-                          "& .css-1u1yok5-MuiStepLabel-label.MuiStepLabel-alternativeLabel":
-                            {
-                              marginTop: 0,
-                            },
-                        }
-                      : {
-                          ...classes.pickupBox,
-                          marginRight: 2,
-                          "& .css-1u1yok5-MuiStepLabel-label.MuiStepLabel-alternativeLabel":
-                            {
-                              marginTop: 0,
-                            },
-                        }),
+                    cursor: "pointer",
+                    ...(index === dropActiveStep
+                      ? { ...classes.addressBox, marginRight: 2 }
+                      : { ...classes.pickupBox, marginRight: 2 }),
                   }}
                 >
                   {label}
@@ -232,38 +367,53 @@ const JourneyDetails = () => {
               ))}
             </Stepper>
 
-            {/* Conditional Content Based on Active Step */}
-            {activeStep === 0 ? (
-              // "Address" Step Content - Dynamic Input Fields
-              <>
-                {fields.map((field, index) => (
+            {dropActiveStep === 0
+              ? formData.dropoffs.addresses.map((dropoffs, index) => (
                   <TextField
                     key={index}
-                    value={field}
-                    onChange={(e) => handleChange(index, e.target.value)}
-                    placeholder="Enter Drop Off Address"
+                    value={dropoffs.address}
+                    onChange={(e) =>
+                      handleChange(
+                        "dropoffs",
+                        "addresses",
+                        index,
+                        "address",
+                        e.target.value
+                      )
+                    }
+                    placeholder="Enter Pickup Address"
                     variant="outlined"
                     fullWidth
                     InputProps={{
                       endAdornment: (
                         <InputAdornment position="end">
-                          {/* Add Button */}
-                          {index === fields.length - 1 && (
+                          {index === formData.dropoffs.addresses.length - 1 && (
                             <IconButton
-                              onClick={handleAddField}
-                              sx={{ color: "#FFD700" }}
+                              onClick={() =>
+                                handleAddField("dropoffs", "addresses")
+                              }
                             >
-                              <AddCircleOutlineIcon />
+                              <AddCircleOutlineIcon sx={{ color: "#FFD700" }} />
                             </IconButton>
                           )}
-                          {/* Remove Button */}
-                          {fields.length > 1 && (
+                          {formData.dropoffs.addresses.length > 1 && (
                             <IconButton
-                              onClick={() => handleRemoveField(index)}
+                              onClick={() =>
+                                handleRemoveField(
+                                  "dropoffs",
+                                  "addresses",
+                                  index
+                                )
+                              }
                               sx={{
-                                color: fields.length === 1 ? "grey" : "#FFD700",
+                                color:
+                                  formData.dropoffs.addresses.length === 1
+                                    ? "grey"
+                                    : "#FFD700",
                               }}
-                              disabled={fields.length === 1}
+                              disabled={
+                                formData.dropoffs.addresses.length === 1
+                              }
                             >
                               <RemoveCircleOutlineIcon />
                             </IconButton>
@@ -273,48 +423,74 @@ const JourneyDetails = () => {
                     }}
                     sx={classes.textInputField}
                   />
+                ))
+              : formData.dropoffs.airports.map((dropoffs, index) => (
+                  <Stack direction={"row"} spacing={1} key={index}>
+                    <FormControl fullWidth sx={classes.selectInputField}>
+                      <Select
+                        value={dropoffs.airport}
+                        onChange={(e) =>
+                          handleChange(
+                            "dropoffs",
+                            "airports",
+                            index,
+                            "airport",
+                            e.target.value
+                          )
+                        }
+                        displayEmpty
+                      >
+                        <MenuItem value="" disabled>
+                          Select Airport
+                        </MenuItem>
+                        <MenuItem value="airport_option_1">
+                          Airport Option 1
+                        </MenuItem>
+                        <MenuItem value="airport_option_2">
+                          Airport Option 2
+                        </MenuItem>
+                      </Select>
+                    </FormControl>
+                    {index === formData.dropoffs.airports.length - 1 && (
+                      <IconButton
+                        onClick={() => handleAddField("dropoffs", "airports")}
+                      >
+                        <AddCircleOutlineIcon sx={{ color: "#FFD700" }} />
+                      </IconButton>
+                    )}
+                    {formData.dropoffs.airports.length > 1 && (
+                      <IconButton
+                        onClick={() =>
+                          handleRemoveField("dropoffs", "airports", index)
+                        }
+                        sx={{
+                          color:
+                            formData.dropoffs.airports.length === 1
+                              ? "grey"
+                              : "#FFD700",
+                        }}
+                        disabled={formData.dropoffs.airports.length === 1}
+                      >
+                        <RemoveCircleOutlineIcon />
+                      </IconButton>
+                    )}
+                  </Stack>
                 ))}
-              </>
-            ) : (
-              // "Airport" Step Content - Dropdown
-              <FormControl fullWidth sx={classes.selectInputField}>
-                <Select
-                  value={selectedValue}
-                  onChange={() => handleSelectChange} // Corrected the onChange
-                  label="Select Airport"
-                >
-                  <MenuItem value="airport_option_4">Airport Option 4</MenuItem>
-                  <MenuItem value="airport_option_5">Airport Option 5</MenuItem>
-                </Select>
-              </FormControl>
-            )}
           </Stack>
+
+          {/* Trip Type Step */}
           <Stack direction={"column"} spacing={3}>
             <Typography variant="body2">Select Trip Type</Typography>
             <Stepper activeStep={tripTypeActiveStep} alternativeLabel>
               {tripType.map((label, index) => (
                 <StepLabel
                   key={index}
-                  onClick={() => handleTripTypeStepClick(index)} // Make StepLabel clickable
+                  onClick={() => handleTripTypeStepClick(index)}
                   sx={{
-                    cursor: "pointer", // Add pointer cursor to indicate clickability
+                    cursor: "pointer",
                     ...(index === tripTypeActiveStep
-                      ? {
-                          ...classes.addressBox,
-                          marginRight: 2,
-                          "& .css-1u1yok5-MuiStepLabel-label.MuiStepLabel-alternativeLabel":
-                            {
-                              marginTop: 0,
-                            },
-                        }
-                      : {
-                          ...classes.pickupBox,
-                          marginRight: 2,
-                          "& .css-1u1yok5-MuiStepLabel-label.MuiStepLabel-alternativeLabel":
-                            {
-                              marginTop: 0,
-                            },
-                        }),
+                      ? { ...classes.addressBox, marginRight: 2 }
+                      : { ...classes.pickupBox, marginRight: 2 }),
                   }}
                 >
                   {label}
@@ -322,64 +498,70 @@ const JourneyDetails = () => {
               ))}
             </Stepper>
 
+            {/* DateTime Picker for Trip Type */}
             {tripTypeActiveStep === 0 && (
-              <Stack direction={"row"} spacing={2}>
-                <Box>
-                  <LocalizationProvider dateAdapter={AdapterDateFns}>
-                    <DatePicker
-                      value={selectedDate}
-                      onChange={handleDateChange}
-                    />
-                  </LocalizationProvider>
-                </Box>
-                <Box>
-                  <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <TimePicker
-                      value={selectedTime}
-                      onChange={handleSelectTimeChange}
-                    />
-                  </LocalizationProvider>
-                </Box>
-              </Stack>
+              <LocalizationProvider dateAdapter={AdapterDateFns}>
+                <DateTimePicker
+                  label="Select Start Date and Time"
+                  value={formData.start_datetime}
+                  onChange={(newDate: any) =>
+                    handleDateChange("start_datetime", newDate)
+                  }
+                />
+              </LocalizationProvider>
             )}
 
             {tripTypeActiveStep === 1 && (
-              <Stack direction={"column"} spacing={2}>
+              <>
                 <LocalizationProvider dateAdapter={AdapterDateFns}>
                   <DateTimePicker
-                    label="Select Date and Time"
-                    value={selectedDateAndTime}
-                    onChange={handleDateAndTimeChange}
+                    label="Select Start Date and Time"
+                    value={formData.start_datetime}
+                    onChange={(newDate: any) =>
+                      handleDateChange("start_datetime", newDate)
+                    }
                   />
                 </LocalizationProvider>
                 <LocalizationProvider dateAdapter={AdapterDateFns}>
                   <DateTimePicker
-                    label="Select Date and Time"
-                    value={selectedDateAndTime}
-                    onChange={handleDateAndTimeChange}
+                    label="Select End Date and Time"
+                    value={formData.end_datetime}
+                    onChange={(newDate: any) =>
+                      handleDateChange("end_datetime", newDate)
+                    }
                   />
                 </LocalizationProvider>
-              </Stack>
+              </>
             )}
+
             {tripTypeActiveStep === 2 && (
-              <Stack direction={"column"} spacing={2}>
+              <>
                 <LocalizationProvider dateAdapter={AdapterDateFns}>
                   <DateTimePicker
-                    label="Select Date and Time"
-                    value={selectedDateAndTime}
-                    onChange={handleDateAndTimeChange}
+                    label="Select Start Date and Time"
+                    value={formData.start_datetime}
+                    onChange={(newDate: any) =>
+                      handleDateChange("start_datetime", newDate)
+                    }
                   />
                 </LocalizationProvider>
                 <TextField
-                  placeholder="Enter your hour"
+                  placeholder="Enter Hours"
                   variant="outlined"
-                  value="hour"
                   type="number"
+                  value={formData.hours}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      hours: Number(e.target.value),
+                    })
+                  }
                   sx={classes.textInputField}
                 />
-              </Stack>
+              </>
             )}
           </Stack>
+
           <Stack direction={"row"} spacing={2}>
             <Button
               variant="contained"
@@ -400,6 +582,7 @@ const JourneyDetails = () => {
             </Button>
             <Button
               variant="contained"
+              onClick={handleSubmit}
               sx={{
                 backgroundColor: theme.palette.primary.contrastText,
                 color: "#fff",
