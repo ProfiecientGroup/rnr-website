@@ -1,4 +1,10 @@
 class Urls {
+  PROD = false;
+
+  BASE_WEBAPP_URL = this.PROD
+  ? "https://rnr.com/"
+  : "https://rnr.com/";
+
   Pricing = `/pricing`;
 
   // Book a demo
