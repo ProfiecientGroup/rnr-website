@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   Box,
   Typography,
@@ -20,8 +20,9 @@ import BookingStyles from "../BookingStyles";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import dayjs, { Dayjs } from "dayjs";
+import { Dayjs } from "dayjs";
 import { doBooking } from "./BookingService";
+import GoogleAutocompleteInput from "./GoogleAutocompleteInput ";
 
 const steps = ["Address", "Airport"];
 const tripType = ["One Way", "Round Trip", "By the Hour"];
@@ -39,12 +40,12 @@ const JourneyDetails = (props: CustomProps) => {
   const [tripTypeActiveStep, setTripTypeActiveStep] = useState(0);
   const [formData, setFormData] = useState({
     pickups: {
-      addresses: [{ address: "", in_congestion_zone: false }],
-      airports: [{ airport: "", terminal: "", in_congestion_zone: false }],
+      addresses: [{ address: "" }],
+      airports: [{ airport: "", terminal: "" }],
     },
     dropoffs: {
-      addresses: [{ address: "", in_congestion_zone: false }],
-      airports: [{ airport: "", terminal: "", in_congestion_zone: false }],
+      addresses: [{ address: "" }],
+      airports: [{ airport: "", terminal: "" }],
     },
     trip_type:
       tripTypeActiveStep === 0
@@ -56,6 +57,8 @@ const JourneyDetails = (props: CustomProps) => {
     end_datetime: null,
     hours: 0,
   });
+
+  console.log(formData);
 
   const transformLocations = (locations: any) => {
     const addresses = locations.addresses.map((address: any) => ({
@@ -88,12 +91,12 @@ const JourneyDetails = (props: CustomProps) => {
       await doBooking(body);
       setFormData({
         pickups: {
-          addresses: [{ address: "", in_congestion_zone: false }],
-          airports: [{ airport: "", terminal: "", in_congestion_zone: false }],
+          addresses: [{ address: "" }],
+          airports: [{ airport: "", terminal: "" }],
         },
         dropoffs: {
-          addresses: [{ address: "", in_congestion_zone: false }],
-          airports: [{ airport: "", terminal: "", in_congestion_zone: false }],
+          addresses: [{ address: "" }],
+          airports: [{ airport: "", terminal: "" }],
         },
         trip_type: "",
         start_datetime: null,
@@ -107,12 +110,12 @@ const JourneyDetails = (props: CustomProps) => {
       setIsSuccess(false);
       setFormData({
         pickups: {
-          addresses: [{ address: "", in_congestion_zone: false }],
-          airports: [{ airport: "", terminal: "", in_congestion_zone: false }],
+          addresses: [{ address: "" }],
+          airports: [{ airport: "", terminal: "" }],
         },
         dropoffs: {
-          addresses: [{ address: "", in_congestion_zone: false }],
-          airports: [{ airport: "", terminal: "", in_congestion_zone: false }],
+          addresses: [{ address: "" }],
+          airports: [{ airport: "", terminal: "" }],
         },
         trip_type: "",
         start_datetime: null,
@@ -159,11 +162,14 @@ const JourneyDetails = (props: CustomProps) => {
     field: "addresses" | "airports",
     index: number,
     key: string,
-    value: string | number
+    value: string
   ) => {
     const updatedData: any = { ...formData };
-    updatedData[type][field][index][key] = value;
-    setFormData(updatedData);
+    if (updatedData[type] && updatedData[type][field]) {
+      // Ensure the index and key are correct for updating
+      updatedData[type][field][index][key] = value;
+      setFormData(updatedData); // Don't forget to update the state
+    }
   };
 
   // Handle Add/Remove Fields
@@ -242,54 +248,44 @@ const JourneyDetails = (props: CustomProps) => {
             {/* Pickup Address or Airport Selection */}
             {pickActiveStep === 0
               ? formData.pickups.addresses.map((pickup, index) => (
-                  <TextField
-                    key={index}
-                    value={pickup.address}
-                    onChange={(e) =>
-                      handleChange(
-                        "pickups",
-                        "addresses",
-                        index,
-                        "address",
-                        e.target.value
-                      )
-                    }
-                    placeholder="Enter Pickup Address"
-                    variant="outlined"
-                    fullWidth
-                    InputProps={{
-                      endAdornment: (
-                        <InputAdornment position="end">
-                          {index === formData.pickups.addresses.length - 1 && (
-                            <IconButton
-                              onClick={() =>
-                                handleAddField("pickups", "addresses")
-                              }
-                            >
-                              <AddCircleOutlineIcon sx={{ color: "#FFD700" }} />
-                            </IconButton>
-                          )}
-                          {formData.pickups.addresses.length > 1 && (
-                            <IconButton
-                              onClick={() =>
-                                handleRemoveField("pickups", "addresses", index)
-                              }
-                              sx={{
-                                color:
-                                  formData.pickups.addresses.length === 1
-                                    ? "grey"
-                                    : "#FFD700",
-                              }}
-                              disabled={formData.pickups.addresses.length === 1}
-                            >
-                              <RemoveCircleOutlineIcon />
-                            </IconButton>
-                          )}
-                        </InputAdornment>
-                      ),
-                    }}
-                    sx={classes.textInputField}
-                  />
+                  <Stack direction={"row"} spacing={1} key={index}>
+                    <GoogleAutocompleteInput
+                      key={index}
+                      value={pickup.address} // Make sure pickup.address is a string
+                      onChange={(newValue: string) =>
+                        handleChange(
+                          "pickups",
+                          "addresses",
+                          index,
+                          "address",
+                          newValue
+                        )
+                      }
+                    />
+                    {index === formData.pickups.addresses.length - 1 && (
+                      <IconButton
+                        onClick={() => handleAddField("pickups", "addresses")}
+                      >
+                        <AddCircleOutlineIcon sx={{ color: "#FFD700" }} />
+                      </IconButton>
+                    )}
+                    {formData.pickups.addresses.length > 1 && (
+                      <IconButton
+                        onClick={() =>
+                          handleRemoveField("pickups", "addresses", index)
+                        }
+                        sx={{
+                          color:
+                            formData.pickups.addresses.length === 1
+                              ? "grey"
+                              : "#FFD700",
+                        }}
+                        disabled={formData.pickups.addresses.length === 1}
+                      >
+                        <RemoveCircleOutlineIcon />
+                      </IconButton>
+                    )}
+                  </Stack>
                 ))
               : formData.pickups.airports.map((pickup, index) => (
                   <Stack direction={"row"} spacing={1} key={index}>
@@ -366,63 +362,46 @@ const JourneyDetails = (props: CustomProps) => {
                 </StepLabel>
               ))}
             </Stepper>
-
             {dropActiveStep === 0
               ? formData.dropoffs.addresses.map((dropoffs, index) => (
-                  <TextField
-                    key={index}
-                    value={dropoffs.address}
-                    onChange={(e) =>
-                      handleChange(
-                        "dropoffs",
-                        "addresses",
-                        index,
-                        "address",
-                        e.target.value
-                      )
-                    }
-                    placeholder="Enter Pickup Address"
-                    variant="outlined"
-                    fullWidth
-                    InputProps={{
-                      endAdornment: (
-                        <InputAdornment position="end">
-                          {index === formData.dropoffs.addresses.length - 1 && (
-                            <IconButton
-                              onClick={() =>
-                                handleAddField("dropoffs", "addresses")
-                              }
-                            >
-                              <AddCircleOutlineIcon sx={{ color: "#FFD700" }} />
-                            </IconButton>
-                          )}
-                          {formData.dropoffs.addresses.length > 1 && (
-                            <IconButton
-                              onClick={() =>
-                                handleRemoveField(
-                                  "dropoffs",
-                                  "addresses",
-                                  index
-                                )
-                              }
-                              sx={{
-                                color:
-                                  formData.dropoffs.addresses.length === 1
-                                    ? "grey"
-                                    : "#FFD700",
-                              }}
-                              disabled={
-                                formData.dropoffs.addresses.length === 1
-                              }
-                            >
-                              <RemoveCircleOutlineIcon />
-                            </IconButton>
-                          )}
-                        </InputAdornment>
-                      ),
-                    }}
-                    sx={classes.textInputField}
-                  />
+                  <Stack direction={"row"} spacing={1} key={index}>
+                    <GoogleAutocompleteInput
+                      key={index}
+                      value={dropoffs.address} // Assuming dropoffs.address is a string
+                      onChange={(newValue: string) =>
+                        handleChange(
+                          "dropoffs",
+                          "addresses",
+                          index,
+                          "address",
+                          newValue
+                        )
+                      }
+                    />
+                    {index === formData.dropoffs.addresses.length - 1 && (
+                      <IconButton
+                        onClick={() => handleAddField("dropoffs", "addresses")}
+                      >
+                        <AddCircleOutlineIcon sx={{ color: "#FFD700" }} />
+                      </IconButton>
+                    )}
+                    {formData.dropoffs.addresses.length > 1 && (
+                      <IconButton
+                        onClick={() =>
+                          handleRemoveField("dropoffs", "addresses", index)
+                        }
+                        sx={{
+                          color:
+                            formData.dropoffs.addresses.length === 1
+                              ? "grey"
+                              : "#FFD700",
+                        }}
+                        disabled={formData.dropoffs.addresses.length === 1}
+                      >
+                        <RemoveCircleOutlineIcon />
+                      </IconButton>
+                    )}
+                  </Stack>
                 ))
               : formData.dropoffs.airports.map((dropoffs, index) => (
                   <Stack direction={"row"} spacing={1} key={index}>
