@@ -29,8 +29,9 @@ export const createTypography = (
       },
     },
     button: {
-      fontWeight: 600,
+      fontWeight: 500,
       fontFamily: "Jost",
+      lineHeight: "28.9px",
     },
     caption: {
       fontSize: "1.25rem",

@@ -1,10 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   Box,
   Button,
-  CircularProgress,
   Container,
-  InputAdornment,
   Stack,
   TextField,
   Typography,
@@ -12,15 +10,17 @@ import {
   useTheme,
 } from "@mui/material";
 import HomeStyles from "../HomeStyles";
-import aboutCar1 from "../../../assets/images/home/aboutCar1.webp";
-import aboutCar2 from "../../../assets/images/home/aboutCar2.webp";
+import aboutCar1 from "../../../assets/images/home/about-car.webp";
+import urls from "global/constants/urls";
+import strings from "global/constants/strings";
 
 const TOP_NAV_HEIGHT = 64;
 
 const AboutSection = () => {
   const theme = useTheme();
   const classes = HomeStyles(theme);
-  const lgUp = useMediaQuery(theme.breakpoints.up("md"));
+  const isLgUp = useMediaQuery(theme.breakpoints.up("lg"));
+  const isMdUp = useMediaQuery(theme.breakpoints.up("md"));
 
   return (
     <Box sx={classes.aboutBgBox}>
@@ -28,46 +28,67 @@ const AboutSection = () => {
         maxWidth="lg"
         sx={{
           minHeight: TOP_NAV_HEIGHT,
-          // p: 2,
-          pl: lgUp ? 6 : 2,
-          pr: lgUp ? 6 : 2,
+          padding: isLgUp ? "0 48px" : "0 16px",
         }}
       >
         <Stack
-          alignItems="self-start"
-          direction="row"
+          direction={isMdUp ? "row" : "column"}
+          alignItems="center"
           justifyContent="space-between"
-          spacing={10}
+          spacing={4}
         >
-          <Stack alignItems="self-start" direction="column" spacing={2}>
-            <Typography sx={classes.addressBox} variant="caption">
-              Address
+          <Stack alignItems={isMdUp ? "flex-start" : "center"} spacing={2}>
+            <Typography
+              sx={{ ...classes.experiFont, color: theme.palette.primary.main }}
+              variant="h6"
+              align={isMdUp ? "left" : "center"}
+            >
+              About Us
             </Typography>
-            <Box>
-              <Typography
-                sx={{ ...classes.experiFont, textAlign: "start",fontSize:"42px" }}
-                variant="h5"
-              >
-                <span>Award Winning</span>
-              </Typography>
-              <Typography sx={classes.experiFont} variant="h6">
-                <span style={{ color: theme.palette.primary.main }}>
-                  Outstanding
-                </span>{" "}
-                Service.
-              </Typography>
-            </Box>
-            <Typography>
-              Enjoy outstanding service every step of the way. From the moment
-              you contact us, to the moment your chauffeur opens your door.
+            <Typography align={isMdUp ? "left" : "center"}>
+              RNR Chauffeurs is a premier Chauffeur service in Wokingham. We
+              provide luxury, reliable chauffeur services tailored to your
+              needs. Our professional drivers and premium fleet ensure a
+              seamless, elegant travel experience.
             </Typography>
-            <Typography>
-              Winning Awards for Best UK Chauffeur Company demonstrates our
-              commitment to providing the best chauffeur service.
+            <Typography align={isMdUp ? "left" : "center"}>
+              Whether for airport transfers, corporate travel, or special
+              events, we prioritize comfort, safety, and punctuality. Operating
+              in Wokingham and surrounding areas, we are proud to serve our
+              community with top-tier transport solutions. Choose RNR Chauffeurs
+              for first-class service, anytime, anywhere.
             </Typography>
+            <Button
+              variant="contained"
+              href={urls.Facebook}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Typography variant="button">{strings.readMore}</Typography>
+            </Button>
           </Stack>
-          <img src={aboutCar1.src} alt="car" height="auto" width="70%"/>
+          <Box
+            component="img"
+            src={aboutCar1.src}
+            alt="Luxury car"
+            sx={{
+              width: isMdUp ? "50%" : "100%",
+              height: "auto",
+              borderRadius: 2,
+            }}
+          />
         </Stack>
+        <Box
+          sx={{
+            width: "100%",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            paddingTop: 10,
+          }}
+        >
+          <Box sx={classes.verticalLine}></Box>
+        </Box>
       </Container>
     </Box>
   );

@@ -11,6 +11,7 @@ class Strings {
 
   CaptchaSiteKey = "6LcfPTQiAAAAAEiV_UD6kJ1heocnrPFSq";
 
+  readMore="Read More";
   APP_NAME = "rnr";
   EMAIL = "helloRNR@demo.com";
   PHONE = "+44 (0)12 1234 1234";

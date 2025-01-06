@@ -86,9 +86,9 @@ export const createTheme = (config: ThemeConfig): Theme => {
         })
   );
 
-  if (config.responsiveFontSizes) {
-    theme = responsiveFontSizes(theme);
-  }
+  // if (config.responsiveFontSizes) {
+  //   theme = responsiveFontSizes(theme);
+  // }
 
   return theme;
 };

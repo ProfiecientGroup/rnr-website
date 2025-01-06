@@ -265,7 +265,7 @@ const TopNav = (props: CustomProps) => {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <Typography variant="body2">Book</Typography>
+                  <Typography variant="button">Book</Typography>
                 </Button>
               </Stack>
             </>

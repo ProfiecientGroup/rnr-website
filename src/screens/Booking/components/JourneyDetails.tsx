@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useState } from "react";
 import {
   Box,
   Typography,
@@ -6,7 +6,6 @@ import {
   FormControl,
   MenuItem,
   Select,
-  InputAdornment,
   IconButton,
   Stepper,
   StepLabel,
@@ -24,7 +23,6 @@ import { Dayjs } from "dayjs";
 import { doBooking } from "./BookingService";
 import GoogleAutocompleteInput from "./GoogleAutocompleteInput ";
 
-const steps = ["Address", "Airport"];
 const tripType = ["One Way", "Round Trip", "By the Hour"];
 interface CustomProps {
   handleNext: Function;
@@ -244,7 +242,9 @@ const JourneyDetails = (props: CustomProps) => {
                   padding: "8px 16px",
                   borderRadius: "16px",
                   backgroundColor:
-                    formData.pickups[0].type === "address" ? "#FFD700" : "#333",
+                    formData.pickups[0].type === "address"
+                      ? { ...classes.addressBox, marginRight: 2 }
+                      : { ...classes.pickupBox, marginRight: 2 },
                   color:
                     formData.pickups[0].type === "address" ? "black" : "white",
                 }}
@@ -259,13 +259,15 @@ const JourneyDetails = (props: CustomProps) => {
                   padding: "8px 16px",
                   borderRadius: "16px",
                   backgroundColor:
-                    formData.pickups[0].type === "airport" ? "#FFD700" : "#333",
+                    formData.pickups[0].type === "airport"
+                      ? { ...classes.addressBox, marginRight: 2 }
+                      : { ...classes.pickupBox, marginRight: 2 },
                   color:
                     formData.pickups[0].type === "airport" ? "black" : "white",
                 }}
                 onClick={() => handleTabChange(0, "airport")}
               >
-                Airport Pickup
+                Airport
               </Typography>
             </Stack>
 
@@ -326,8 +328,10 @@ const JourneyDetails = (props: CustomProps) => {
                       padding: "8px 16px",
                       borderRadius: "16px",
                       backgroundColor:
-                        pickup.type === "address" ? "#FFD700" : "#333",
-                      color: pickup.type === "address" ? "black" : "white",
+                        pickup.type === "address"
+                          ? { ...classes.addressBox, marginRight: 2 }
+                          : { ...classes.pickupBox, marginRight: 2 },
+                      // color: pickup.type === "address" ? "black" : "white",
                     }}
                     onClick={() => handleTabChange(index + 1, "address")}
                   >
@@ -340,12 +344,14 @@ const JourneyDetails = (props: CustomProps) => {
                       padding: "8px 16px",
                       borderRadius: "16px",
                       backgroundColor:
-                        pickup.type === "airport" ? "#FFD700" : "#333",
+                        pickup.type === "airport"
+                          ? { ...classes.addressBox, marginRight: 2 }
+                          : { ...classes.pickupBox, marginRight: 2 },
                       color: pickup.type === "airport" ? "black" : "white",
                     }}
                     onClick={() => handleTabChange(index + 1, "airport")}
                   >
-                    Airport Pickup
+                    Airport
                   </Typography>
                 </Stack>
 
@@ -413,8 +419,8 @@ const JourneyDetails = (props: CustomProps) => {
                   borderRadius: "16px",
                   backgroundColor:
                     formData.dropoffs[0].type === "address"
-                      ? "#FFD700"
-                      : "#333",
+                      ? { ...classes.addressBox, marginRight: 2 }
+                      : { ...classes.pickupBox, marginRight: 2 },
                   color:
                     formData.dropoffs[0].type === "address" ? "black" : "white",
                 }}
@@ -430,14 +436,14 @@ const JourneyDetails = (props: CustomProps) => {
                   borderRadius: "16px",
                   backgroundColor:
                     formData.dropoffs[0].type === "airport"
-                      ? "#FFD700"
-                      : "#333",
+                      ? { ...classes.addressBox, marginRight: 2 }
+                      : { ...classes.pickupBox, marginRight: 2 },
                   color:
                     formData.dropoffs[0].type === "airport" ? "black" : "white",
                 }}
                 onClick={() => handleTabChangeDropoffs(0, "airport")}
               >
-                Airport Pickup
+                Airport
               </Typography>
             </Stack>
 
@@ -498,7 +504,8 @@ const JourneyDetails = (props: CustomProps) => {
                       padding: "8px 16px",
                       borderRadius: "16px",
                       backgroundColor:
-                        dropoff.type === "address" ? "#FFD700" : "#333",
+                        dropoff.type === "address"      ? { ...classes.addressBox, marginRight: 2 }
+                        : { ...classes.pickupBox, marginRight: 2 },
                       color: dropoff.type === "address" ? "black" : "white",
                     }}
                     onClick={() =>
@@ -513,15 +520,18 @@ const JourneyDetails = (props: CustomProps) => {
                       cursor: "pointer",
                       padding: "8px 16px",
                       borderRadius: "16px",
+
                       backgroundColor:
-                        dropoff.type === "airport" ? "#FFD700" : "#333",
-                      color: dropoff.type === "airport" ? "black" : "white",
+                        dropoff.type === "airport"
+                          ? { ...classes.addressBox, marginRight: 2 }
+                          : { ...classes.pickupBox, marginRight: 2 },
+                      // color: dropoff.type === "airport" ? "black" : "white",
                     }}
                     onClick={() =>
                       handleTabChangeDropoffs(index + 1, "airport")
                     }
                   >
-                    Airport Pickup
+                    Airport
                   </Typography>
                 </Stack>
 
@@ -587,14 +597,19 @@ const JourneyDetails = (props: CustomProps) => {
                 <StepLabel
                   key={index}
                   onClick={() => handleTripTypeStepClick(index)}
-                  sx={{
-                    cursor: "pointer",
-                    ...(index === tripTypeActiveStep
-                      ? { ...classes.addressBox, marginRight: 2 }
-                      : { ...classes.pickupBox, marginRight: 2 }),
-                  }}
+                  sx={{}}
                 >
-                  {label}
+                  <Typography
+                    variant="body2"
+                    sx={{
+                      cursor: "pointer",
+                      ...(index === tripTypeActiveStep
+                        ? { ...classes.addressBox, marginRight: 2 }
+                        : { ...classes.pickupBox, marginRight: 2 }),
+                    }}
+                  >
+                    {label}
+                  </Typography>
                 </StepLabel>
               ))}
             </Stepper>

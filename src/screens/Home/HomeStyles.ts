@@ -1,6 +1,7 @@
 import { Theme } from "@mui/material";
-import aboutBg from "../../assets/images/home/aboutBg.webp";
+import aboutBg from "../../assets/images/home/about-bg.webp";
 import Bg from "../../assets/images/home/Bg.svg";
+import bannerAddressBg from "../../assets/images/home/banner-address-bg.webp";
 
 const HomeStyles = (theme: Theme) => {
   return {
@@ -18,10 +19,10 @@ const HomeStyles = (theme: Theme) => {
     },
     experiFont: {
       fontFamily: "Kugile",
-      fontSize: "60px",
+      fontSize: "42px",
       fontWeight: "400",
       textAlign: "center",
-      lineHeight: "90px",
+      lineHeight: "63px",
     },
     contactBox: {
       width: "414px",
@@ -29,8 +30,9 @@ const HomeStyles = (theme: Theme) => {
       borderRadius: "50px",
       backgroundColor: "#0E0E0E",
       padding: 4,
-      background:
-        "linear-gradient(200deg, rgba(172, 199, 55, 0.14) 0%, #0E0E0E 100%)",
+      background: "url(" + bannerAddressBg.src + ")",
+      backgroundSize: "cover",
+      backgroundPosition: "center",
     },
     addressBox: {
       width: "Fill (167px)px",
