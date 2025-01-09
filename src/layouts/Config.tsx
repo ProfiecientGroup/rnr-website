@@ -33,8 +33,8 @@ export const useSections = () => {
           path: viewpaths.services,
         },
         {
-          title: "Company",
-          path: viewpaths.company,
+          title: "About us",
+          path: viewpaths.aboutUs,
         },
         {
           title: "Contact us",

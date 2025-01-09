@@ -2,7 +2,7 @@ export class ViewPathConstants {
   home = "/";
   cars = "/cars/";
   services = "/services/";
-  company = "/company/";
+  aboutUs = "/about-us/";
   contactUs = "/contact-us/";
   terms = "/terms-of-use/";
   faqs = "/faqs/";
