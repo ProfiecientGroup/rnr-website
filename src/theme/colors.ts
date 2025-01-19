@@ -18,7 +18,7 @@ const withAlphas = (color: PaletteColor): PaletteColor => {
 export const neutral: ColorRange = {
   50: "#F8F9FA",
   100: "#F3F4F6",
-  200: "#E5E7EB",
+  200: "#655737",
   300: "#D2D6DB",
   400: "#9DA4AE",
   500: "#6C737F",

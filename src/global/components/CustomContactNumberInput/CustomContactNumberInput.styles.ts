@@ -7,8 +7,8 @@ const customContactNumberStyles = {
         borderColor: "none",
       },
     },
-    backgroundColor: "#FFFFFF",
-    borderRadius: "10px",
+    backgroundColor: "transparent",
+    borderRadius: "none",
   },
 } as const;
 

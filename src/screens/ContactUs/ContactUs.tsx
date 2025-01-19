@@ -17,13 +17,21 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-
 import ContactUsStyles from "./ContactUsStyles";
 import { isTruthy } from "helpers/methods";
 import CustomContactNumberInput from "global/components/CustomContactNumberInput/CustomContactNumberInput";
 import { contactUsForm, validateData } from "./ContactUsStateAndValidation";
+import formBg from "../../assets/images/contactUs/formBg.webp";
+import { title } from "process";
+import strings from "global/constants/strings";
 
 const TOP_NAV_HEIGHT = 64;
+
+const contactData = [
+  { value: strings.PHONE, title: "Phone number" },
+  { value: "Central London", title: "Address" },
+  { value: strings.EMAIL, title: "Email Address" },
+];
 
 const ContactUs = () => {
   const theme = useTheme();
@@ -110,88 +118,61 @@ const ContactUs = () => {
               call the RNR Response Center toll free at +1234567890.
             </Typography>
             <Stack direction={"row"} spacing={2}>
-            <Box
-      sx={{
-        border: "1px solid rgba(221, 184, 99, 0.5)",
-        width: { xs: "100%", sm: "416px" },
-        padding: { xs: 3, sm: 4 },
-        backgroundColor: theme.palette.primary.dark,
-        borderRadius: "25px",
-      }}
-    >
-      <Stack spacing={2}>
-        {/* Section 1: Phone */}
-        <Stack spacing={1} alignItems="center">
-          <Typography variant="h6" sx={{ color: "#fff" }}>
-            +444 123-4567
-          </Typography>
-          <Divider
-            sx={{
-              width: "50%",
-              backgroundColor: "rgba(221, 184, 99, 0.5)",
-              margin: "4px auto",
-            }}
-          />
-          <Typography
-            variant="body2"
-            sx={{ color: theme.palette.text.secondary }}
-          >
-            Our Phone
-          </Typography>
-        </Stack>
+              <Box
+                sx={{
+                  border: "1px solid rgba(221, 184, 99, 0.5)",
+                  width: { xs: "100%", sm: "416px" },
+                  // padding: { xs: 3, sm: 4 },
+                  backgroundColor: theme.palette.primary.dark,
+                  borderRadius: "25px",
+                }}
+              >
+                <Stack
+                  spacing={2}
+                  height={"100%"}
+                  justifyContent={"space-around"}
+                  textAlign={"start"}
+                >
+                  {contactData.map((i: any, index: number) => {
+                    return (
+                      <Stack spacing={0} alignItems="center" key={index} textAlign={"start"}>
+                        <Typography variant="body2" sx={{ color: "#DDB863" }}>
+                          {i.value}
+                        </Typography>
 
-        {/* Section 2: Address */}
-        <Stack spacing={1} alignItems="center">
-          <Typography variant="body1" sx={{ color: "#fff" }}>
-            Central London
-          </Typography>
-          <Divider
-            sx={{
-              width: "50%",
-              backgroundColor: "rgba(221, 184, 99, 0.5)",
-              margin: "4px auto",
-            }}
-          />
-          <Typography
-            variant="body2"
-            sx={{ color: theme.palette.text.secondary }}
-          >
-            Address
-          </Typography>
-        </Stack>
-
-        {/* Section 3: Price */}
-        <Stack spacing={1} alignItems="center">
-          <Typography variant="body1" sx={{ color: "#fff" }}>
-            £600
-          </Typography>
-          <Divider
-            sx={{
-              width: "50%",
-              backgroundColor: "rgba(221, 184, 99, 0.5)",
-              margin: "4px auto",
-            }}
-          />
-          <Typography
-            variant="body2"
-            sx={{ color: theme.palette.text.secondary }}
-          >
-            Email Address
-          </Typography>
-        </Stack>
-      </Stack>
-    </Box>
+                        <Typography
+                          variant="body2"
+                          sx={{ color: theme.palette.text.secondary, mb: 2 }}
+                        >
+                          {i.title}
+                        </Typography>
+                        {index !== contactData.length - 1 && ( // Check if it's not the last item
+                          <Divider
+                            variant="fullWidth"
+                            sx={{
+                              width: "100%",
+                              backgroundColor: "rgba(221, 184, 99, 0.5)",
+                              margin: "4px auto",
+                              borderColor: theme.palette.primary.main,
+                            }}
+                          />
+                        )}
+                      </Stack>
+                    );
+                  })}
+                </Stack>
+              </Box>
               <Box
                 sx={{
                   width: "100%",
-                  //   padding: {
-                  //     md: "42px 32px 42px 32px",
-                  //     xs: "42px 6px 42px 6px",
-                  //   },
                   backgroundColor: "#FCFBFD",
                   borderRadius: theme.spacing(3),
                   padding: theme.spacing(4),
                   boxShadow: "0px 4px 16px rgba(0, 0, 0, 0.1)",
+                  background: "url(" + formBg.src + ")",
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                  backgroundRepeat: "no-repeat",
                 }}
               >
                 <Container maxWidth="md">{getForm()}</Container>
@@ -206,17 +187,11 @@ const ContactUs = () => {
 
   const getForm = () => {
     return (
-      <Grid
-        container
-        spacing={2}
-        alignItems="center"
-        justifyContent="center"
-        mt={3}
-      >
+      <Grid container spacing={2} alignItems="center" justifyContent="center">
         <Grid item lg={12} xl={12} md={12} sm={12} xs={12}>
-          <Stack mb={1}>
-            <InputLabel required>First Name</InputLabel>
-          </Stack>
+          <Typography>Write a Message</Typography>
+        </Grid>
+        <Grid item lg={12} xl={12} md={12} sm={12} xs={12}>
           <TextField
             variant="outlined"
             placeholder="Your First Name"
@@ -236,9 +211,6 @@ const ContactUs = () => {
           />
         </Grid>
         <Grid item lg={6} xl={6} md={6} sm={12} xs={12}>
-          <Stack mb={1}>
-            <InputLabel required>Email Address</InputLabel>{" "}
-          </Stack>
           <TextField
             variant="outlined"
             placeholder="Your Email"
@@ -257,18 +229,7 @@ const ContactUs = () => {
             helperText={formFields.email.error}
           />
         </Grid>
-        <Grid
-          item
-          lg={6}
-          xl={6}
-          md={6}
-          sm={12}
-          xs={12}
-          sx={{ background: "white" }}
-        >
-          <Stack mb={1}>
-            <InputLabel required>Phone Number</InputLabel>{" "}
-          </Stack>
+        <Grid item lg={6} xl={6} md={6} sm={12} xs={12}>
           <CustomContactNumberInput
             label="Phone Number"
             id="phone-number"
@@ -291,9 +252,6 @@ const ContactUs = () => {
           />
         </Grid>
         <Grid item lg={12} xl={12} md={12} sm={12} xs={12}>
-          <Stack mb={1}>
-            <InputLabel required>Message</InputLabel>
-          </Stack>
           <TextField
             variant="outlined"
             maxRows={5}
@@ -324,7 +282,7 @@ const ContactUs = () => {
             fullWidth
             sx={{ mt: 1 }}
             onClick={handleSubmit}
-            disabled={ isLoading}
+            disabled={isLoading}
           >
             Send Message
           </Button>

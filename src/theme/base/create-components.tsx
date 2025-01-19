@@ -248,10 +248,12 @@ export const createComponents = (): Components => {
         input: {
           fontSize: 14,
           fontWeight: 500,
+          color: "#B3B3B3",
+          fontFamily: "Jost",
           lineHeight: "24px",
-          backgroundColor: "#FFFFFF",
-          border: "1px solid #E8E4F1",
-          borderRadius: "8px",
+          backgroundColor: "transparent",
+          border: "1px solid #655737",
+          borderRadius: "25px",
         },
         notchedOutline: {
           transition: muiTheme.transitions.create([

@@ -123,13 +123,15 @@ export const createComponents = ({ palette }: Config): Components => {
             backgroundColor: palette.action!.hover,
             [`& .${outlinedInputClasses.notchedOutline}`]: {
               borderColor: palette.neutral![200],
+              borderRadius: "25px",
             },
           },
           [`&.${outlinedInputClasses.focused}`]: {
             backgroundColor: "transparent",
             [`& .${outlinedInputClasses.notchedOutline}`]: {
-              borderColor: "#B9A0EF",
+              borderColor: palette.neutral![200],
               borderWidth: "1px",
+              borderRadius: "25px",
             },
           },
           [`&.${filledInputClasses.error}`]: {
@@ -137,11 +139,13 @@ export const createComponents = ({ palette }: Config): Components => {
               borderColor: (palette.error as PaletteColor).main,
               borderWidth: "1px",
               fontSize: "0.875rem",
+              borderRadius: "25px",
             },
           },
         },
         notchedOutline: {
           borderColor: palette.neutral![200],
+          borderRadius: "25px",
         },
       },
     },
@@ -173,14 +177,14 @@ export const createComponents = ({ palette }: Config): Components => {
         },
       },
     },
-// @ts-expect-error: The MuiTimelineConnector component doesn't exist in the current MUI types
-MuiTimelineConnector: {
-  styleOverrides: {
-    root: {
-      backgroundColor: palette.divider,
+    // @ts-expect-error: The MuiTimelineConnector component doesn't exist in the current MUI types
+    MuiTimelineConnector: {
+      styleOverrides: {
+        root: {
+          backgroundColor: palette.divider,
+        },
+      },
     },
-  },
-},
 
     MuiTooltip: {
       styleOverrides: {
