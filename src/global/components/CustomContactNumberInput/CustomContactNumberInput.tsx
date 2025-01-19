@@ -66,7 +66,7 @@ const CustomContactNumberInput: React.FC<MUIPhoneProps> = ({
                     height: "300px",
                     width: "360px",
                     top: "0px",
-                    left: "-34px",
+                    // left: "-34px",
                   },
                   transformOrigin: {
                     vertical: "top",
@@ -91,6 +91,7 @@ const CustomContactNumberInput: React.FC<MUIPhoneProps> = ({
                     padding: "8px",
                     border: "none",
                     paddingRight: "28px !important",
+                    display:"flex",
                     "&.focused": {
                       border: "none",
                       fieldset: {

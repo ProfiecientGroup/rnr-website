@@ -1,5 +1,12 @@
 import React from "react";
-import { Box, Button, Stack, Typography, useTheme } from "@mui/material";
+import {
+  Box,
+  Button,
+  Stack,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 import BookingStyles from "../BookingStyles";
 import car1 from "../../../assets/images/booking/car1.svg";
 
@@ -33,6 +40,7 @@ const carData = [
 const ChooseACar = () => {
   const theme = useTheme();
   const classes = BookingStyles(theme);
+  const isLgUp = useMediaQuery(theme.breakpoints.up("xl"));
 
   const carItemStyle = {
     borderColor: theme.palette.primary.main,
@@ -63,15 +71,26 @@ const ChooseACar = () => {
         </Typography>
         {carData.map(
           ({ model, description, imgSrc, extraInfo, price }, index) => (
-            <Stack direction="row" spacing={2} sx={carItemStyle} key={index}>
+            <Stack
+              direction={isLgUp ? "row" : "column"}
+              spacing={2}
+              sx={carItemStyle}
+              key={index}
+            >
               <Stack direction="column" spacing={2}>
                 <Typography>{model}</Typography>
-                <Stack direction="row" spacing={2}>
+                <Stack direction={isLgUp ? "row" : "column"} spacing={2}>
                   {description.map((item, i) => (
-                    <Typography key={i}>{item} | </Typography>
+                    <Typography key={i}>
+                      {item} {i !== description.length - 1 && "|"}{" "}
+                    </Typography>
                   ))}
                 </Stack>
-                <img src={imgSrc} width="400px" alt={model} />
+                <img
+                  src={imgSrc}
+                  width={isLgUp ? "400px" : "100%"}
+                  alt={model}
+                />
               </Stack>
               <Stack direction="column" spacing={2}>
                 <Typography>{extraInfo}</Typography>

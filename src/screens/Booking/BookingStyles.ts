@@ -67,7 +67,8 @@ const BookingStyles = (theme: Theme) => {
       },
       "& .MuiOutlinedInput-input": {
         backgroundColor: "transparent",
-        padding: "10px 10px",
+        padding: "12px 12px",
+
         borderRadius: "100px",
         color: "#FFFFFF",
       },

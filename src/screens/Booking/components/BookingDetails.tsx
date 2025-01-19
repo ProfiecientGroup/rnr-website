@@ -12,6 +12,7 @@ import {
   Grid,
   InputLabel,
   MenuItem,
+  OutlinedInput,
   Select,
   Snackbar,
   Stack,
@@ -22,6 +23,9 @@ import {
 import BookingStyles from "../BookingStyles";
 import { isPhoneValid, isTruthy } from "helpers/methods";
 import CustomContactNumberInput from "global/components/CustomContactNumberInput/CustomContactNumberInput";
+
+const noOfPassenger = ["1", "2", "3"];
+const noOfSuitcase = ["1", "2", "3"];
 
 const BookingDetails = () => {
   const theme = useTheme();
@@ -45,6 +49,10 @@ const BookingDetails = () => {
       error: "",
     },
     noOfPassenger: {
+      value: "",
+      error: "",
+    },
+    noOfSuitcase: {
       value: "",
       error: "",
     },
@@ -189,7 +197,7 @@ const BookingDetails = () => {
   const getForm = () => {
     return (
       <Grid container spacing={2} alignItems="center" justifyContent="center">
-        <Grid item lg={6} xl={6} md={6} sm={6} xs={12}>
+        <Grid item lg={6} xl={6} md={12} sm={12} xs={12}>
           <TextField
             variant="outlined"
             placeholder="Your First Name"
@@ -206,10 +214,10 @@ const BookingDetails = () => {
             }}
             sx={classes.textInputField}
             error={isTruthy(formFields.firstName.error)}
-            helperText={formFields.firstName.error}
+            // helperText={formFields.firstName.error}
           />
         </Grid>
-        <Grid item lg={6} xl={6} md={6} sm={6} xs={12}>
+        <Grid item lg={6} xl={6} md={12} sm={12} xs={12}>
           <TextField
             variant="outlined"
             placeholder="Your Last Name"
@@ -226,10 +234,10 @@ const BookingDetails = () => {
               });
             }}
             error={isTruthy(formFields.lastName.error)}
-            helperText={formFields.lastName.error}
+            // helperText={formFields.lastName.error}
           />
         </Grid>
-        <Grid item lg={6} xl={6} md={6} sm={6} xs={12}>
+        <Grid item lg={6} xl={6} md={12} sm={12} xs={12}>
           <TextField
             variant="outlined"
             placeholder="Your Email"
@@ -246,10 +254,10 @@ const BookingDetails = () => {
               });
             }}
             error={isTruthy(formFields.email.error)}
-            helperText={formFields.email.error}
+            // helperText={formFields.email.error}
           />
         </Grid>
-        <Grid item lg={6} xl={6} md={6} sm={6} xs={12}>
+        <Grid item lg={6} xl={6} md={12} sm={12} xs={12}>
           <CustomContactNumberInput
             label="Phone Number"
             id="phone-number"
@@ -267,14 +275,19 @@ const BookingDetails = () => {
               });
             }}
             fullWidth
-            error={
-              isTruthy(formFields?.phone?.error) && formFields?.phone?.error
-            }
+            error={isTruthy(formFields.phone.error)}
+
+            // error={
+            //   isTruthy(formFields?.phone?.error) && formFields?.phone?.error
+            // }
           />
         </Grid>
-        <Grid item lg={6} xl={6} md={6} sm={6} xs={12}>
+        <Grid item lg={6} xl={6} md={12} sm={12} xs={12}>
           <FormControl fullWidth sx={classes.selectInputField}>
             <Select
+              placeholder="Select passenger"
+              id="noOfPassenger"
+              name="noOfPassenger"
               value={formFields.noOfPassenger.value}
               onChange={(event: any) => {
                 setFormFields({
@@ -284,29 +297,92 @@ const BookingDetails = () => {
                     error: "",
                   },
                 });
-              }} // Corrected the onChange
+              }}
+              input={<OutlinedInput />}
+              MenuProps={{
+                PaperProps: {
+                  sx: {
+                    ...classes.menuItems,
+                  },
+                },
+              }}
+              sx={classes.selectMenu}
+              style={{
+                color: formFields.noOfPassenger.value === "" ? "#B3B3B3" : "",
+                width: "100%",
+                background: "transparent",
+                borderRadius: "25px",
+              }}
+              renderValue={
+                formFields.noOfPassenger.value !== ""
+                  ? () => formFields.noOfPassenger.value
+                  : () => "Select passenger"
+              }
+              displayEmpty
             >
-              <MenuItem value="airport_option_4">4</MenuItem>
-              <MenuItem value="airport_option_5">5</MenuItem>
+              {noOfPassenger?.map((passenger: any, index: number) => {
+                return (
+                  <MenuItem
+                    sx={classes.optionStyle}
+                    value={passenger}
+                    key={index}
+                  >
+                    {passenger}
+                  </MenuItem>
+                );
+              })}
             </Select>
           </FormControl>
         </Grid>
-        <Grid item lg={6} xl={6} md={6} sm={6} xs={12}>
+        <Grid item lg={6} xl={6} md={12} sm={12} xs={12}>
           <FormControl fullWidth sx={classes.selectInputField}>
             <Select
-              value={formFields.noOfPassenger.value}
+              placeholder="Select suitcase"
+              id="noOfSuitcase"
+              name="noOfSuitcase"
+              value={formFields.noOfSuitcase.value}
               onChange={(event: any) => {
                 setFormFields({
                   ...formFields,
-                  noOfPassenger: {
+                  noOfSuitcase: {
                     value: event.target.value,
                     error: "",
                   },
                 });
-              }} // Corrected the onChange
+              }}
+              input={<OutlinedInput />}
+              MenuProps={{
+                PaperProps: {
+                  sx: {
+                    ...classes.menuItems,
+                  },
+                },
+              }}
+              sx={classes.selectMenu}
+              style={{
+                color: formFields.noOfSuitcase.value === "" ? "#B3B3B3" : "",
+                width: "100%",
+                background: "transparent",
+                borderRadius: "25px",
+              }}
+              renderValue={
+                formFields.noOfSuitcase.value !== ""
+                  ? () => formFields.noOfSuitcase.value
+                  : () => "Select suitcase"
+              }
+              displayEmpty
             >
-              <MenuItem value="airport_option_4">4</MenuItem>
-              <MenuItem value="airport_option_5">5</MenuItem>
+              {noOfSuitcase?.map((suitcase: any, index: number) => {
+                return (
+                  <MenuItem
+                    sx={classes.optionStyle}
+                    value={suitcase}
+                    key={index}
+                  >
+                    {suitcase}
+                  </MenuItem>
+                );
+              })}
             </Select>
           </FormControl>
         </Grid>
@@ -324,7 +400,7 @@ const BookingDetails = () => {
               },
             }}
             error={isTruthy(formFields.message.error)}
-            helperText={formFields.message.error}
+            // helperText={formFields.message.error}
             onChange={(event) => {
               setFormFields({
                 ...formFields,
@@ -336,7 +412,7 @@ const BookingDetails = () => {
             }}
           />
         </Grid>
-        <Grid item xs={12} md={12} mt={2}>
+        <Grid item md={12} sm={12} xs={12} mt={2}>
           <Stack direction={"row"} spacing={2}>
             <Button
               variant="contained"

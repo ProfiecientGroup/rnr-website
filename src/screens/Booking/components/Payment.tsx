@@ -1,5 +1,12 @@
 import React from "react";
-import { Box, Button, Stack, Typography, useTheme } from "@mui/material";
+import {
+  Box,
+  Button,
+  Stack,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 import BookingStyles from "../BookingStyles";
 import car1 from "../../../assets/images/booking/car1.svg";
 
@@ -12,6 +19,7 @@ const paymentDetails = [
 const Payment = () => {
   const theme = useTheme();
   const classes = BookingStyles(theme);
+  const isLgUp = useMediaQuery(theme.breakpoints.up("lg"));
 
   const carItemStyle = {
     borderColor: theme.palette.primary.main,
@@ -38,8 +46,8 @@ const Payment = () => {
           Payment Details
         </Typography>
         <Stack direction="column" spacing={2} sx={carItemStyle}>
-          <Stack direction="row" spacing={2}>
-            <img src={car1.src} width="400px" alt={"car"} />
+          <Stack direction={isLgUp ? "row" : "column"} spacing={2}>
+            <img src={car1.src} width={isLgUp ? "300px" : "100%"} alt={"car"} />
             <Stack direction="column" spacing={2}>
               <Typography>Mercedes S-Class</Typography>
               <Typography>Tuesday 3 December 2024</Typography>
@@ -50,17 +58,17 @@ const Payment = () => {
           </Stack>
           <Box
             sx={{
-              background: " #DDB863",
+              background: "#DDB863",
               borderTop: "1px solid",
               borderImageSource:
                 "linear-gradient(87.19deg, #030303 4.68%, #DDB863 49.2%, #030303 95.32%)",
             }}
           ></Box>
           <Stack
-            direction={"row"}
+            direction={isLgUp ? "row" : "column"}
             spacing={1}
             width={"100%"}
-            alignItems={"center"}
+            alignItems={isLgUp ? "center" : "start"}
             justifyContent={"space-between"}
           >
             {paymentDetails.map((item, i) => (
