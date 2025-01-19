@@ -47,7 +47,7 @@ const HomeStyles = (theme: Theme) => {
     pickupBox: {
       width: "Fill (167px)px",
       height: "Fixed (60px)px",
-      padding: "10px 15px 10px 15px",
+      padding: "10px 30px 10px 30px",
       borderRadius: "25px",
       opacity: "0px",
       color: "#B3B3B3",

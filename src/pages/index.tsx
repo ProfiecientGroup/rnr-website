@@ -7,7 +7,6 @@ const Home: NextPage = () => {
     return (
       <Head>
         <link rel="canonical" href="https://rnr.com/" />
-       
       </Head>
     );
   };

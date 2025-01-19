@@ -133,7 +133,7 @@ const BannerSection = () => {
                 Address
               </Typography>
               <Typography sx={classes.pickupBox} variant="caption">
-                Airport Pickup
+                Airport
               </Typography>
             </Stack>
             <Box sx={classes.verticalLine}></Box>

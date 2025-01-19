@@ -14,8 +14,10 @@ export const createTypography = (
       lineHeight: 1.5,
       fontFamily: "Jost",
       color: "#FFFFFF",
+      borderRadius: "25px",
       [`@media screen and (max-width: ${breakpoints.values.lg}px)`]: {
         fontSize: "1.06rem",
+        borderRadius: "25px",
       },
     },
     body2: {
@@ -26,6 +28,7 @@ export const createTypography = (
       color: "#FFFFFF",
       [`@media screen and (max-width: ${breakpoints.values.md}px)`]: {
         fontSize: "0.775rem",
+        borderRadius: "25px",
       },
     },
     button: {
