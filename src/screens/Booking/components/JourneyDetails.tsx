@@ -746,28 +746,37 @@ const JourneyDetails = (props: CustomProps) => {
                   onChange={(newValue) =>
                     handleDateAndTimeChange(newValue, "start_datetime")
                   }
+                  sx={classes.timePicker}
                 />
               </LocalizationProvider>
             )}
 
             {tripTypeActiveStep === 1 && (
               <>
-                <LocalizationProvider dateAdapter={AdapterDateFns}>
+                <LocalizationProvider dateAdapter={AdapterMoment}>
                   <DateTimePicker
-                    label="Select Start Date and Time"
-                    value={formData.start_datetime}
+                    value={
+                      formData.start_datetime
+                        ? moment(formData.start_datetime)
+                        : null
+                    }
                     onChange={(newValue) =>
                       handleDateAndTimeChange(newValue, "start_datetime")
                     }
+                    sx={classes.timePicker}
                   />
                 </LocalizationProvider>
-                <LocalizationProvider dateAdapter={AdapterDateFns}>
+                <LocalizationProvider dateAdapter={AdapterMoment}>
                   <DateTimePicker
-                    label="Select End Date and Time"
-                    value={formData.end_datetime}
+                    value={
+                      formData.end_datetime
+                        ? moment(formData.end_datetime)
+                        : null
+                    }
                     onChange={(newValue) =>
                       handleDateAndTimeChange(newValue, "end_datetime")
                     }
+                    sx={classes.timePicker}
                   />
                 </LocalizationProvider>
               </>
@@ -775,13 +784,17 @@ const JourneyDetails = (props: CustomProps) => {
 
             {tripTypeActiveStep === 2 && (
               <>
-                <LocalizationProvider dateAdapter={AdapterDateFns}>
+                <LocalizationProvider dateAdapter={AdapterMoment}>
                   <DateTimePicker
-                    label="Select Start Date and Time"
-                    value={formData.start_datetime}
+                    value={
+                      formData.start_datetime
+                        ? moment(formData.start_datetime)
+                        : null
+                    }
                     onChange={(newValue) =>
                       handleDateAndTimeChange(newValue, "start_datetime")
                     }
+                    sx={classes.timePicker}
                   />
                 </LocalizationProvider>
                 <TextField

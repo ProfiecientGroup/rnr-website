@@ -133,19 +133,19 @@ const BookingStyles = (theme: Theme) => {
         borderRadius: "25px",
         "& .MuiOutlinedInput-notchedOutline": {
           borderColor: "#DDB863",
-          borderRadius: "25px", // Ensure border radius is applied
+          borderRadius: "25px",
         },
         "&:hover .MuiOutlinedInput-notchedOutline": {
           borderColor: "#DDB863",
           borderRadius: "25px",
         },
         "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-          borderColor: "#DDB863", // Border color for the focused state
+          borderColor: "#DDB863",
           borderRadius: "25px",
         },
       },
       "& .MuiSelect-select": {
-        borderRadius: "25px !important", 
+        borderRadius: "25px !important",
       },
       "& .MuiInputBase-input": {
         borderRadius: "25px",
@@ -159,7 +159,7 @@ const BookingStyles = (theme: Theme) => {
     },
     optionStyle: {
       fontFamily: "Kugile",
-      fontSize: "16px", // Adjusted to make it responsive
+      fontSize: "16px",
       fontWeight: "400",
       textAlign: "center",
       backgroundColor: "#111927",
@@ -180,12 +180,17 @@ const BookingStyles = (theme: Theme) => {
       outline: 0,
     },
     timePicker: {
+      paddingTop: "12px",
+      borderRadius: "25px",
       "& .MuiOutlinedInput-root": {
-        borderRadius: "10px",
+        borderRadius: "25px",
+        backgroundColor: "transparent",
       },
       "& .MuiOutlinedInput-input": {
         padding: "8.5px 14px",
         paddingRight: "1px",
+        borderColor: "#DDB863",
+        borderRadius: "25px",
       },
       "& .MuiInputAdornment-root": {
         marginLeft: "0px",
@@ -193,6 +198,15 @@ const BookingStyles = (theme: Theme) => {
       "& .MuiSvgIcon-root": {
         height: "15px",
         width: "15px",
+      },
+      "& .MuiFilledInput-input": {
+        paddingTop: "12px",
+        borderColor: "#DDB863",
+        borderRadius: "25px",
+      },
+      backgroundColor: "transparent",
+      "& .css-4fgus2-MuiInputBase-root-MuiFilledInput-root": {
+        borderRadius: "25px !important",
       },
     },
   };
