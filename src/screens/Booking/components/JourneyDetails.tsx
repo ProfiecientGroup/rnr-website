@@ -12,17 +12,21 @@ import {
   Stack,
   useTheme,
   Button,
+  OutlinedInput,
 } from "@mui/material";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 import BookingStyles from "../BookingStyles";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
+import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { Dayjs } from "dayjs";
 import { doBooking } from "./BookingService";
 import GoogleAutocompleteInput from "./GoogleAutocompleteInput ";
+import moment from "moment";
 
+const addresses = ["1", "2", "3"];
 const tripType = ["One Way", "Round Trip", "By the Hour"];
 interface CustomProps {
   handleNext: Function;
@@ -135,14 +139,22 @@ const JourneyDetails = (props: CustomProps) => {
   };
 
   // Handle Date & Time Changes
-  const handleDateChange = (
-    field: "start_datetime" | "end_datetime",
-    newDate: Dayjs | null
+  const handleDateAndTimeChange = (
+    value: any,
+    field: "start_datetime" | "end_datetime"
   ) => {
-    setFormData({
-      ...formData,
-      [field]: newDate ? newDate.toISOString() : null, // Convert to ISO format
-    });
+    if (!value || !moment(value).isValid()) {
+      console.error("Invalid date/time value");
+      return;
+    }
+
+    const formattedDateTime = value
+      ? moment(value).format("YYYY-MM-DD HH:mm")
+      : null;
+    setFormData((prev: any) => ({
+      ...prev,
+      [field]: formattedDateTime,
+    }));
   };
 
   const handleTabChange = (index: number, type: "address" | "airport") => {
@@ -282,25 +294,48 @@ const JourneyDetails = (props: CustomProps) => {
                   }
                 />
               ) : (
-                <FormControl fullWidth sx={{ minWidth: "200px" }}>
-                  <Select
-                    value={formData.pickups[0].address || ""}
-                    onChange={(e) =>
-                      handleFieldChange(0, "address", e.target.value)
-                    }
-                    displayEmpty
-                  >
-                    <MenuItem value="" disabled>
-                      Select Airport
-                    </MenuItem>
-                    <MenuItem value="Airport Option 1">
-                      Airport Option 1
-                    </MenuItem>
-                    <MenuItem value="Airport Option 2">
-                      Airport Option 2
-                    </MenuItem>
-                  </Select>
-                </FormControl>
+                <Select
+                  placeholder="Select airport"
+                  id="address"
+                  name="address"
+                  value={formData.pickups[0].address || ""}
+                  onChange={(e) =>
+                    handleFieldChange(0, "address", e.target.value)
+                  }
+                  input={<OutlinedInput />}
+                  MenuProps={{
+                    PaperProps: {
+                      sx: {
+                        ...classes.menuItems,
+                      },
+                    },
+                  }}
+                  sx={classes.selectMenu}
+                  style={{
+                    color: formData.pickups[0].address === "" ? "#B3B3B3" : "",
+                    width: "100%",
+                    background: "transparent",
+                    borderRadius: "25px",
+                  }}
+                  renderValue={
+                    formData.pickups[0].address !== ""
+                      ? () => formData.pickups[0].address
+                      : () => "Select address"
+                  }
+                  displayEmpty
+                >
+                  {addresses?.map((address: any, index: number) => {
+                    return (
+                      <MenuItem
+                        sx={classes.optionStyle}
+                        value={address}
+                        key={index}
+                      >
+                        {address}
+                      </MenuItem>
+                    );
+                  })}
+                </Select>
               )}
               <IconButton onClick={() => handleAddField("pickups", "address")}>
                 <AddCircleOutlineIcon sx={{ color: "#FFD700" }} />
@@ -366,29 +401,48 @@ const JourneyDetails = (props: CustomProps) => {
                       }
                     />
                   ) : (
-                    <FormControl fullWidth sx={{ minWidth: "200px" }}>
-                      <Select
-                        value={pickup.address || ""}
-                        onChange={(e) =>
-                          handleFieldChange(
-                            index + 1,
-                            "address",
-                            e.target.value
-                          )
-                        }
-                        displayEmpty
-                      >
-                        <MenuItem value="" disabled>
-                          Select Airport
-                        </MenuItem>
-                        <MenuItem value="Airport Option 1">
-                          Airport Option 1
-                        </MenuItem>
-                        <MenuItem value="Airport Option 2">
-                          Airport Option 2
-                        </MenuItem>
-                      </Select>
-                    </FormControl>
+                    <Select
+                      placeholder="Select airport"
+                      id="address"
+                      name="address"
+                      value={pickup.address || ""}
+                      onChange={(e) =>
+                        handleFieldChange(index + 1, "address", e.target.value)
+                      }
+                      input={<OutlinedInput />}
+                      MenuProps={{
+                        PaperProps: {
+                          sx: {
+                            ...classes.menuItems,
+                          },
+                        },
+                      }}
+                      sx={classes.selectMenu}
+                      style={{
+                        color: pickup.address === "" ? "#B3B3B3" : "",
+                        width: "100%",
+                        background: "transparent",
+                        borderRadius: "25px",
+                      }}
+                      renderValue={
+                        pickup.address !== ""
+                          ? () => pickup.address
+                          : () => "Select address"
+                      }
+                      displayEmpty
+                    >
+                      {addresses?.map((address: any, index: number) => {
+                        return (
+                          <MenuItem
+                            sx={classes.optionStyle}
+                            value={address}
+                            key={index}
+                          >
+                            {address}
+                          </MenuItem>
+                        );
+                      })}
+                    </Select>
                   )}
                   <IconButton
                     onClick={() => handleAddField("pickups", pickup.type)}
@@ -458,25 +512,67 @@ const JourneyDetails = (props: CustomProps) => {
                   }
                 />
               ) : (
-                <FormControl fullWidth sx={{ minWidth: "200px" }}>
-                  <Select
-                    value={formData.dropoffs[0].address || ""}
-                    onChange={(e) =>
-                      handleFieldChangeDropoffs(0, "address", e.target.value)
-                    }
-                    displayEmpty
-                  >
-                    <MenuItem value="" disabled>
-                      Select Airport
-                    </MenuItem>
-                    <MenuItem value="Airport Option 1">
-                      Airport Option 1
-                    </MenuItem>
-                    <MenuItem value="Airport Option 2">
-                      Airport Option 2
-                    </MenuItem>
-                  </Select>
-                </FormControl>
+                <Select
+                  placeholder="Select airport"
+                  id="address"
+                  name="address"
+                  value={formData.dropoffs[0].address || ""}
+                  onChange={(e) =>
+                    handleFieldChangeDropoffs(0, "address", e.target.value)
+                  }
+                  input={<OutlinedInput />}
+                  MenuProps={{
+                    PaperProps: {
+                      sx: {
+                        ...classes.menuItems,
+                      },
+                    },
+                  }}
+                  sx={classes.selectMenu}
+                  style={{
+                    color: formData.dropoffs[0].address === "" ? "#B3B3B3" : "",
+                    width: "100%",
+                    background: "transparent",
+                    borderRadius: "25px",
+                  }}
+                  renderValue={
+                    formData.dropoffs[0].address !== ""
+                      ? () => formData.dropoffs[0].address
+                      : () => "Select address"
+                  }
+                  displayEmpty
+                >
+                  {addresses?.map((address: any, index: number) => {
+                    return (
+                      <MenuItem
+                        sx={classes.optionStyle}
+                        value={address}
+                        key={index}
+                      >
+                        {address}
+                      </MenuItem>
+                    );
+                  })}
+                </Select>
+                // <FormControl fullWidth sx={{ minWidth: "200px" }}>
+                //   <Select
+                // value={formData.dropoffs[0].address || ""}
+                // onChange={(e) =>
+                //   handleFieldChangeDropoffs(0, "address", e.target.value)
+                // }
+                //     displayEmpty
+                //   >
+                //     <MenuItem value="" disabled>
+                //       Select Airport
+                //     </MenuItem>
+                //     <MenuItem value="Airport Option 1">
+                //       Airport Option 1
+                //     </MenuItem>
+                //     <MenuItem value="Airport Option 2">
+                //       Airport Option 2
+                //     </MenuItem>
+                //   </Select>
+                // </FormControl>
               )}
               <IconButton onClick={() => handleAddFieldDropoffs("address")}>
                 <AddCircleOutlineIcon sx={{ color: "#FFD700" }} />
@@ -504,8 +600,9 @@ const JourneyDetails = (props: CustomProps) => {
                       padding: "8px 16px",
                       borderRadius: "16px",
                       backgroundColor:
-                        dropoff.type === "address"      ? { ...classes.addressBox, marginRight: 2 }
-                        : { ...classes.pickupBox, marginRight: 2 },
+                        dropoff.type === "address"
+                          ? { ...classes.addressBox, marginRight: 2 }
+                          : { ...classes.pickupBox, marginRight: 2 },
                       color: dropoff.type === "address" ? "black" : "white",
                     }}
                     onClick={() =>
@@ -550,29 +647,52 @@ const JourneyDetails = (props: CustomProps) => {
                       }
                     />
                   ) : (
-                    <FormControl fullWidth sx={{ minWidth: "200px" }}>
-                      <Select
-                        value={dropoff.address || ""}
-                        onChange={(e) =>
-                          handleFieldChangeDropoffs(
-                            index + 1,
-                            "address",
-                            e.target.value
-                          )
-                        }
-                        displayEmpty
-                      >
-                        <MenuItem value="" disabled>
-                          Select Airport
-                        </MenuItem>
-                        <MenuItem value="Airport Option 1">
-                          Airport Option 1
-                        </MenuItem>
-                        <MenuItem value="Airport Option 2">
-                          Airport Option 2
-                        </MenuItem>
-                      </Select>
-                    </FormControl>
+                    <Select
+                      placeholder="Select airport"
+                      id="address"
+                      name="address"
+                      value={dropoff.address || ""}
+                      onChange={(e) =>
+                        handleFieldChangeDropoffs(
+                          index + 1,
+                          "address",
+                          e.target.value
+                        )
+                      }
+                      input={<OutlinedInput />}
+                      MenuProps={{
+                        PaperProps: {
+                          sx: {
+                            ...classes.menuItems,
+                          },
+                        },
+                      }}
+                      sx={classes.selectMenu}
+                      style={{
+                        color: dropoff.address === "" ? "#B3B3B3" : "",
+                        width: "100%",
+                        background: "transparent",
+                        borderRadius: "25px",
+                      }}
+                      renderValue={
+                        dropoff.address !== ""
+                          ? () => dropoff.address
+                          : () => "Select address"
+                      }
+                      displayEmpty
+                    >
+                      {addresses?.map((address: any, index: number) => {
+                        return (
+                          <MenuItem
+                            sx={classes.optionStyle}
+                            value={address}
+                            key={index}
+                          >
+                            {address}
+                          </MenuItem>
+                        );
+                      })}
+                    </Select>
                   )}
                   <IconButton
                     onClick={() => handleAddFieldDropoffs(dropoff.type)}
@@ -616,12 +736,15 @@ const JourneyDetails = (props: CustomProps) => {
 
             {/* DateTime Picker for Trip Type */}
             {tripTypeActiveStep === 0 && (
-              <LocalizationProvider dateAdapter={AdapterDateFns}>
+              <LocalizationProvider dateAdapter={AdapterMoment}>
                 <DateTimePicker
-                  label="Select Start Date and Time"
-                  value={formData.start_datetime}
-                  onChange={(newDate: any) =>
-                    handleDateChange("start_datetime", newDate)
+                  value={
+                    formData.start_datetime
+                      ? moment(formData.start_datetime)
+                      : null
+                  }
+                  onChange={(newValue) =>
+                    handleDateAndTimeChange(newValue, "start_datetime")
                   }
                 />
               </LocalizationProvider>
@@ -633,8 +756,8 @@ const JourneyDetails = (props: CustomProps) => {
                   <DateTimePicker
                     label="Select Start Date and Time"
                     value={formData.start_datetime}
-                    onChange={(newDate: any) =>
-                      handleDateChange("start_datetime", newDate)
+                    onChange={(newValue) =>
+                      handleDateAndTimeChange(newValue, "start_datetime")
                     }
                   />
                 </LocalizationProvider>
@@ -642,8 +765,8 @@ const JourneyDetails = (props: CustomProps) => {
                   <DateTimePicker
                     label="Select End Date and Time"
                     value={formData.end_datetime}
-                    onChange={(newDate: any) =>
-                      handleDateChange("end_datetime", newDate)
+                    onChange={(newValue) =>
+                      handleDateAndTimeChange(newValue, "end_datetime")
                     }
                   />
                 </LocalizationProvider>
@@ -656,8 +779,8 @@ const JourneyDetails = (props: CustomProps) => {
                   <DateTimePicker
                     label="Select Start Date and Time"
                     value={formData.start_datetime}
-                    onChange={(newDate: any) =>
-                      handleDateChange("start_datetime", newDate)
+                    onChange={(newValue) =>
+                      handleDateAndTimeChange(newValue, "start_datetime")
                     }
                   />
                 </LocalizationProvider>

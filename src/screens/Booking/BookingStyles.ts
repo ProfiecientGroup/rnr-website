@@ -85,7 +85,7 @@ const BookingStyles = (theme: Theme) => {
         },
       },
     },
-    selectInputField:{
+    selectInputField: {
       backgroundColor: "transparent",
       borderRadius: "100px",
       width: "100%",
@@ -126,9 +126,76 @@ const BookingStyles = (theme: Theme) => {
       padding: 3,
       borderRadius: "18px",
     },
-
+    selectMenu: {
+      width: "100%",
+      borderRadius: "25px",
+      "& .MuiInputBase-root": {
+        borderRadius: "25px",
+        "& .MuiOutlinedInput-notchedOutline": {
+          borderColor: "#DDB863",
+          borderRadius: "25px", // Ensure border radius is applied
+        },
+        "&:hover .MuiOutlinedInput-notchedOutline": {
+          borderColor: "#DDB863",
+          borderRadius: "25px",
+        },
+        "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+          borderColor: "#DDB863", // Border color for the focused state
+          borderRadius: "25px",
+        },
+      },
+      "& .MuiSelect-select": {
+        borderRadius: "25px !important", 
+      },
+      "& .MuiInputBase-input": {
+        borderRadius: "25px",
+        padding: "12px 12px",
+        background: "transparent",
+      },
+      "& .MuiMenu-paper": {
+        background: "transparent",
+        borderRadius: "25px",
+      },
+    },
+    optionStyle: {
+      fontFamily: "Kugile",
+      fontSize: "16px", // Adjusted to make it responsive
+      fontWeight: "400",
+      textAlign: "center",
+      backgroundColor: "#111927",
+      "&:hover": {
+        backgroundColor: "#1D2230",
+      },
+      color: "#FFFFFF",
+      borderRadius: "25px",
+    },
+    menuItems: {
+      backgroundColor: "#111927",
+      color: "#B3B3B3",
+      borderRadius: "25px",
+      boxShadow: "0px 6px 30px rgba(0, 0, 0, 0.08)",
+      maxHeight: "calc(100% - 96px)",
+      overflowY: "auto",
+      overflowX: "hidden",
+      outline: 0,
+    },
+    timePicker: {
+      "& .MuiOutlinedInput-root": {
+        borderRadius: "10px",
+      },
+      "& .MuiOutlinedInput-input": {
+        padding: "8.5px 14px",
+        paddingRight: "1px",
+      },
+      "& .MuiInputAdornment-root": {
+        marginLeft: "0px",
+      },
+      "& .MuiSvgIcon-root": {
+        height: "15px",
+        width: "15px",
+      },
+    },
   };
-  
 };
 
 export default BookingStyles;

@@ -11,8 +11,9 @@ function MyApp({ Component, pageProps }: AppProps) {
     colorPreset: "rnr",
     contrast: "normal",
     direction: "ltr",
-    paletteMode: "light",
+    paletteMode: "dark",
     responsiveFontSizes: true,
+    
   });
 
   // useEffect(() => {

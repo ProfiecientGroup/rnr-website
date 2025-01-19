@@ -20,6 +20,7 @@
     "date-fns": "^2.30.0",
     "dayjs": "^1.11.13",
     "google-libphonenumber": "^3.2.40",
+    "moment": "^2.30.1",
     "next": "15.1.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
