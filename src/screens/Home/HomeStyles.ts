@@ -3,6 +3,7 @@ import aboutBg from "../../assets/images/home/about-bg.webp";
 import Bg from "../../assets/images/home/Bg.svg";
 import bannerAddressBg from "../../assets/images/home/banner-address-bg.webp";
 import chooseOurCar from "../../assets/images/home/OurServicesCarBg.webp";
+import whatAreWaitingBox from "../../assets/images/home/whatAreWaitingBg.webp";
 
 const HomeStyles = (theme: Theme) => {
   return {
@@ -43,6 +44,17 @@ const HomeStyles = (theme: Theme) => {
       background: "url(" + chooseOurCar.src + ")",
       backgroundSize: "cover",
       backgroundPosition: "center",
+    },
+    whatAreWaitingBox: {
+      width: "100%",
+      height: "auto",
+      backgroundColor: "#0E0E0E",
+      padding: 4,
+      background: "url(" + whatAreWaitingBox.src + ")",
+      backgroundSize: "cover",
+      backgroundPosition: "center",
+      display:"flex",
+      justifyContent:"center"
     },
     addressBox: {
       width: "Fill (167px)px",
