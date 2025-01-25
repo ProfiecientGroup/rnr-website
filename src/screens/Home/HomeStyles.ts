@@ -2,6 +2,7 @@ import { Theme } from "@mui/material";
 import aboutBg from "../../assets/images/home/about-bg.webp";
 import Bg from "../../assets/images/home/Bg.svg";
 import bannerAddressBg from "../../assets/images/home/banner-address-bg.webp";
+import chooseOurCar from "../../assets/images/home/OurServicesCarBg.webp";
 
 const HomeStyles = (theme: Theme) => {
   return {
@@ -31,6 +32,15 @@ const HomeStyles = (theme: Theme) => {
       backgroundColor: "#0E0E0E",
       padding: 4,
       background: "url(" + bannerAddressBg.src + ")",
+      backgroundSize: "cover",
+      backgroundPosition: "center",
+    },
+    chooseOurCarBox: {
+      width: "100%",
+      height: "100%",
+      backgroundColor: "#0E0E0E",
+      padding: 4,
+      background: "url(" + chooseOurCar.src + ")",
       backgroundSize: "cover",
       backgroundPosition: "center",
     },

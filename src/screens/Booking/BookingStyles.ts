@@ -159,7 +159,7 @@ const BookingStyles = (theme: Theme) => {
       },
     },
     optionStyle: {
-      fontFamily: "Kugile",
+      // fontFamily: "Kugile",
       fontSize: "16px",
       fontWeight: "400",
       textAlign: "center",

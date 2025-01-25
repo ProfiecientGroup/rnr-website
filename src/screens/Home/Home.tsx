@@ -4,6 +4,7 @@ import urls from "global/constants/urls";
 import BannerSection from "./components/BannerSection";
 import AboutSection from "./components/AboutSection";
 import HomeStyles from "./HomeStyles";
+import ChooseOurCarSection from "./components/ChooseOurCarSection";
 
 const Home = () => {
   const theme = useTheme();
@@ -15,11 +16,14 @@ const Home = () => {
   const getAboutSection = () => {
     return <AboutSection />;
   };
-
+  const getChooseOurCarSection = () => {
+    return <ChooseOurCarSection />;
+  };
   return (
     <>
       {getBannerSection()}
       {getAboutSection()}
+      {getChooseOurCarSection()}
     </>
   );
 };

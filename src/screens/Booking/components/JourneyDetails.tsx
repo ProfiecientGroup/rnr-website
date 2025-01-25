@@ -26,7 +26,16 @@ import { doBooking } from "./BookingService";
 import GoogleAutocompleteInput from "./GoogleAutocompleteInput ";
 import moment from "moment";
 
-const addresses = ["1", "2", "3"];
+const addresses = [
+  "Heathrow  terminal2",
+  "Heathrow  terminal3",
+  "Heathrow  terminal4",
+  "Heathrow  terminal5",
+  "gatwick south and north",
+  "luton",
+  "standsted",
+  "city airport",
+];
 const tripType = ["One Way", "Round Trip", "By the Hour"];
 interface CustomProps {
   handleNext: Function;
@@ -284,7 +293,7 @@ const JourneyDetails = (props: CustomProps) => {
             </Stack>
 
             {/* First Input Field */}
-            <Stack direction="row" spacing={1}>
+            <Stack direction="row" spacing={1}> 
               {formData.pickups[0].type === "address" ? (
                 <GoogleAutocompleteInput
                   value={formData.pickups[0].address || ""}
