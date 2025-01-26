@@ -27,27 +27,37 @@ const WhatAreWaitingSection = () => {
         <Stack direction={"row"} spacing={8}>
           <img src={SClassCar.src} alt="SClassCar" width={"auto"} />
 
-          <Stack direction={"column"} spacing={2} alignItems={"flex-end"}>
-            <Typography
-              sx={{
-                fontFamily: "kugile",
-                fontWeight: 400,
-                fontSize: "42px",
-                textAlign: "end",
-              }}
-            >
-              What are you
-              <span style={{ color: theme.palette.primary.main }}>
+          <Stack direction={"column"} spacing={2} alignItems={"center"}>
+            <Stack direction={"column"} spacing={0} alignItems={"start"}>
+              <Typography
+                sx={{
+                  fontFamily: "kugile",
+                  fontWeight: 400,
+                  fontSize: "42px",
+                  textAlign: "start",
+                }}
+              >
+                What are you
+              </Typography>
+              <Typography
+                sx={{
+                  fontFamily: "kugile",
+                  fontWeight: 400,
+                  fontSize: "42px",
+                  textAlign: "start",
+                  color: theme.palette.primary.main,
+                }}
+              >
                 Waiting for?
-              </span>
-            </Typography>
+              </Typography>
+            </Stack>
             <Button
               variant="contained"
               href={urls.Facebook}
               target="_blank"
               rel="noopener noreferrer"
               size="small"
-              sx={{ width: "35%" }}
+              sx={{ width: "100%" }}
             >
               <Typography variant="button">Book Now</Typography>
             </Button>
@@ -58,7 +68,7 @@ const WhatAreWaitingSection = () => {
               rel="noopener noreferrer"
               size="small"
               sx={{
-                width: "35%",
+                width: "100%",
                 border: "1px solid #A04747",
                 borderRadius: "25px",
               }}
