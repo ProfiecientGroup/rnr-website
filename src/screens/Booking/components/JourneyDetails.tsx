@@ -73,8 +73,6 @@ const JourneyDetails = (props: CustomProps) => {
     hours: 0,
   });
 
-  console.log(formData);
-
   const handleSubmit = async () => {
     try {
       setIsLoading(true);

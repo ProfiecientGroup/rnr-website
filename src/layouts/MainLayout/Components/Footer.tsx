@@ -109,12 +109,14 @@ const Footer = () => {
   return (
     <Box
       sx={{
-        background: "#0B0A0A",
+        background: "#1A1A1A",
+        mt: 5,
         p: 4,
         width: "auto",
         borderTop: "1px solid",
         borderImageSource:
           "linear-gradient(87.19deg, #030303 4.68%, #DDB863 49.2%, #030303 95.32%)",
+        borderImageSlice: 1,
         borderTopRightRadius: "50px",
         borderTopLeftRadius: "50px",
       }}
