@@ -93,6 +93,20 @@ const ContactUsStyles = (theme: Theme) => {
       color: "#DDB863",
       backgroundColor: "#DDB8631A",
     },
+    textInputField: {
+      // border: "1px solid #655737",
+      "& .MuiOutlinedInput-root": {
+        borderRadius: "25px",
+        fontSize: 20,
+        color:"#fff  !important"
+      },
+      "& input:-webkit-autofill": {
+        WebkitBoxShadow: "0 0 0 100px #1a1a1a inset !important",
+        WebkitTextFillColor: "#fff !important",
+        borderRadius: "inherit",
+      },
+      
+    },
   };
 };
 

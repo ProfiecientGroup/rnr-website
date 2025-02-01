@@ -135,7 +135,12 @@ const ContactUs = () => {
                 >
                   {contactData.map((i: any, index: number) => {
                     return (
-                      <Stack spacing={0} alignItems="center" key={index} textAlign={"start"}>
+                      <Stack
+                        spacing={0}
+                        alignItems="center"
+                        key={index}
+                        textAlign={"start"}
+                      >
                         <Typography variant="body2" sx={{ color: "#DDB863" }}>
                           {i.value}
                         </Typography>
@@ -208,6 +213,7 @@ const ContactUs = () => {
             }}
             error={isTruthy(formFields.firstName.error)}
             helperText={formFields.firstName.error}
+            sx={classes.textInputField}
           />
         </Grid>
         <Grid item lg={6} xl={6} md={6} sm={12} xs={12}>
@@ -227,6 +233,7 @@ const ContactUs = () => {
             }}
             error={isTruthy(formFields.email.error)}
             helperText={formFields.email.error}
+            sx={classes.textInputField}
           />
         </Grid>
         <Grid item lg={6} xl={6} md={6} sm={12} xs={12}>
@@ -249,12 +256,14 @@ const ContactUs = () => {
             error={
               isTruthy(formFields?.phone?.error) && formFields?.phone?.error
             }
+            sx={classes.textInputField}
           />
         </Grid>
         <Grid item lg={12} xl={12} md={12} sm={12} xs={12}>
           <TextField
             variant="outlined"
-            maxRows={5}
+            minRows={2}
+            multiline
             placeholder="Your Message"
             fullWidth
             value={formFields.message.value}
@@ -270,9 +279,8 @@ const ContactUs = () => {
               });
             }}
             sx={{
-              "&.MuiFormHelperText-root.Mui-error": {
-                fontSize: "0.8 rem !important",
-              },
+              ...classes.textInputField,
+             
             }}
           />
         </Grid>

@@ -9,6 +9,7 @@ import {
   CircularProgress,
   Container,
   FormControl,
+  FormHelperText,
   Grid,
   InputLabel,
   MenuItem,
@@ -66,7 +67,8 @@ const BookingDetails = () => {
   const [isSuccess, setIsSuccess] = useState(false);
   const [message, setMessage] = useState<string>("");
   const [checked, setChecked] = useState(false);
-
+  const [isButtonClicked, setIsButtonClicked] = useState(false);
+  
   const handleClose = (
     event?: React.SyntheticEvent | Event,
     reason?: string
@@ -83,11 +85,15 @@ const BookingDetails = () => {
     const email = formFields.email.value;
     const firstName = formFields.firstName.value;
     const lastName = formFields.lastName.value;
+    const noOfPassenger = formFields.noOfPassenger.value;
+    const noOfSuitcase = formFields.noOfSuitcase.value;
     const message = formFields.message.value;
     const phone = formFields.phone.value;
-    if (!email && !firstName && !lastName && !message && !phone) {
+    if (!email && !firstName && !lastName && !noOfPassenger && !noOfSuitcase && !message && !phone) {
       errors.firstName.error = "Please enter first name.";
       errors.lastName.error = "Please enter last name.";
+      errors.noOfPassenger.error = "Please select passenger.";
+      errors.noOfSuitcase.error = "Please select suitcase.";
       errors.email.error = "Please enter email.";
       errors.phone.error = "Please enter phone number.";
       errors.message.error = "Please enter message.";
@@ -99,6 +105,14 @@ const BookingDetails = () => {
     }
     if (!lastName) {
       errors.lastName.error = "Please enter last name.";
+      isValid = false;
+    }
+    if (!noOfPassenger) {
+      errors.noOfPassenger.error = "Please select passenger.";
+      isValid = false;
+    }
+    if (!noOfSuitcase) {
+      errors.noOfSuitcase.error = "Please select suitcase.";
       isValid = false;
     }
     if (!email) {
@@ -130,6 +144,7 @@ const BookingDetails = () => {
   const handleSubmit = async () => {
     try {
       setIsLoading(true);
+      setIsButtonClicked(true);
       if (validateFormData()) {
         // const token = await recaptchaRef?.current?.executeAsync();
         const body = {
@@ -214,7 +229,7 @@ const BookingDetails = () => {
             }}
             sx={classes.textInputField}
             error={isTruthy(formFields.firstName.error)}
-            // helperText={formFields.firstName.error}
+            helperText={formFields.firstName.error}
           />
         </Grid>
         <Grid item lg={6} xl={6} md={12} sm={12} xs={12}>
@@ -234,7 +249,7 @@ const BookingDetails = () => {
               });
             }}
             error={isTruthy(formFields.lastName.error)}
-            // helperText={formFields.lastName.error}
+            helperText={formFields.lastName.error}
           />
         </Grid>
         <Grid item lg={6} xl={6} md={12} sm={12} xs={12}>
@@ -254,7 +269,7 @@ const BookingDetails = () => {
               });
             }}
             error={isTruthy(formFields.email.error)}
-            // helperText={formFields.email.error}
+            helperText={formFields.email.error}
           />
         </Grid>
         <Grid item lg={6} xl={6} md={12} sm={12} xs={12}>
@@ -275,11 +290,11 @@ const BookingDetails = () => {
               });
             }}
             fullWidth
-            error={isTruthy(formFields.phone.error)}
+            // error={isTruthy(formFields.phone.error)}
 
-            // error={
-            //   isTruthy(formFields?.phone?.error) && formFields?.phone?.error
-            // }
+            error={
+              isTruthy(formFields?.phone?.error) && formFields?.phone?.error
+            }
           />
         </Grid>
         <Grid item lg={6} xl={6} md={12} sm={12} xs={12}>
@@ -319,6 +334,8 @@ const BookingDetails = () => {
                   : () => "Select passenger"
               }
               displayEmpty
+              error={!isTruthy(formFields.noOfPassenger.value) && isButtonClicked ? true : false}
+
             >
               {noOfPassenger?.map((passenger: any, index: number) => {
                 return (
@@ -333,6 +350,11 @@ const BookingDetails = () => {
               })}
             </Select>
           </FormControl>
+          {!isTruthy(formFields.noOfPassenger.value) && (
+              <FormHelperText error sx={{pl:2}}>
+                {formFields.noOfPassenger.error}
+              </FormHelperText>
+            )}
         </Grid>
         <Grid item lg={6} xl={6} md={12} sm={12} xs={12}>
           <FormControl fullWidth sx={classes.selectInputField}>
@@ -371,6 +393,7 @@ const BookingDetails = () => {
                   : () => "Select suitcase"
               }
               displayEmpty
+              error={!isTruthy(formFields.noOfSuitcase.value) && isButtonClicked ? true : false}
             >
               {noOfSuitcase?.map((suitcase: any, index: number) => {
                 return (
@@ -385,11 +408,17 @@ const BookingDetails = () => {
               })}
             </Select>
           </FormControl>
+            {!isTruthy(formFields.noOfSuitcase.value) && (
+              <FormHelperText error sx={{pl:2}}>
+                {formFields.noOfSuitcase.error}
+              </FormHelperText>
+            )}
         </Grid>
         <Grid item lg={12} xl={12} md={12} sm={12} xs={12}>
           <TextField
             variant="outlined"
-            maxRows={5}
+            minRows={3}
+            multiline
             placeholder="Your Message"
             fullWidth
             value={formFields.message.value}
@@ -400,7 +429,7 @@ const BookingDetails = () => {
               },
             }}
             error={isTruthy(formFields.message.error)}
-            // helperText={formFields.message.error}
+            helperText={formFields.message.error}
             onChange={(event) => {
               setFormFields({
                 ...formFields,
@@ -411,6 +440,7 @@ const BookingDetails = () => {
               });
             }}
           />
+          
         </Grid>
         <Grid item md={12} sm={12} xs={12} mt={2}>
           <Stack direction={"row"} spacing={2}>

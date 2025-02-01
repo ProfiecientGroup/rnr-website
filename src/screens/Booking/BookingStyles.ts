@@ -57,34 +57,44 @@ const BookingStyles = (theme: Theme) => {
       borderRadius: "18px",
     },
     textInputField: {
-      backgroundColor: "transparent",
-      borderRadius: "100px",
-      width: "100%",
-      // maxWidth: "400px",
-      border: "1px solid #655737",
-      "& .MuiOutlinedInput-root:hover": {
-        backgroundColor: "transparent",
-      },
-      "& .MuiOutlinedInput-input": {
-        backgroundColor: "transparent",
-        padding: "12px 12px",
-
-        borderRadius: "100px",
-        color: "#FFFFFF",
-      },
-      "& .MuiInputBase-input": {
-        border: "1px solid #101010",
-      },
       "& .MuiOutlinedInput-root": {
-        paddingRight: 0,
-        "& fieldset": {
-          borderColor: "transparent",
-          borderTopLeftRadius: "100px",
-          borderBottomLeftRadius: "100px",
-          borderTopRightRadius: "100px",
-          borderBottomRightRadius: "100px",
-        },
+        borderRadius: "25px",
+        fontSize: 20,
+        color:"#fff  !important"
       },
+      "& input:-webkit-autofill": {
+        WebkitBoxShadow: "0 0 0 100px #1a1a1a inset !important",
+        WebkitTextFillColor: "#fff !important",
+        borderRadius: "inherit",
+      },
+      // backgroundColor: "transparent",
+      // borderRadius: "100px",
+      width: "100%",
+      // // maxWidth: "400px",
+      // border: "1px solid #655737",
+      // "& .MuiOutlinedInput-root:hover": {
+      //   backgroundColor: "transparent",
+      // },
+      // "& .MuiOutlinedInput-input": {
+      //   backgroundColor: "transparent",
+      //   padding: "12px 12px",
+
+      //   borderRadius: "100px",
+      //   color: "#FFFFFF",
+      // },
+      // "& .MuiInputBase-input": {
+      //   border: "1px solid #101010",
+      // },
+      // "& .MuiOutlinedInput-root": {
+      //   paddingRight: 0,
+      //   "& fieldset": {
+      //     borderColor: "transparent",
+      //     borderTopLeftRadius: "100px",
+      //     borderBottomLeftRadius: "100px",
+      //     borderTopRightRadius: "100px",
+      //     borderBottomRightRadius: "100px",
+      //   },
+      // },
     },
     selectInputField: {
       backgroundColor: "transparent",

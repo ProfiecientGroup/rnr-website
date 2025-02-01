@@ -48,7 +48,7 @@ const CustomContactNumberInput: React.FC<MUIPhoneProps> = ({
   return (
     <>
       <TextField
-        sx={classes.textField}
+        // sx={classes.textField}
         variant="outlined"
         fullWidth
         value={phone}
@@ -62,16 +62,16 @@ const CustomContactNumberInput: React.FC<MUIPhoneProps> = ({
             <InputAdornment position="start">
               <Select
                 MenuProps={{
-                  style: {
-                    height: "300px",
-                    width: "360px",
-                    top: "0px",
-                    // left: "-34px",
-                  },
-                  transformOrigin: {
-                    vertical: "top",
-                    horizontal: "left",
-                  },
+                  // style: {
+                  //   height: "300px",
+                  //   width: "360px",
+                  //   top: "0px",
+                  //   // left: "-34px",
+                  // },
+                  // transformOrigin: {
+                  //   vertical: "top",
+                  //   horizontal: "left",
+                  // },
                 }}
                 sx={{
                   // width: "max-content",
@@ -86,12 +86,15 @@ const CustomContactNumberInput: React.FC<MUIPhoneProps> = ({
                       display: "block",
                     },
                   },
+                  "& .MuiOutlinedInput-input": {
+                    border: "1px solid red",
+                  },
                   // Update default spacing
                   ".MuiSelect-select": {
                     padding: "8px",
                     border: "none",
                     paddingRight: "28px !important",
-                    display:"flex",
+                    display: "flex",
                     "&.focused": {
                       border: "none",
                       fieldset: {
@@ -143,4 +146,4 @@ const CustomContactNumberInput: React.FC<MUIPhoneProps> = ({
   );
 };
 
-export default CustomContactNumberInput
+export default CustomContactNumberInput;
