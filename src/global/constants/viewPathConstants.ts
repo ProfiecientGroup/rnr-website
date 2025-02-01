@@ -7,6 +7,7 @@ export class ViewPathConstants {
   terms = "/terms-of-use/";
   faqs = "/faqs/";
   privacyPolicy = "/privacy-policy/";
+  bookingViewPath="/booking"
 }
 
 const viewpaths = new ViewPathConstants();

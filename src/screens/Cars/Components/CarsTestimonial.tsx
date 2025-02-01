@@ -126,7 +126,7 @@ const CarsTestimonialSection = (props: CustomProps) => {
       }}
     >
       {ratings.map((rating, index) => (
-        <Stack direction={"row"} spacing={5}>
+        <Stack direction={"row"} spacing={5} key={index}>
           <Stack
             direction={"column"}
             spacing={1}
