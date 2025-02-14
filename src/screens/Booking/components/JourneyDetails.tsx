@@ -13,6 +13,7 @@ import {
   useTheme,
   Button,
   OutlinedInput,
+  FormHelperText,
 } from "@mui/material";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
@@ -25,6 +26,7 @@ import { Dayjs } from "dayjs";
 import { doBooking } from "./BookingService";
 import GoogleAutocompleteInput from "./GoogleAutocompleteInput ";
 import moment from "moment";
+import { isTruthy } from "helpers/methods";
 
 const addresses = [
   "Heathrow  terminal2",
@@ -38,7 +40,13 @@ const addresses = [
 ];
 const tripType = ["One Way", "Round Trip", "By the Hour"];
 interface CustomProps {
-  handleNext: Function;
+  handleNext?: Function;
+  formData: any;
+  setFormData: Function;
+  tripTypeActiveStep: number;
+  setTripTypeActiveStep: Function;
+  errors: any;
+  setErrors: Function;
 }
 const JourneyDetails = (props: CustomProps) => {
   const theme = useTheme();
@@ -46,87 +54,11 @@ const JourneyDetails = (props: CustomProps) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [message, setMessage] = useState<string>("");
-  const [pickActiveStep, setPickActiveStep] = useState(0);
-  const [dropActiveStep, setDropActiveStep] = useState(0);
-  const [tripTypeActiveStep, setTripTypeActiveStep] = useState(0);
-  const [formData, setFormData] = useState({
-    pickups: [
-      {
-        type: "address",
-        address: "",
-      },
-    ],
-    dropoffs: [
-      {
-        type: "address",
-        address: "",
-      },
-    ],
-    trip_type:
-      tripTypeActiveStep === 0
-        ? "one_way"
-        : tripTypeActiveStep === 1
-        ? "round_trip"
-        : "by_hour",
-    start_datetime: null,
-    end_datetime: null,
-    hours: 0,
-  });
-
-  const handleSubmit = async () => {
-    try {
-      setIsLoading(true);
-      await doBooking({ ...formData });
-      setFormData({
-        pickups: [
-          {
-            type: "",
-            address: "",
-          },
-        ],
-        dropoffs: [
-          {
-            type: "",
-            address: "",
-          },
-        ],
-        trip_type: "",
-        start_datetime: null,
-        end_datetime: null,
-        hours: 0,
-      });
-      props.handleNext();
-      setIsSuccess(true);
-    } catch (error: any) {
-      setMessage(error.message);
-      setIsSuccess(false);
-      setFormData({
-        pickups: [
-          {
-            type: "",
-            address: "",
-          },
-        ],
-        dropoffs: [
-          {
-            type: "",
-            address: "",
-          },
-        ],
-        trip_type: "",
-        start_datetime: null,
-        end_datetime: null,
-        hours: 0,
-      });
-    } finally {
-      setIsLoading(false);
-    }
-  };
 
   const handleTripTypeStepClick = (step: number) => {
-    setTripTypeActiveStep(step);
+    props.setTripTypeActiveStep(step);
     const tripTypeValues = ["one_way", "round_trip", "by_hour"];
-    const updatedData = { ...formData, trip_type: tripTypeValues[step] };
+    const updatedData = { ...props.formData, trip_type: tripTypeValues[step] };
 
     // Reset fields based on trip type
     if (step === 0) {
@@ -142,7 +74,7 @@ const JourneyDetails = (props: CustomProps) => {
       updatedData.end_datetime = null;
     }
 
-    setFormData(updatedData);
+    props.setFormData(updatedData);
   };
 
   // Handle Date & Time Changes
@@ -158,51 +90,65 @@ const JourneyDetails = (props: CustomProps) => {
     const formattedDateTime = value
       ? moment(value).format("YYYY-MM-DD HH:mm")
       : null;
-    setFormData((prev: any) => ({
+    props.setFormData((prev: any) => ({
       ...prev,
       [field]: formattedDateTime,
     }));
   };
 
   const handleTabChange = (index: number, type: "address" | "airport") => {
-    const updatedData = [...formData.pickups];
+    const updatedData = [...props.formData.pickups];
     updatedData[index].type = type; // Change the type
     updatedData[index].address = ""; // Clear the address when switching type
-    setFormData({ ...formData, pickups: updatedData });
+    props.setFormData({ ...props.formData, pickups: updatedData });
   };
 
+  // const handleFieldChange = (index: number, key: string, value: string) => {
+  //   const updatedData: any = [...props.formData.pickups];
+  //   updatedData[index][key] = value; // Update the field
+  //   props.setFormData({ ...props.formData, pickups: updatedData });
+  // };
+
   const handleFieldChange = (index: number, key: string, value: string) => {
-    const updatedData: any = [...formData.pickups];
-    updatedData[index][key] = value; // Update the field
-    setFormData({ ...formData, pickups: updatedData });
+    const updatedData = [...props.formData.pickups];
+
+    // Ensure the index exists in the array
+    if (!updatedData[index]) {
+      updatedData[index] = { type: "address", address: "" };
+    }
+
+    // Update the field
+    updatedData[index][key] = value;
+
+    props.setFormData({ ...props.formData, pickups: updatedData });
   };
 
   const handleAddField = (
     type: "pickups" | "dropoffs",
     selectedType: "address" | "airport"
   ) => {
-    const updatedData = [...formData.pickups];
+    const updatedData = [...props.formData.pickups];
     updatedData.push({
       type: selectedType,
       address: "",
     });
-    setFormData({ ...formData, pickups: updatedData });
+    props.setFormData({ ...props.formData, pickups: updatedData });
   };
 
   const handleRemoveField = (index: number) => {
-    const updatedData = [...formData.pickups];
+    const updatedData = [...props.formData.pickups];
     updatedData.splice(index, 1); // Remove the section
-    setFormData({ ...formData, pickups: updatedData });
+    props.setFormData({ ...props.formData, pickups: updatedData });
   };
 
   const handleTabChangeDropoffs = (
     index: number,
     type: "address" | "airport"
   ) => {
-    const updatedData = [...formData.dropoffs];
+    const updatedData = [...props.formData.dropoffs];
     updatedData[index].type = type; // Change the type
     updatedData[index].address = ""; // Clear the address when switching type
-    setFormData({ ...formData, dropoffs: updatedData });
+    props.setFormData({ ...props.formData, dropoffs: updatedData });
   };
 
   const handleFieldChangeDropoffs = (
@@ -210,24 +156,24 @@ const JourneyDetails = (props: CustomProps) => {
     key: string,
     value: string
   ) => {
-    const updatedData: any = [...formData.dropoffs];
+    const updatedData: any = [...props.formData.dropoffs];
     updatedData[index][key] = value; // Update the field
-    setFormData({ ...formData, dropoffs: updatedData });
+    props.setFormData({ ...props.formData, dropoffs: updatedData });
   };
 
   const handleAddFieldDropoffs = (selectedType: "address" | "airport") => {
-    const updatedData = [...formData.dropoffs];
+    const updatedData = [...props.formData.dropoffs];
     updatedData.push({
       type: selectedType,
       address: "",
     });
-    setFormData({ ...formData, dropoffs: updatedData });
+    props.setFormData({ ...props.formData, dropoffs: updatedData });
   };
 
   const handleRemoveFieldDropoffs = (index: number) => {
-    const updatedData = [...formData.dropoffs];
+    const updatedData = [...props.formData.dropoffs];
     updatedData.splice(index, 1); // Remove the section
-    setFormData({ ...formData, dropoffs: updatedData });
+    props.setFormData({ ...props.formData, dropoffs: updatedData });
   };
 
   return (
@@ -261,11 +207,13 @@ const JourneyDetails = (props: CustomProps) => {
                   padding: "8px 16px",
                   borderRadius: "16px",
                   backgroundColor:
-                    formData.pickups[0].type === "address"
+                    props.formData.pickups[0].type === "address"
                       ? { ...classes.addressBox, marginRight: 2 }
                       : { ...classes.pickupBox, marginRight: 2 },
                   color:
-                    formData.pickups[0].type === "address" ? "black" : "white",
+                    props.formData.pickups[0].type === "address"
+                      ? "black"
+                      : "white",
                 }}
                 onClick={() => handleTabChange(0, "address")}
               >
@@ -278,11 +226,13 @@ const JourneyDetails = (props: CustomProps) => {
                   padding: "8px 16px",
                   borderRadius: "16px",
                   backgroundColor:
-                    formData.pickups[0].type === "airport"
+                    props.formData.pickups[0].type === "airport"
                       ? { ...classes.addressBox, marginRight: 2 }
                       : { ...classes.pickupBox, marginRight: 2 },
                   color:
-                    formData.pickups[0].type === "airport" ? "black" : "white",
+                    props.formData.pickups[0].type === "airport"
+                      ? "black"
+                      : "white",
                 }}
                 onClick={() => handleTabChange(0, "airport")}
               >
@@ -291,58 +241,80 @@ const JourneyDetails = (props: CustomProps) => {
             </Stack>
 
             {/* First Input Field */}
-            <Stack direction="row" spacing={1}> 
-              {formData.pickups[0].type === "address" ? (
+            <Stack direction="row" spacing={1}>
+              {props.formData.pickups[0].type === "address" ? (
                 <GoogleAutocompleteInput
-                  value={formData.pickups[0].address || ""}
+                  value={props.formData.pickups[0].address || ""}
                   // placeholder="Enter Pick Up Address"
                   onChange={(newValue: string) =>
                     handleFieldChange(0, "address", newValue)
                   }
+                  error={
+                    !isTruthy(props.formData.pickups[0].address) &&
+                    props.errors.pickups[0].address
+                  }
+                  helperText={
+                    !isTruthy(props.formData.pickups[0].address) &&
+                    props.errors.pickups[0].address
+                  }
                 />
               ) : (
-                <Select
-                  placeholder="Select airport"
-                  id="address"
-                  name="address"
-                  value={formData.pickups[0].address || ""}
-                  onChange={(e) =>
-                    handleFieldChange(0, "address", e.target.value)
-                  }
-                  input={<OutlinedInput />}
-                  MenuProps={{
-                    PaperProps: {
-                      sx: {
-                        ...classes.menuItems,
+                <Stack direction="column" spacing={0} width="100%">
+                  <Select
+                    placeholder="Select airport"
+                    id="address"
+                    name="address"
+                    value={props.formData.pickups[0].address || ""}
+                    onChange={(e) =>
+                      handleFieldChange(0, "address", e.target.value)
+                    }
+                    input={<OutlinedInput />}
+                    MenuProps={{
+                      PaperProps: {
+                        sx: {
+                          ...classes.menuItems,
+                        },
                       },
-                    },
-                  }}
-                  sx={classes.selectMenu}
-                  style={{
-                    color: formData.pickups[0].address === "" ? "#B3B3B3" : "",
-                    width: "100%",
-                    background: "transparent",
-                    borderRadius: "25px",
-                  }}
-                  renderValue={
-                    formData.pickups[0].address !== ""
-                      ? () => formData.pickups[0].address
-                      : () => "Select address"
-                  }
-                  displayEmpty
-                >
-                  {addresses?.map((address: any, index: number) => {
-                    return (
-                      <MenuItem
-                        sx={classes.optionStyle}
-                        value={address}
-                        key={index}
-                      >
-                        {address}
-                      </MenuItem>
-                    );
-                  })}
-                </Select>
+                    }}
+                    sx={classes.selectMenu}
+                    style={{
+                      color:
+                        props.formData.pickups[0].address === ""
+                          ? "#B3B3B3"
+                          : "",
+                      width: "100%",
+                      background: "transparent",
+                      borderRadius: "25px",
+                    }}
+                    renderValue={
+                      props.formData.pickups[0].address !== ""
+                        ? () => props.formData.pickups[0].address
+                        : () => "Select address"
+                    }
+                    displayEmpty
+                    error={
+                      !isTruthy(props.formData.pickups[0].address) &&
+                      props.errors.pickups[0].address
+                    }
+                  >
+                    {addresses?.map((address: any, index: number) => {
+                      return (
+                        <MenuItem
+                          sx={classes.optionStyle}
+                          value={address}
+                          key={index}
+                        >
+                          {address}
+                        </MenuItem>
+                      );
+                    })}
+                  </Select>
+                  {!isTruthy(props.formData.pickups[0].address) && (
+                    <FormHelperText error>
+                      {props.errors.pickups[0].address}
+                    </FormHelperText>
+                  )}
+                </Stack>
               )}
               <IconButton onClick={() => handleAddField("pickups", "address")}>
                 <AddCircleOutlineIcon sx={{ color: "#FFD700" }} />
@@ -350,7 +322,7 @@ const JourneyDetails = (props: CustomProps) => {
             </Stack>
 
             {/* Dynamic Via Sections */}
-            {formData.pickups.slice(1).map((pickup: any, index) => (
+            {props.formData.pickups.slice(1).map((pickup: any, index: any) => (
               <Stack
                 key={index + 1}
                 direction="column"
@@ -406,6 +378,11 @@ const JourneyDetails = (props: CustomProps) => {
                       onChange={(newValue: string) =>
                         handleFieldChange(index + 1, "address", newValue)
                       }
+                      error={
+                        (!isTruthy(pickup.address) &&
+                          (props.errors.pickups[index + 1] || {}).address) ||
+                        ""
+                      }
                     />
                   ) : (
                     <Select
@@ -437,6 +414,11 @@ const JourneyDetails = (props: CustomProps) => {
                           : () => "Select address"
                       }
                       displayEmpty
+                      error={props.errors.pickups[index + 1].address || ""}
+                      // error={
+                      //   !isTruthy(pickup.address) &&
+                      //   props.errors.pickup[index].address
+                      // }
                     >
                       {addresses?.map((address: any, index: number) => {
                         return (
@@ -479,11 +461,13 @@ const JourneyDetails = (props: CustomProps) => {
                   padding: "8px 16px",
                   borderRadius: "16px",
                   backgroundColor:
-                    formData.dropoffs[0].type === "address"
+                    props.formData.dropoffs[0].type === "address"
                       ? { ...classes.addressBox, marginRight: 2 }
                       : { ...classes.pickupBox, marginRight: 2 },
                   color:
-                    formData.dropoffs[0].type === "address" ? "black" : "white",
+                    props.formData.dropoffs[0].type === "address"
+                      ? "black"
+                      : "white",
                 }}
                 onClick={() => handleTabChangeDropoffs(0, "address")}
               >
@@ -496,11 +480,13 @@ const JourneyDetails = (props: CustomProps) => {
                   padding: "8px 16px",
                   borderRadius: "16px",
                   backgroundColor:
-                    formData.dropoffs[0].type === "airport"
+                    props.formData.dropoffs[0].type === "airport"
                       ? { ...classes.addressBox, marginRight: 2 }
                       : { ...classes.pickupBox, marginRight: 2 },
                   color:
-                    formData.dropoffs[0].type === "airport" ? "black" : "white",
+                    props.formData.dropoffs[0].type === "airport"
+                      ? "black"
+                      : "white",
                 }}
                 onClick={() => handleTabChangeDropoffs(0, "airport")}
               >
@@ -510,76 +496,64 @@ const JourneyDetails = (props: CustomProps) => {
 
             {/* First Input Field */}
             <Stack direction="row" spacing={1}>
-              {formData.dropoffs[0].type === "address" ? (
+              {props.formData.dropoffs[0].type === "address" ? (
                 <GoogleAutocompleteInput
-                  value={formData.dropoffs[0].address || ""}
-                  // placeholder="Enter Dropoff Address"
+                  value={props.formData.dropoffs[0].address || ""}
                   onChange={(newValue: string) =>
                     handleFieldChangeDropoffs(0, "address", newValue)
                   }
+                  error={
+                    !isTruthy(props.formData.dropoffs[0].address) &&
+                    props.errors.dropoffs[0].address
+                  }
+                  helperText={props.errors.dropoffs?.[0]?.address}
                 />
               ) : (
                 <Select
                   placeholder="Select airport"
                   id="address"
                   name="address"
-                  value={formData.dropoffs[0].address || ""}
+                  value={props.formData.dropoffs[0].address || ""}
                   onChange={(e) =>
                     handleFieldChangeDropoffs(0, "address", e.target.value)
                   }
                   input={<OutlinedInput />}
                   MenuProps={{
                     PaperProps: {
-                      sx: {
-                        ...classes.menuItems,
-                      },
+                      sx: { ...classes.menuItems },
                     },
                   }}
                   sx={classes.selectMenu}
                   style={{
-                    color: formData.dropoffs[0].address === "" ? "#B3B3B3" : "",
+                    color:
+                      props.formData.dropoffs[0].address === ""
+                        ? "#B3B3B3"
+                        : "",
                     width: "100%",
                     background: "transparent",
                     borderRadius: "25px",
                   }}
                   renderValue={
-                    formData.dropoffs[0].address !== ""
-                      ? () => formData.dropoffs[0].address
+                    props.formData.dropoffs[0].address !== ""
+                      ? () => props.formData.dropoffs[0].address
                       : () => "Select address"
                   }
                   displayEmpty
+                  error={
+                    !isTruthy(props.formData.dropoffs[0].address) &&
+                    props.errors.dropoffs[0].address
+                  }
                 >
-                  {addresses?.map((address: any, index: number) => {
-                    return (
-                      <MenuItem
-                        sx={classes.optionStyle}
-                        value={address}
-                        key={index}
-                      >
-                        {address}
-                      </MenuItem>
-                    );
-                  })}
+                  {addresses?.map((address: any, index: number) => (
+                    <MenuItem
+                      sx={classes.optionStyle}
+                      value={address}
+                      key={index}
+                    >
+                      {address}
+                    </MenuItem>
+                  ))}
                 </Select>
-                // <FormControl fullWidth sx={{ minWidth: "200px" }}>
-                //   <Select
-                // value={formData.dropoffs[0].address || ""}
-                // onChange={(e) =>
-                //   handleFieldChangeDropoffs(0, "address", e.target.value)
-                // }
-                //     displayEmpty
-                //   >
-                //     <MenuItem value="" disabled>
-                //       Select Airport
-                //     </MenuItem>
-                //     <MenuItem value="Airport Option 1">
-                //       Airport Option 1
-                //     </MenuItem>
-                //     <MenuItem value="Airport Option 2">
-                //       Airport Option 2
-                //     </MenuItem>
-                //   </Select>
-                // </FormControl>
               )}
               <IconButton onClick={() => handleAddFieldDropoffs("address")}>
                 <AddCircleOutlineIcon sx={{ color: "#FFD700" }} />
@@ -587,109 +561,113 @@ const JourneyDetails = (props: CustomProps) => {
             </Stack>
 
             {/* Dynamic Via Sections */}
-            {formData.dropoffs.slice(1).map((dropoff: any, index) => (
-              <Stack
-                key={index + 1}
-                direction="column"
-                spacing={2}
-                sx={{ mb: 3 }}
-              >
-                <Typography variant="body2" sx={{ color: "white" }}>
-                  Via {index + 1}
-                </Typography>
-
-                {/* Tabs for Address and Airport */}
-                <Stack direction="row" spacing={2}>
-                  <Typography
-                    variant="body2"
-                    sx={{
-                      cursor: "pointer",
-                      padding: "8px 16px",
-                      borderRadius: "16px",
-                      backgroundColor:
-                        dropoff.type === "address"
-                          ? { ...classes.addressBox, marginRight: 2 }
-                          : { ...classes.pickupBox, marginRight: 2 },
-                      color: dropoff.type === "address" ? "black" : "white",
-                    }}
-                    onClick={() =>
-                      handleTabChangeDropoffs(index + 1, "address")
-                    }
-                  >
-                    Address
+            {props.formData.dropoffs
+              .slice(1)
+              .map((dropoff: any, index: any) => (
+                <Stack
+                  key={index + 1}
+                  direction="column"
+                  spacing={2}
+                  sx={{ mb: 3 }}
+                >
+                  <Typography variant="body2" sx={{ color: "white" }}>
+                    Via {index + 1}
                   </Typography>
-                  <Typography
-                    variant="body2"
-                    sx={{
-                      cursor: "pointer",
-                      padding: "8px 16px",
-                      borderRadius: "16px",
 
-                      backgroundColor:
-                        dropoff.type === "airport"
-                          ? { ...classes.addressBox, marginRight: 2 }
-                          : { ...classes.pickupBox, marginRight: 2 },
-                      // color: dropoff.type === "airport" ? "black" : "white",
-                    }}
-                    onClick={() =>
-                      handleTabChangeDropoffs(index + 1, "airport")
-                    }
-                  >
-                    Airport
-                  </Typography>
-                </Stack>
-
-                {/* Input Fields for Address or Airport */}
-                <Stack direction="row" spacing={1}>
-                  {dropoff.type === "address" ? (
-                    <GoogleAutocompleteInput
-                      value={dropoff.address || ""}
-                      // placeholder="Enter Dropoff Address"
-                      onChange={(newValue: string) =>
-                        handleFieldChangeDropoffs(
-                          index + 1,
-                          "address",
-                          newValue
-                        )
-                      }
-                    />
-                  ) : (
-                    <Select
-                      placeholder="Select airport"
-                      id="address"
-                      name="address"
-                      value={dropoff.address || ""}
-                      onChange={(e) =>
-                        handleFieldChangeDropoffs(
-                          index + 1,
-                          "address",
-                          e.target.value
-                        )
-                      }
-                      input={<OutlinedInput />}
-                      MenuProps={{
-                        PaperProps: {
-                          sx: {
-                            ...classes.menuItems,
-                          },
-                        },
+                  {/* Tabs for Address and Airport */}
+                  <Stack direction="row" spacing={2}>
+                    <Typography
+                      variant="body2"
+                      sx={{
+                        cursor: "pointer",
+                        padding: "8px 16px",
+                        borderRadius: "16px",
+                        backgroundColor:
+                          dropoff.type === "address"
+                            ? { ...classes.addressBox, marginRight: 2 }
+                            : { ...classes.pickupBox, marginRight: 2 },
+                        color: dropoff.type === "address" ? "black" : "white",
                       }}
-                      sx={classes.selectMenu}
-                      style={{
-                        color: dropoff.address === "" ? "#B3B3B3" : "",
-                        width: "100%",
-                        background: "transparent",
-                        borderRadius: "25px",
-                      }}
-                      renderValue={
-                        dropoff.address !== ""
-                          ? () => dropoff.address
-                          : () => "Select address"
+                      onClick={() =>
+                        handleTabChangeDropoffs(index + 1, "address")
                       }
-                      displayEmpty
                     >
-                      {addresses?.map((address: any, index: number) => {
-                        return (
+                      Address
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      sx={{
+                        cursor: "pointer",
+                        padding: "8px 16px",
+                        borderRadius: "16px",
+                        backgroundColor:
+                          dropoff.type === "airport"
+                            ? { ...classes.addressBox, marginRight: 2 }
+                            : { ...classes.pickupBox, marginRight: 2 },
+                      }}
+                      onClick={() =>
+                        handleTabChangeDropoffs(index + 1, "airport")
+                      }
+                    >
+                      Airport
+                    </Typography>
+                  </Stack>
+
+                  {/* Input Fields for Address or Airport */}
+                  <Stack direction="row" spacing={1}>
+                    {dropoff.type === "address" ? (
+                      <GoogleAutocompleteInput
+                        value={dropoff.address || ""}
+                        onChange={(newValue: string) =>
+                          handleFieldChangeDropoffs(
+                            index + 1,
+                            "address",
+                            newValue
+                          )
+                        }
+                        error={Boolean(
+                          props.errors.dropoffs?.[index + 1]?.address
+                        )}
+                        helperText={props.errors.dropoffs?.[index + 1]?.address}
+                      />
+                    ) : (
+                      <Select
+                        placeholder="Select airport"
+                        id="address"
+                        name="address"
+                        value={dropoff.address || ""}
+                        onChange={(e) =>
+                          handleFieldChangeDropoffs(
+                            index + 1,
+                            "address",
+                            e.target.value
+                          )
+                        }
+                        input={<OutlinedInput />}
+                        MenuProps={{
+                          PaperProps: {
+                            sx: { ...classes.menuItems },
+                          },
+                        }}
+                        sx={classes.selectMenu}
+                        style={{
+                          color: dropoff.address === "" ? "#B3B3B3" : "",
+                          width: "100%",
+                          background: "transparent",
+                          borderRadius: "25px",
+                        }}
+                        renderValue={
+                          dropoff.address !== ""
+                            ? () => dropoff.address
+                            : () => "Select address"
+                        }
+                        displayEmpty
+                        error={Boolean(
+                          props.errors.dropoffs?.[index + 1]?.address
+                        )}
+                        // helperText={props.error.dropoffs?.[index + 1]?.address}
+                      >
+                        {addresses?.map((address: any, index: number) => (
                           <MenuItem
                             sx={classes.optionStyle}
                             value={address}
@@ -697,29 +675,28 @@ const JourneyDetails = (props: CustomProps) => {
                           >
                             {address}
                           </MenuItem>
-                        );
-                      })}
-                    </Select>
-                  )}
-                  <IconButton
-                    onClick={() => handleAddFieldDropoffs(dropoff.type)}
-                  >
-                    <AddCircleOutlineIcon sx={{ color: "#FFD700" }} />
-                  </IconButton>
-                  <IconButton
-                    onClick={() => handleRemoveFieldDropoffs(index + 1)}
-                  >
-                    <RemoveCircleOutlineIcon sx={{ color: "#FFD700" }} />
-                  </IconButton>
+                        ))}
+                      </Select>
+                    )}
+                    <IconButton
+                      onClick={() => handleAddFieldDropoffs(dropoff.type)}
+                    >
+                      <AddCircleOutlineIcon sx={{ color: "#FFD700" }} />
+                    </IconButton>
+                    <IconButton
+                      onClick={() => handleRemoveFieldDropoffs(index + 1)}
+                    >
+                      <RemoveCircleOutlineIcon sx={{ color: "#FFD700" }} />
+                    </IconButton>
+                  </Stack>
                 </Stack>
-              </Stack>
-            ))}
+              ))}
           </Stack>
 
           {/* Trip Type Step */}
           <Stack direction={"column"} spacing={3}>
             <Typography variant="body2">Select Trip Type</Typography>
-            <Stepper activeStep={tripTypeActiveStep} alternativeLabel>
+            <Stepper activeStep={props.tripTypeActiveStep} alternativeLabel>
               {tripType.map((label, index) => (
                 <StepLabel
                   key={index}
@@ -730,7 +707,7 @@ const JourneyDetails = (props: CustomProps) => {
                     variant="body2"
                     sx={{
                       cursor: "pointer",
-                      ...(index === tripTypeActiveStep
+                      ...(index === props.tripTypeActiveStep
                         ? { ...classes.addressBox, marginRight: 2 }
                         : { ...classes.pickupBox, marginRight: 2 }),
                     }}
@@ -740,14 +717,13 @@ const JourneyDetails = (props: CustomProps) => {
                 </StepLabel>
               ))}
             </Stepper>
-
             {/* DateTime Picker for Trip Type */}
-            {tripTypeActiveStep === 0 && (
+            {props.tripTypeActiveStep === 0 && (
               <LocalizationProvider dateAdapter={AdapterMoment}>
                 <DateTimePicker
                   value={
-                    formData.start_datetime
-                      ? moment(formData.start_datetime)
+                    props.formData.start_datetime
+                      ? moment(props.formData.start_datetime)
                       : null
                   }
                   onChange={(newValue) =>
@@ -755,16 +731,20 @@ const JourneyDetails = (props: CustomProps) => {
                   }
                   sx={classes.timePicker}
                 />
+                {!isTruthy(props.formData.start_datetime) && (
+                  <FormHelperText error>
+                    {props.errors.start_datetime}
+                  </FormHelperText>
+                )}
               </LocalizationProvider>
             )}
-
-            {tripTypeActiveStep === 1 && (
+            {props.tripTypeActiveStep === 1 && (
               <>
                 <LocalizationProvider dateAdapter={AdapterMoment}>
                   <DateTimePicker
                     value={
-                      formData.start_datetime
-                        ? moment(formData.start_datetime)
+                      props.formData.start_datetime
+                        ? moment(props.formData.start_datetime)
                         : null
                     }
                     onChange={(newValue) =>
@@ -772,12 +752,17 @@ const JourneyDetails = (props: CustomProps) => {
                     }
                     sx={classes.timePicker}
                   />
+                  {!isTruthy(props.formData.start_datetime) && (
+                    <FormHelperText error>
+                      {props.errors.start_datetime}
+                    </FormHelperText>
+                  )}
                 </LocalizationProvider>
                 <LocalizationProvider dateAdapter={AdapterMoment}>
                   <DateTimePicker
                     value={
-                      formData.end_datetime
-                        ? moment(formData.end_datetime)
+                      props.formData.end_datetime
+                        ? moment(props.formData.end_datetime)
                         : null
                     }
                     onChange={(newValue) =>
@@ -785,17 +770,22 @@ const JourneyDetails = (props: CustomProps) => {
                     }
                     sx={classes.timePicker}
                   />
+                  {!isTruthy(props.formData.end_datetime) && (
+                    <FormHelperText error>
+                      {props.errors.end_datetime}
+                    </FormHelperText>
+                  )}
                 </LocalizationProvider>
               </>
             )}
 
-            {tripTypeActiveStep === 2 && (
+            {props.tripTypeActiveStep === 2 && (
               <>
                 <LocalizationProvider dateAdapter={AdapterMoment}>
                   <DateTimePicker
                     value={
-                      formData.start_datetime
-                        ? moment(formData.start_datetime)
+                      props.formData.start_datetime
+                        ? moment(props.formData.start_datetime)
                         : null
                     }
                     onChange={(newValue) =>
@@ -803,19 +793,26 @@ const JourneyDetails = (props: CustomProps) => {
                     }
                     sx={classes.timePicker}
                   />
+                  {!isTruthy(props.formData.start_datetime) && (
+                    <FormHelperText error>
+                      {props.errors.start_datetime}
+                    </FormHelperText>
+                  )}
                 </LocalizationProvider>
                 <TextField
                   placeholder="Enter Hours"
                   variant="outlined"
                   type="number"
-                  value={formData.hours}
+                  value={props.formData.hours}
                   onChange={(e) =>
-                    setFormData({
-                      ...formData,
+                    props.setFormData({
+                      ...props.formData,
                       hours: Number(e.target.value),
                     })
                   }
                   sx={classes.textInputField}
+                  error={!!props.errors.hours}
+                  helperText={props.errors.hours || ""}
                 />
               </>
             )}
@@ -841,7 +838,7 @@ const JourneyDetails = (props: CustomProps) => {
             </Button>
             <Button
               variant="contained"
-              onClick={handleSubmit}
+              onClick={() => props.handleNext && props.handleNext()}
               sx={{
                 backgroundColor: theme.palette.primary.contrastText,
                 color: "#fff",

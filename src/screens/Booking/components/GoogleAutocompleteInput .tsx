@@ -8,11 +8,15 @@ import BookingStyles from "../BookingStyles";
 interface GoogleAutocompleteInputProps {
   onChange: (value: string) => void;
   value: string;
+  error?: boolean;  // Add error prop
+  helperText?: string; // Add helperText prop
 }
 
 const GoogleAutocompleteInput: React.FC<GoogleAutocompleteInputProps> = ({
   onChange,
   value,
+  error = false,    // Default error to false
+  helperText = "",  // Default helperText to empty string
 }) => {
   const theme = useTheme();
   const classes = BookingStyles(theme);
@@ -69,6 +73,8 @@ const GoogleAutocompleteInput: React.FC<GoogleAutocompleteInputProps> = ({
           fullWidth
           type="text"
           value={value} // Bind value here
+          error={error}  // Pass error to TextField
+          helperText={helperText}  // Pass helperText to TextField
           InputProps={{
             ...params.InputProps,
             endAdornment: (

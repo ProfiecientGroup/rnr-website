@@ -28,47 +28,24 @@ import CustomContactNumberInput from "global/components/CustomContactNumberInput
 const noOfPassenger = ["1", "2", "3"];
 const noOfSuitcase = ["1", "2", "3"];
 
-const BookingDetails = () => {
+interface CustomProps {
+  handleBack: Function;
+  formData: any;
+  setFormData: Function;
+  error: any;
+  setError: Function;
+  handleNext: Function;
+  isLoading: boolean;
+  isSuccess: any;
+  message: string;
+  isButtonClicked: boolean;
+}
+
+const BookingDetails = (props: CustomProps) => {
   const theme = useTheme();
   const classes = BookingStyles(theme);
-
-  const [formFields, setFormFields] = useState({
-    firstName: {
-      value: "",
-      error: "",
-    },
-    lastName: {
-      value: "",
-      error: "",
-    },
-    email: {
-      value: "",
-      error: "",
-    },
-    phone: {
-      value: "",
-      error: "",
-    },
-    noOfPassenger: {
-      value: "",
-      error: "",
-    },
-    noOfSuitcase: {
-      value: "",
-      error: "",
-    },
-    message: {
-      value: "",
-      error: "",
-    },
-  });
-  const [isLoading, setIsLoading] = useState(false);
   const [open, setOpen] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false);
-  const [message, setMessage] = useState<string>("");
-  const [checked, setChecked] = useState(false);
-  const [isButtonClicked, setIsButtonClicked] = useState(false);
-  
+
   const handleClose = (
     event?: React.SyntheticEvent | Event,
     reason?: string
@@ -79,105 +56,11 @@ const BookingDetails = () => {
     setOpen(false);
   };
 
-  const validateData = (formFields: any) => {
-    let errors = formFields;
-    let isValid = true;
-    const email = formFields.email.value;
-    const firstName = formFields.firstName.value;
-    const lastName = formFields.lastName.value;
-    const noOfPassenger = formFields.noOfPassenger.value;
-    const noOfSuitcase = formFields.noOfSuitcase.value;
-    const message = formFields.message.value;
-    const phone = formFields.phone.value;
-    if (!email && !firstName && !lastName && !noOfPassenger && !noOfSuitcase && !message && !phone) {
-      errors.firstName.error = "Please enter first name.";
-      errors.lastName.error = "Please enter last name.";
-      errors.noOfPassenger.error = "Please select passenger.";
-      errors.noOfSuitcase.error = "Please select suitcase.";
-      errors.email.error = "Please enter email.";
-      errors.phone.error = "Please enter phone number.";
-      errors.message.error = "Please enter message.";
-      isValid = false;
-    }
-    if (!firstName) {
-      errors.firstName.error = "Please enter first name.";
-      isValid = false;
-    }
-    if (!lastName) {
-      errors.lastName.error = "Please enter last name.";
-      isValid = false;
-    }
-    if (!noOfPassenger) {
-      errors.noOfPassenger.error = "Please select passenger.";
-      isValid = false;
-    }
-    if (!noOfSuitcase) {
-      errors.noOfSuitcase.error = "Please select suitcase.";
-      isValid = false;
-    }
-    if (!email) {
-      errors.email.error = "Please enter email.";
-      isValid = false;
-    }
-    if (!message) {
-      errors.message.error = "Please enter message.";
-      isValid = false;
-    }
-    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
-      errors.email.error = "Please enter valid email.";
-      isValid = false;
-    }
-    if (!isPhoneValid(phone)) {
-      errors.phone.error = "Please enter phone number.";
-      isValid = false;
-    }
-    return { isValid, errors };
-  };
-
-  const validateFormData = () => {
-    const { isValid, errors } = validateData(formFields);
-    setFormFields({ ...errors });
-
-    return isValid;
-  };
-
-  const handleSubmit = async () => {
-    try {
-      setIsLoading(true);
-      setIsButtonClicked(true);
-      if (validateFormData()) {
-        // const token = await recaptchaRef?.current?.executeAsync();
-        const body = {
-          firstName: formFields.firstName.value,
-          lastName: formFields.lastName.value,
-          emailId: formFields.email.value,
-          contactNo: formFields.phone.value,
-          comments: formFields.message.value,
-          category: "",
-          // captchaToken: token,
-        };
-        // await doContactUs(body);
-        // setFormFields(contactUsForm());
-        setOpen(true);
-        setIsSuccess(true);
-        setChecked(false);
-      }
-    } catch (error: any) {
-      setMessage(error.message);
-      setOpen(true);
-      setIsSuccess(false);
-      // setFormFields(contactUsForm());
-      setChecked(false);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
   const getBackDrop = () => {
     return (
       <Backdrop
         sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 101 }}
-        open={isLoading}
+        open={props.isLoading}
       >
         <CircularProgress color="inherit" />
       </Backdrop>
@@ -195,14 +78,16 @@ const BookingDetails = () => {
         <Alert
           onClose={handleClose}
           severity={
-            isSuccess ? ("success" as AlertColor) : ("error" as AlertColor)
+            props.isSuccess
+              ? ("success" as AlertColor)
+              : ("error" as AlertColor)
           }
           sx={{ width: "100%" }}
         >
-          {isSuccess
+          {props.isSuccess
             ? "Your request has been Submitted!"
-            : isTruthy(message)
-            ? message
+            : isTruthy(props.message)
+            ? props.message
             : "Something went wrong! Please try again."}
         </Alert>
       </Snackbar>
@@ -212,105 +97,150 @@ const BookingDetails = () => {
   const getForm = () => {
     return (
       <Grid container spacing={2} alignItems="center" justifyContent="center">
+        {/* First Name */}
         <Grid item lg={6} xl={6} md={12} sm={12} xs={12}>
           <TextField
             variant="outlined"
             placeholder="Your First Name"
             fullWidth
-            value={formFields.firstName.value}
+            value={props.formData.bookingDetails?.firstName || ""}
             onChange={(event) => {
-              setFormFields({
-                ...formFields,
-                firstName: {
-                  value: event.target.value,
-                  error: "",
+              props.setFormData({
+                ...props.formData,
+                bookingDetails: {
+                  ...props.formData.bookingDetails,
+                  firstName: event.target.value,
                 },
+              });
+              props.setError({
+                ...props.error,
+                firstName: "",
               });
             }}
             sx={classes.textInputField}
-            error={isTruthy(formFields.firstName.error)}
-            helperText={formFields.firstName.error}
+            error={
+              !isTruthy(props.formData.bookingDetails.firstName) &&
+              props.error.firstName
+            } // Apply error state
+            // helperText={props.error.firstName} // Display error message
           />
         </Grid>
+
+        {/* Last Name */}
         <Grid item lg={6} xl={6} md={12} sm={12} xs={12}>
           <TextField
             variant="outlined"
             placeholder="Your Last Name"
             fullWidth
-            value={formFields.lastName.value}
+            value={props.formData.bookingDetails?.lastName || ""}
             sx={classes.textInputField}
             onChange={(event) => {
-              setFormFields({
-                ...formFields,
-                lastName: {
-                  value: event.target.value,
-                  error: "",
+              props.setFormData({
+                ...props.formData,
+                bookingDetails: {
+                  ...props.formData.bookingDetails,
+                  lastName: event.target.value,
                 },
               });
+              props.setError({
+                ...props.error,
+                lastName: "",
+              });
             }}
-            error={isTruthy(formFields.lastName.error)}
-            helperText={formFields.lastName.error}
+            error={
+              !isTruthy(props.formData.bookingDetails.lastName) &&
+              props.error.lastName
+            }
+            // helperText={props.error.lastName} // Display error message
           />
         </Grid>
+
+        {/* Email */}
         <Grid item lg={6} xl={6} md={12} sm={12} xs={12}>
           <TextField
             variant="outlined"
             placeholder="Your Email"
-            value={formFields.email.value}
+            value={props.formData.bookingDetails?.email || ""}
             fullWidth
             sx={classes.textInputField}
             onChange={(event) => {
-              setFormFields({
-                ...formFields,
-                email: {
-                  value: event.target.value,
-                  error: "",
+              props.setFormData({
+                ...props.formData,
+                bookingDetails: {
+                  ...props.formData.bookingDetails,
+                  email: event.target.value,
                 },
               });
+              props.setError({
+                ...props.error,
+                email: "",
+              });
             }}
-            error={isTruthy(formFields.email.error)}
-            helperText={formFields.email.error}
+            error={
+              !isTruthy(props.formData.bookingDetails.email) &&
+              props.error.email
+            }
+
+            // helperText={props.error.email} // Display error message
           />
         </Grid>
+
+        {/* Phone Number */}
         <Grid item lg={6} xl={6} md={12} sm={12} xs={12}>
           <CustomContactNumberInput
             label="Phone Number"
             id="phone-number"
-            value={formFields.phone.value}
+            value={props.formData.bookingDetails?.phone || ""}
             placeHolder="(999) 999-9999"
             sx={classes.textInputField}
-            onChange={(value: string) => {
-              setFormFields({
-                ...formFields,
-                phone: {
-                  ...formFields.phone,
-                  value: value,
-                  error: "",
+            onChange={(value) => {
+              props.setFormData({
+                ...props.formData,
+                bookingDetails: {
+                  ...props.formData.bookingDetails,
+                  phone: value,
                 },
+              });
+              props.setError({
+                ...props.error,
+                phone: "",
               });
             }}
             fullWidth
-            // error={isTruthy(formFields.phone.error)}
-
-            error={
-              isTruthy(formFields?.phone?.error) && formFields?.phone?.error
+            // error={
+            //   !isTruthy(props.formData.bookingDetails.phone) &&
+            //   props.error.phone
+            // }
+            onError={
+              !isTruthy(props.formData.bookingDetails.phone) &&
+              props.error.phone
             }
+            helperText={
+              !isTruthy(props.formData.bookingDetails.phone) &&
+              props.error.phone
+            } // Display error message
           />
         </Grid>
+
+        {/* Number of Passengers */}
         <Grid item lg={6} xl={6} md={12} sm={12} xs={12}>
           <FormControl fullWidth sx={classes.selectInputField}>
             <Select
               placeholder="Select passenger"
               id="noOfPassenger"
               name="noOfPassenger"
-              value={formFields.noOfPassenger.value}
-              onChange={(event: any) => {
-                setFormFields({
-                  ...formFields,
-                  noOfPassenger: {
-                    value: event.target.value,
-                    error: "",
+              value={props.formData.bookingDetails?.noOfPassenger || ""}
+              onChange={(event) => {
+                props.setFormData({
+                  ...props.formData,
+                  bookingDetails: {
+                    ...props.formData.bookingDetails,
+                    noOfPassenger: event.target.value,
                   },
+                });
+                props.setError({
+                  ...props.error,
+                  noOfPassenger: "",
                 });
               }}
               input={<OutlinedInput />}
@@ -322,54 +252,49 @@ const BookingDetails = () => {
                 },
               }}
               sx={classes.selectMenu}
-              style={{
-                color: formFields.noOfPassenger.value === "" ? "#B3B3B3" : "",
-                width: "100%",
-                background: "transparent",
-                borderRadius: "25px",
-              }}
-              renderValue={
-                formFields.noOfPassenger.value !== ""
-                  ? () => formFields.noOfPassenger.value
-                  : () => "Select passenger"
-              }
               displayEmpty
-              error={!isTruthy(formFields.noOfPassenger.value) && isButtonClicked ? true : false}
-
+              error={
+                !isTruthy(props.formData.bookingDetails.noOfPassenger) &&
+                props.error.noOfPassenger
+              } // Apply error state
             >
-              {noOfPassenger?.map((passenger: any, index: number) => {
-                return (
-                  <MenuItem
-                    sx={classes.optionStyle}
-                    value={passenger}
-                    key={index}
-                  >
-                    {passenger}
-                  </MenuItem>
-                );
-              })}
+              {noOfPassenger?.map((passenger, index) => (
+                <MenuItem
+                  sx={classes.optionStyle}
+                  value={passenger}
+                  key={index}
+                >
+                  {passenger}
+                </MenuItem>
+              ))}
             </Select>
           </FormControl>
-          {!isTruthy(formFields.noOfPassenger.value) && (
-              <FormHelperText error sx={{pl:2}}>
-                {formFields.noOfPassenger.error}
-              </FormHelperText>
-            )}
+          {!isTruthy(props.formData.bookingDetails.noOfPassenger) && (
+            <FormHelperText error sx={{ pl: 2 }}>
+              {props.error.noOfPassenger}
+            </FormHelperText>
+          )}
         </Grid>
+
+        {/* Number of Suitcases */}
         <Grid item lg={6} xl={6} md={12} sm={12} xs={12}>
           <FormControl fullWidth sx={classes.selectInputField}>
             <Select
               placeholder="Select suitcase"
               id="noOfSuitcase"
               name="noOfSuitcase"
-              value={formFields.noOfSuitcase.value}
-              onChange={(event: any) => {
-                setFormFields({
-                  ...formFields,
-                  noOfSuitcase: {
-                    value: event.target.value,
-                    error: "",
+              value={props.formData.bookingDetails?.noOfSuitcase || ""}
+              onChange={(event) => {
+                props.setFormData({
+                  ...props.formData,
+                  bookingDetails: {
+                    ...props.formData.bookingDetails,
+                    noOfSuitcase: event.target.value,
                   },
+                });
+                props.setError({
+                  ...props.error,
+                  noOfSuitcase: "",
                 });
               }}
               input={<OutlinedInput />}
@@ -381,39 +306,27 @@ const BookingDetails = () => {
                 },
               }}
               sx={classes.selectMenu}
-              style={{
-                color: formFields.noOfSuitcase.value === "" ? "#B3B3B3" : "",
-                width: "100%",
-                background: "transparent",
-                borderRadius: "25px",
-              }}
-              renderValue={
-                formFields.noOfSuitcase.value !== ""
-                  ? () => formFields.noOfSuitcase.value
-                  : () => "Select suitcase"
-              }
               displayEmpty
-              error={!isTruthy(formFields.noOfSuitcase.value) && isButtonClicked ? true : false}
+              error={
+                !isTruthy(props.formData.bookingDetails.noOfSuitcase) &&
+                props.error.noOfSuitcase
+              } // Apply error state
             >
-              {noOfSuitcase?.map((suitcase: any, index: number) => {
-                return (
-                  <MenuItem
-                    sx={classes.optionStyle}
-                    value={suitcase}
-                    key={index}
-                  >
-                    {suitcase}
-                  </MenuItem>
-                );
-              })}
+              {noOfSuitcase?.map((suitcase, index) => (
+                <MenuItem sx={classes.optionStyle} value={suitcase} key={index}>
+                  {suitcase}
+                </MenuItem>
+              ))}
             </Select>
           </FormControl>
-            {!isTruthy(formFields.noOfSuitcase.value) && (
-              <FormHelperText error sx={{pl:2}}>
-                {formFields.noOfSuitcase.error}
-              </FormHelperText>
-            )}
+          {!isTruthy(props.formData.bookingDetails.noOfSuitcase) && (
+            <FormHelperText error sx={{ pl: 2 }}>
+              {props.error.noOfSuitcase}
+            </FormHelperText>
+          )}
         </Grid>
+
+        {/* Message */}
         <Grid item lg={12} xl={12} md={12} sm={12} xs={12}>
           <TextField
             variant="outlined"
@@ -421,27 +334,36 @@ const BookingDetails = () => {
             multiline
             placeholder="Your Message"
             fullWidth
-            value={formFields.message.value}
+            value={props.formData.bookingDetails?.message || ""}
             sx={{
               ...classes.textInputField,
               "&.MuiFormHelperText-root.Mui-error": {
-                fontSize: "0.8 rem !important",
+                fontSize: "0.8rem !important",
               },
             }}
-            error={isTruthy(formFields.message.error)}
-            helperText={formFields.message.error}
             onChange={(event) => {
-              setFormFields({
-                ...formFields,
-                message: {
-                  value: event.target.value,
-                  error: "",
+              props.setFormData({
+                ...props.formData,
+                bookingDetails: {
+                  ...props.formData.bookingDetails,
+                  message: event.target.value,
                 },
               });
+              props.setError({
+                ...props.error,
+                message: "",
+              });
             }}
+            error={
+              !isTruthy(props.formData.bookingDetails.message) &&
+              props.error.message
+            }
+
+            // helperText={props.error.message} // Display error message
           />
-          
         </Grid>
+
+        {/* Buttons */}
         <Grid item md={12} sm={12} xs={12} mt={2}>
           <Stack direction={"row"} spacing={2}>
             <Button
@@ -458,14 +380,14 @@ const BookingDetails = () => {
                   backgroundColor: theme.palette.primary.darkest,
                 },
               }}
+              onClick={() => props.handleBack()}
             >
               <Typography variant="body2">Back To HOME</Typography>
             </Button>
             <Button
               variant="contained"
               fullWidth
-              onClick={handleSubmit}
-              // disabled={!checked || isLoading}
+              onClick={() => props.handleNext && props.handleNext()}
               sx={{
                 backgroundColor: theme.palette.primary.contrastText,
                 color: "#fff",
