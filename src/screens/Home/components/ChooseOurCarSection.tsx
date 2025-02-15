@@ -167,7 +167,7 @@ const ChooseOurCarSection = () => {
                 justifyContent={"flex-end"}
               >
                 <Typography
-                  sx={{ ...classes.addressBox, width: "20%" }}
+                  sx={{ ...classes.addressBox, width: isLgUp ? "20%" : "auto" }}
                   variant="caption"
                 >
                   Why RNR?
@@ -194,7 +194,7 @@ const ChooseOurCarSection = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                   size="small"
-                  sx={{ width: "20%" }}
+                  sx={{ width: isLgUp ? "20%" : "auto" }}
                 >
                   <Typography variant="button">Know More</Typography>
                 </Button>
@@ -266,17 +266,17 @@ const ChooseOurCarSection = () => {
             </Stack>
           </Stack>
         </Stack>
-          <Box
-                  sx={{
-                    width: "100%",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    paddingTop: 10,
-                  }}
-                >
-                  <Box sx={classes.verticalLine}></Box>
-                </Box>
+        <Box
+          sx={{
+            width: "100%",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            paddingTop: 10,
+          }}
+        >
+          <Box sx={classes.verticalLine}></Box>
+        </Box>
       </Container>
     </Box>
   );

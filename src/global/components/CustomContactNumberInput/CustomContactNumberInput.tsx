@@ -37,7 +37,7 @@ const CustomContactNumberInput: React.FC<MUIPhoneProps> = ({
 
   const { phone, handlePhoneValueChange, inputRef, country, setCountry } =
     usePhoneInput({
-      defaultCountry: "us",
+      defaultCountry: "gb",
       value,
       countries: defaultCountries,
       onChange: (data: any) => {
@@ -61,18 +61,20 @@ const CustomContactNumberInput: React.FC<MUIPhoneProps> = ({
           startAdornment: (
             <InputAdornment position="start">
               <Select
-                MenuProps={{
-                  // style: {
-                  //   height: "300px",
-                  //   width: "360px",
-                  //   top: "0px",
-                  //   // left: "-34px",
-                  // },
-                  // transformOrigin: {
-                  //   vertical: "top",
-                  //   horizontal: "left",
-                  // },
-                }}
+                MenuProps={
+                  {
+                    // style: {
+                    //   height: "300px",
+                    //   width: "360px",
+                    //   top: "0px",
+                    //   // left: "-34px",
+                    // },
+                    // transformOrigin: {
+                    //   vertical: "top",
+                    //   horizontal: "left",
+                    // },
+                  }
+                }
                 sx={{
                   // width: "max-content",
                   width: "55px",
@@ -115,6 +117,8 @@ const CustomContactNumberInput: React.FC<MUIPhoneProps> = ({
               >
                 {defaultCountries.map((c: any) => {
                   const country = parseCountry(c);
+                  console.log("country", country);
+
                   return (
                     <MenuItem
                       key={country.iso2}

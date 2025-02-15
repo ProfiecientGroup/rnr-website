@@ -117,7 +117,7 @@ const ContactUs = () => {
               For help upgrading, changing or canceling your RNR account, please
               call the RNR Response Center toll free at +1234567890.
             </Typography>
-            <Stack direction={"row"} spacing={2}>
+            <Stack direction={isLgUp ? "row" : "column"} spacing={2}>
               <Box
                 sx={{
                   border: "1px solid rgba(221, 184, 99, 0.5)",
@@ -280,7 +280,6 @@ const ContactUs = () => {
             }}
             sx={{
               ...classes.textInputField,
-             
             }}
           />
         </Grid>

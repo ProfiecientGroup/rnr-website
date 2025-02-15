@@ -13,8 +13,8 @@ const HomeStyles = (theme: Theme) => {
       backgroundPosition: "center",
       backgroundColor: theme.palette.primary.darkest,
       width: "100%",
-      height: "80vh",
-      paddingTop: "200px",
+      height: "auto",
+      paddingTop: "150px",
       display: "flex",
       justifyContent: "center",
       alignItems: "center",
@@ -35,6 +35,10 @@ const HomeStyles = (theme: Theme) => {
       background: "url(" + bannerAddressBg.src + ")",
       backgroundSize: "cover",
       backgroundPosition: "center",
+      [theme.breakpoints.down("sm")]:{
+      width: "auto",
+
+      }
     },
     chooseOurCarBox: {
       width: "100%",

@@ -62,9 +62,9 @@ const Home = () => {
       {getBannerSection()}
       {getAboutSection()}
       {getChooseOurCarSection()}
-      <Testimonial testimonialData={testimonial} />
+        <Testimonial testimonialData={testimonial} />
 
-      {getWhatAreWaitingSection()}
+        {getWhatAreWaitingSection()}
     </>
   );
 };

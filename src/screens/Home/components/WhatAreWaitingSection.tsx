@@ -24,9 +24,12 @@ const WhatAreWaitingSection = () => {
       }}
     >
       <Container maxWidth="xl">
-        <Stack direction={"row"} spacing={8}>
-          <img src={SClassCar.src} alt="SClassCar" width={"auto"} />
-
+        <Stack direction={isLgUp ? "row" : "column"} spacing={8}>
+          <img
+            src={SClassCar.src}
+            alt="SClassCar"
+            width={isLgUp ? "auto" : "90%"}
+          />
           <Stack direction={"column"} spacing={2} alignItems={"center"}>
             <Stack direction={"column"} spacing={0} alignItems={"start"}>
               <Typography

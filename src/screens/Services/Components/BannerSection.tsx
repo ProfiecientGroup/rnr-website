@@ -6,6 +6,7 @@ import {
   Grid,
   Stack,
   Typography,
+  useMediaQuery,
   useTheme,
 } from "@mui/material";
 import ServicesStyles from "../ServicesStyles";
@@ -37,7 +38,7 @@ const eventsData = [
 ];
 const BannerSection = () => {
   const theme = useTheme();
-
+  const lgUp = useMediaQuery(theme.breakpoints.up("md"));
   const classes = ServicesStyles(theme);
 
   return (
@@ -94,7 +95,7 @@ const BannerSection = () => {
             },
           }}
         >
-          <Stack direction="row" spacing={1} mt={3}>
+          <Stack direction={lgUp ? "row" : "column"} spacing={1} mt={3}>
             <Grid container spacing={0} width={"100%"}>
               {eventsData.map((item: any, index: number) => {
                 return (
@@ -112,8 +113,8 @@ const BannerSection = () => {
             </Grid>
             <img
               src={bannerCar.src}
-              width={"830px"}
-              height={"420px"}
+              width={lgUp ? "830px" : "30%"}
+              height={lgUp ? "420px" : "auto"}
               style={{
                 position: "relative",
                 left: "190px",
@@ -125,7 +126,7 @@ const BannerSection = () => {
             href={viewpaths.bookingViewPath}
             target="_blank"
             rel="noopener noreferrer"
-            sx={{ width: "12vw", mt: "0px !important" }}
+            sx={{ width:lgUp ?  "12vw" : "auto", mt: "0px !important" }}
           >
             Book Now
           </Button>

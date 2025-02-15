@@ -32,6 +32,10 @@ const ContactUsStyles = (theme: Theme) => {
       display: "flex",
       justifyContent: "center",
       alignItems: "center",
+      [theme.breakpoints.down("md")]: {
+      height: "40vh",
+      backgroundSize: "contain",
+      },
     },
     textBox: {
       backgroundColor: "#1A1A1A",
@@ -98,14 +102,13 @@ const ContactUsStyles = (theme: Theme) => {
       "& .MuiOutlinedInput-root": {
         borderRadius: "25px",
         fontSize: 20,
-        color:"#fff  !important"
+        color: "#fff  !important",
       },
       "& input:-webkit-autofill": {
         WebkitBoxShadow: "0 0 0 100px #1a1a1a inset !important",
         WebkitTextFillColor: "#fff !important",
         borderRadius: "inherit",
       },
-      
     },
   };
 };

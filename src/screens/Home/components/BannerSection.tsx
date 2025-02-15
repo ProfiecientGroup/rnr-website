@@ -69,14 +69,14 @@ const BannerSection = () => {
           minHeight: TOP_NAV_HEIGHT,
           p: 2,
           pl: lgUp ? 6 : 2,
-          pr: lgUp ? 6 : 2,
+          pr: lgUp ? 6 : 1,
         }}
       >
         <Stack
           alignItems="self-start"
-          direction="row"
+          direction={lgUp ? "row" : "column"}
           justifyContent="space-between"
-          spacing={10}
+          spacing={lgUp ? 10 : 5}
         >
           <Stack
             alignItems="center"
@@ -112,7 +112,7 @@ const BannerSection = () => {
                 </span>
               </Typography>
             </Box>
-            <img src={SClassCar.src} alt="SClassCar" />
+            <img src={SClassCar.src} alt="SClassCar" width={lgUp ? "auto" : "90%"}/>
           </Stack>
           <Stack
             direction={"column"}

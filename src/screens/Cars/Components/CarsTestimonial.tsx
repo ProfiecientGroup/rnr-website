@@ -70,7 +70,7 @@ const CarsTestimonialSection = (props: CustomProps) => {
           <Typography>{step.text}</Typography>
           <img
             src={step.img}
-            width={width}
+            width={isLgUp ? width : "50%"}
             alt={`Car ${index}`}
             style={{ borderRadius: "20px" }}
           />
@@ -114,7 +114,7 @@ const CarsTestimonialSection = (props: CustomProps) => {
     ratings: { price?: string; title?: string; btn?: boolean }[]
   ) => (
     <Stack
-      direction="row"
+      direction={isLgUp ? "row" : "column"}
       spacing={2}
       justifyContent="space-around"
       sx={{
