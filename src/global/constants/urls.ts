@@ -3,8 +3,8 @@ class Urls {
 
   BASE_WEBAPP_URL = this.PROD ? "https://rnr.com/" : "https://rnr.com/";
 
-  contactApiCallEndpoint =
-    "https://f9f7-2401-4900-838e-d5ae-55c5-c35e-2615-115e.ngrok-free.app/calculate-prices";
+  bookingApiCallEndpoint =
+    "https://ff23-2409-4050-2ebc-f010-fcc6-68e-a00-d8e6.ngrok-free.app/calculate-booking-prices";
 
   Pricing = `/pricing`;
 

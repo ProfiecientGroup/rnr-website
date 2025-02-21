@@ -18,6 +18,9 @@ const HomeStyles = (theme: Theme) => {
       display: "flex",
       justifyContent: "center",
       alignItems: "center",
+      [theme.breakpoints.down("sm")]: {
+        paddingTop: "50px",
+      },
     },
     experiFont: {
       fontFamily: "Kugile",
@@ -25,6 +28,10 @@ const HomeStyles = (theme: Theme) => {
       fontWeight: "400",
       textAlign: "center",
       lineHeight: "63px",
+      [theme.breakpoints.down("sm")]: {
+        fontSize: "28px",
+        lineHeight: "40px",
+      },
     },
     contactBox: {
       width: "414px",
@@ -35,10 +42,9 @@ const HomeStyles = (theme: Theme) => {
       background: "url(" + bannerAddressBg.src + ")",
       backgroundSize: "cover",
       backgroundPosition: "center",
-      [theme.breakpoints.down("sm")]:{
-      width: "auto",
-
-      }
+      [theme.breakpoints.down("sm")]: {
+        width: "auto",
+      },
     },
     chooseOurCarBox: {
       width: "100%",
@@ -57,8 +63,8 @@ const HomeStyles = (theme: Theme) => {
       background: "url(" + whatAreWaitingBox.src + ")",
       backgroundSize: "cover",
       backgroundPosition: "center",
-      display:"flex",
-      justifyContent:"center"
+      display: "flex",
+      justifyContent: "center",
     },
     addressBox: {
       width: "Fill (167px)px",
@@ -129,6 +135,9 @@ const HomeStyles = (theme: Theme) => {
       display: "flex",
       justifyContent: "center",
       alignItems: "center",
+      [theme.breakpoints.down("sm")]: {
+        paddingTop: "10px",
+      },
     },
   };
 };

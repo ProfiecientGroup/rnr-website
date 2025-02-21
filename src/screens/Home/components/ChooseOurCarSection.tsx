@@ -53,7 +53,7 @@ const ChooseOurCarSection = () => {
     <Box
       sx={{
         ...classes.chooseOurCarBox,
-        padding: "60px 0",
+        padding:isLgUp ?   "60px 0" : "30px 0",
       }}
     >
       <Box>

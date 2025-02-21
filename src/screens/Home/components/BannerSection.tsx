@@ -67,30 +67,30 @@ const BannerSection = () => {
         maxWidth="lg"
         sx={{
           minHeight: TOP_NAV_HEIGHT,
-          p: 2,
-          pl: lgUp ? 6 : 2,
-          pr: lgUp ? 6 : 1,
+          // p: 2,
+          // pl: lgUp ? 6 : 2,
+          // pr: lgUp ? 6 : 1,
         }}
       >
         <Stack
           alignItems="self-start"
           direction={lgUp ? "row" : "column"}
           justifyContent="space-between"
-          spacing={lgUp ? 10 : 5}
+          spacing={lgUp ? 10 : 1}
         >
           <Stack
             alignItems="center"
             direction="column"
             justifyContent="space-between"
-            spacing={2}
+            spacing={3}
           >
             <Box>
               <Typography sx={classes.experiFont} variant="h6">
                 <span>
                   <img
                     src={whiteStar.src}
-                    height="20px"
-                    width="20px"
+                    height={lgUp ? "20px" : "13px"}
+                    width={lgUp ? "20px" : "13px"}
                     style={{ position: "relative", bottom: 20 }}
                   />
                 </span>{" "}
@@ -105,14 +105,18 @@ const BannerSection = () => {
                 <span>
                   <img
                     src={goldStar.src}
-                    height="20px"
-                    width="20px"
+                    height={lgUp ? "20px" : "13px"}
+                    width={lgUp ? "20px" : "13px"}
                     style={{ position: "relative", top: 10 }}
                   />
                 </span>
               </Typography>
             </Box>
-            <img src={SClassCar.src} alt="SClassCar" width={lgUp ? "auto" : "90%"}/>
+            <img
+              src={SClassCar.src}
+              alt="SClassCar"
+              width={lgUp ? "auto" : "100%"}
+            />
           </Stack>
           <Stack
             direction={"column"}

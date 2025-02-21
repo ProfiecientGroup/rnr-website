@@ -12,7 +12,7 @@ import car1 from "../../../assets/images/booking/car1.svg";
 
 const carData = [
   {
-    model: "Mercedes S-Class",
+    model: "E_CLASS",
     description: ["4 adults", "2 suitcases", "2 carry bags", "WiFi"],
     imgSrc: car1.src,
     extraInfo:
@@ -20,7 +20,7 @@ const carData = [
     price: "£290.00",
   },
   {
-    model: "BMW 7 Series",
+    model: "S_CLASS",
     description: ["4 adults", "2 suitcases", "2 carry bags", "WiFi"],
     imgSrc: car1.src,
     extraInfo:
@@ -28,7 +28,15 @@ const carData = [
     price: "£350.00",
   },
   {
-    model: "Audi A8",
+    model: "V_CLASS",
+    description: ["4 adults", "2 suitcases", "2 carry bags", "WiFi"],
+    imgSrc: car1.src,
+    extraInfo:
+      "First class chauffeur Free 60 mins airport parking & waiting Free 15 mins waiting for other journeys Includes meet & greet Free cancellation within 24 hours",
+    price: "£320.00",
+  },
+  {
+    model: "ESTATE",
     description: ["4 adults", "2 suitcases", "2 carry bags", "WiFi"],
     imgSrc: car1.src,
     extraInfo:
@@ -36,8 +44,12 @@ const carData = [
     price: "£320.00",
   },
 ];
+interface CustomProps {
+  bookingData: any;
+}
 
-const ChooseACar = () => {
+const ChooseACar = (props: CustomProps) => {
+  const { bookingData } = props;
   const theme = useTheme();
   const classes = BookingStyles(theme);
   const isLgUp = useMediaQuery(theme.breakpoints.up("xl"));
@@ -50,6 +62,20 @@ const ChooseACar = () => {
     borderStyle: "solid",
     borderWidth: 1,
   };
+
+  // Map carData and replace price with the corresponding final_price
+  const updatedCarData = carData.map((car) => {
+    const matchingPrice = bookingData.prices.find(
+      (p: any) => p.car_class === car.model.toUpperCase().replace(" ", "_")
+    );
+
+    return {
+      ...car,
+      final_price: matchingPrice
+        ? `£${matchingPrice.final_price.toFixed(2)}`
+        : "N/A",
+    };
+  });
 
   return (
     <Box sx={classes.chooseACarBg}>
@@ -67,10 +93,10 @@ const ChooseACar = () => {
           Available Cars
         </Typography>
         <Typography variant="body2" color={theme.palette.primary.main}>
-          3 Cars Available
+          {updatedCarData.length} Cars Available
         </Typography>
-        {carData.map(
-          ({ model, description, imgSrc, extraInfo, price }, index) => (
+        {updatedCarData.map(
+          ({ model, description, imgSrc, extraInfo, final_price }, index) => (
             <Stack
               direction={isLgUp ? "row" : "column"}
               spacing={2}
@@ -95,7 +121,7 @@ const ChooseACar = () => {
               <Stack direction="column" spacing={2}>
                 <Typography>{extraInfo}</Typography>
                 <Typography>Your Journey Price</Typography>
-                <Typography>{price}</Typography>
+                <Typography>{final_price}</Typography>
                 <Button
                   variant="contained"
                   sx={{

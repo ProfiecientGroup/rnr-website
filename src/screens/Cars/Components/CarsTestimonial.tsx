@@ -70,7 +70,7 @@ const CarsTestimonialSection = (props: CustomProps) => {
           <Typography>{step.text}</Typography>
           <img
             src={step.img}
-            width={isLgUp ? width : "50%"}
+            width={isLgUp ? width : "100%"}
             alt={`Car ${index}`}
             style={{ borderRadius: "20px" }}
           />
@@ -82,8 +82,8 @@ const CarsTestimonialSection = (props: CustomProps) => {
   const renderKeyFeatures = (features: { icon: string; name: string }[]) => (
     <Stack
       direction="row"
-      spacing={2}
-      justifyContent="space-between"
+      spacing={isLgUp ? 2 : 0}
+      justifyContent={isLgUp ? "space-between" : "center"}  
       sx={{ flexWrap: "wrap" }}
     >
       {features.map((feature, index) => (
@@ -116,7 +116,7 @@ const CarsTestimonialSection = (props: CustomProps) => {
     <Stack
       direction={isLgUp ? "row" : "column"}
       spacing={2}
-      justifyContent="space-around"
+      justifyContent={isLgUp ? "space-around" :"center"}
       sx={{
         // flexWrap: "wrap",
         border: "1px solid #DDB86352",
@@ -126,7 +126,7 @@ const CarsTestimonialSection = (props: CustomProps) => {
       }}
     >
       {ratings.map((rating, index) => (
-        <Stack direction={"row"} spacing={5} key={index}>
+        <Stack direction={"row"} spacing={5} key={index} justifyContent="center" alignItems="center">
           <Stack
             direction={"column"}
             spacing={1}
@@ -143,7 +143,7 @@ const CarsTestimonialSection = (props: CustomProps) => {
                 href={urls.Facebook}
                 target="_blank"
                 rel="noopener noreferrer"
-                sx={{ width: "12vw", mt: "0px !important" }}
+                sx={{ width: isLgUp ? "12vw" : "100%", mt: "0px !important" }}
               >
                 <Typography variant="button">GET A PRICE & BOOK</Typography>
               </Button>
@@ -239,6 +239,7 @@ const CarsTestimonialSection = (props: CustomProps) => {
                         fontWeight: 400,
                         color: theme.palette.primary.main,
                         fontSize: "45px",
+                        textAlign: isLgUp ? "start" : "center",
                       }}
                     >
                       {data.title}
@@ -254,7 +255,7 @@ const CarsTestimonialSection = (props: CustomProps) => {
                           fontWeight: 400,
                           color: theme.palette.primary.main,
                           fontSize: "35px",
-                          textAlign: "start",
+                          textAlign: isLgUp ? "start" : "center",
                         }}
                       >
                         Key Features

@@ -4,7 +4,7 @@ import { getCallParams, makeCall } from "helpers/methods";
 export const doBooking = async (body: any) => {
   try {
     const callParams = getCallParams("POST", body);
-    const response = await makeCall(urls.contactApiCallEndpoint, callParams);
+    const response = await makeCall(urls.bookingApiCallEndpoint, callParams);
     return response;
   } catch (error: any) {
     throw error;

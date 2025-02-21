@@ -120,7 +120,8 @@ const TopNav = (props: CustomProps) => {
         background: theme.palette.primary.darkest,
       }}
     >
-      <ContactsBanner />
+      {!lgUp ? null : <ContactsBanner />}
+      {/* {<ContactsBanner />} */}
       <Container
         maxWidth="lg"
         sx={{
@@ -131,14 +132,15 @@ const TopNav = (props: CustomProps) => {
           pl: lgUp ? 6 : 2,
           pr: lgUp ? 6 : 2,
           backgroundColor: theme.palette.primary.darkest,
-          '&::after': {
+          "&::after": {
             content: '""',
-            position: 'absolute',
+            position: "absolute",
             bottom: 0,
             left: 0,
-            width: '100%',
-            height: '2px', // Adjust the height of the border
-            background: 'linear-gradient(90deg, #161616 12.08%, rgba(221, 184, 99, 0.5) 64.5%, #161616 86.27%)',
+            width: "100%",
+            height: "2px", // Adjust the height of the border
+            background:
+              "linear-gradient(90deg, #161616 12.08%, rgba(221, 184, 99, 0.5) 64.5%, #161616 86.27%)",
           },
         }}
       >

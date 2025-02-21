@@ -20,6 +20,7 @@ import BookingDetails from "./components/BookingDetails";
 import Payment from "./components/Payment";
 import { isPhoneValid } from "helpers/methods";
 import moment from "moment";
+import { doBooking } from "./components/BookingService";
 
 const steps = ["Journey details", "Booking Details", "Choose a Car", "Payment"];
 
@@ -36,7 +37,8 @@ const Booking = () => {
   const [isSuccess, setIsSuccess] = useState(false);
   const [message, setMessage] = useState<string>("");
   const [isButtonClicked, setIsButtonClicked] = useState(false);
-  const [checked, setChecked] = useState(false);
+  const [bookingData, setBookingData] = useState<any>();
+  console.log("bookingData", bookingData);
 
   const [formData, setFormData] = useState({
     pickups: [
@@ -97,64 +99,70 @@ const Booking = () => {
   });
 
   console.log(formData, "gjhjh");
-console.log("bookingErrors",bookingErrors);
+  console.log("bookingErrors", bookingErrors);
 
-const BookingDetailsValidate = () => {
-  let newErrors = { ...bookingErrors };
-  let isValid = true;
+  const BookingDetailsValidate = async (): Promise<boolean> => {
+    let newErrors = { ...bookingErrors };
+    let isValid = true;
 
-  // Validate Booking Details
-  const {
-    firstName,
-    lastName,
-    email,
-    phone,
-    noOfPassenger,
-    noOfSuitcase,
-    message,
-  } = formData.bookingDetails;
+    const {
+      firstName,
+      lastName,
+      email,
+      phone,
+      noOfPassenger,
+      noOfSuitcase,
+      message,
+    } = formData.bookingDetails;
 
-  console.log("Form Data:", formData.bookingDetails); // Debugging
+    if (!firstName) {
+      newErrors.firstName = "Please enter first name.";
+      isValid = false;
+    }
+    if (!lastName) {
+      newErrors.lastName = "Please enter last name.";
+      isValid = false;
+    }
+    if (!email) {
+      newErrors.email = "Please enter email.";
+      isValid = false;
+    }
+    if (email && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
+      newErrors.email = "Please enter a valid email.";
+      isValid = false;
+    }
+    if (!phone || !isPhoneValid(phone)) {
+      newErrors.phone = "Please enter a valid phone number.";
+      isValid = false;
+    }
+    if (!noOfPassenger) {
+      newErrors.noOfPassenger = "Please select number of passengers.";
+      isValid = false;
+    }
+    if (!noOfSuitcase) {
+      newErrors.noOfSuitcase = "Please select number of suitcases.";
+      isValid = false;
+    }
+    if (!message) {
+      newErrors.message = "Please enter a message.";
+      isValid = false;
+    }
 
-  if (!firstName) {
-    newErrors.firstName = "Please enter first name.";
-    isValid = false;
-  }
-  if (!lastName) {
-    newErrors.lastName = "Please enter last name.";
-    isValid = false;
-  }
-  if (!email) {
-    newErrors.email = "Please enter email.";
-    isValid = false;
-  }
-  if (email && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
-    newErrors.email = "Please enter a valid email.";
-    isValid = false;
-  }
-  if (!phone || !isPhoneValid(phone)) {
-    newErrors.phone = "Please enter a valid phone number.";
-    isValid = false;
-  }
-  if (!noOfPassenger) {
-    newErrors.noOfPassenger = "Please select number of passengers.";
-    isValid = false;
-  }
-  if (!noOfSuitcase) {
-    newErrors.noOfSuitcase = "Please select number of suitcases.";
-    isValid = false;
-  }
-  if (!message) {
-    newErrors.message = "Please enter a message.";
-    isValid = false;
-  }
+    setBookingErrors(newErrors);
 
-  console.log("Validation Errors:", newErrors); // Debugging
-  console.log("Is Form Valid:", isValid); // Debugging
+    if (isValid) {
+      try {
+        setIsLoading(true);
+        const res = await doBooking(formData);
+        setBookingData(res);
+        setIsLoading(false);
+      } catch (error: any) {
+        setIsLoading(false);
+      }
+    }
 
-  setBookingErrors(newErrors);
-  return isValid;
-};
+    return isValid;
+  };
 
   const bookingJourneyValidate = () => {
     let newErrors = { ...journeyDetailsErrors };
@@ -262,26 +270,6 @@ const BookingDetailsValidate = () => {
     return isValid;
   };
 
-  const handleSubmit = async () => {
-    setIsLoading(true);
-    // setIsButtonClicked(true);
-    try {
-      // if (validateData()) {
-      // setOpen(true);
-      // setIsSuccess(true);
-      // setChecked(false);
-      // }
-      handleNext();
-    } catch (error: any) {
-      setMessage(error.message);
-      setOpen(true);
-      setIsSuccess(false);
-      setChecked(false);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
   const isStepSkipped = (step: number) => {
     return skipped.has(step);
   };
@@ -298,14 +286,14 @@ const BookingDetailsValidate = () => {
     setCurrentStep(step);
   };
 
-  const handleValidationNext = () => {
+  const handleValidationNext = async () => {
     let isValid = false;
     switch (currentStep) {
       case 0:
         isValid = bookingJourneyValidate();
         break;
       case 1:
-        isValid = BookingDetailsValidate();
+        isValid = await BookingDetailsValidate();
         break;
       case 2:
         isValid = true;
@@ -351,7 +339,7 @@ const BookingDetailsValidate = () => {
           />
         );
       case 2:
-        return <ChooseACar />;
+        return <ChooseACar bookingData={bookingData}/>;
       case 3:
         return <Payment />;
       default:

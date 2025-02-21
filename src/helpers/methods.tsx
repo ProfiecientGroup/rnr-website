@@ -1,3 +1,4 @@
+import strings from "global/constants/strings";
 import urls from "global/constants/urls";
 import { PhoneNumberUtil } from "google-libphonenumber";
 
@@ -118,3 +119,14 @@ export const isPhoneValid = (phone: string) => {
 export const getCurrentYear = () => {
   return new Date().getFullYear();
 };
+
+// export const openErrorNotification = (
+//   message: any,
+//   title: string = "Error"
+// ) => {
+//   globalEmitter.emit(strings.notification, {
+//     type: strings.error,
+//     message: message,
+//     title: title,
+//   });
+// };
