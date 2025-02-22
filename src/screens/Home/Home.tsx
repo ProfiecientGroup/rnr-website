@@ -1,5 +1,5 @@
 import React from "react";
-import { useTheme } from "@mui/material";
+import { Box, Theme, useMediaQuery, useTheme } from "@mui/material";
 import urls from "global/constants/urls";
 import BannerSection from "./components/BannerSection";
 import AboutSection from "./components/AboutSection";
@@ -44,12 +44,21 @@ const testimonial = [
 const Home = () => {
   const theme = useTheme();
   const classes = HomeStyles(theme);
+  const lgUp = useMediaQuery((theme: Theme) => theme.breakpoints.up("lg"));
 
   const getBannerSection = () => {
-    return <BannerSection />;
+    return (
+      <Box pb={lgUp ? 10 : 0}>
+        <BannerSection />
+      </Box>
+    );
   };
   const getAboutSection = () => {
-    return <AboutSection />;
+    return (
+      <Box>
+        <AboutSection />
+      </Box>
+    );
   };
   const getChooseOurCarSection = () => {
     return <ChooseOurCarSection />;

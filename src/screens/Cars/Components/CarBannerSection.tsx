@@ -19,8 +19,7 @@ const CarsBannerSection = () => {
         sx={{
           backgroundColor: "#030303",
           width: "100%",
-          height: "100%",
-          paddingTop: isLgUp ? "80px" : "160px",
+          height: "auto",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",

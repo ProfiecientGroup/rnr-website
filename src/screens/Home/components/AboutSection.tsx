@@ -84,7 +84,8 @@ const AboutSection = () => {
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            paddingTop:isLgUp ?  10:5,
+            paddingTop: isLgUp ? 5 : 5,
+            paddingBottom: isLgUp ? 5 : 5,
           }}
         >
           <Box sx={classes.verticalLine}></Box>

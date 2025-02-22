@@ -13,7 +13,6 @@ const AbouStyles = (theme: Theme) => {
       backgroundColor: theme.palette.primary.darkest,
       width: "100%",
       height: "80vh",
-      paddingTop: "200px",
       display: "flex",
       justifyContent: "center",
       alignItems: "center",

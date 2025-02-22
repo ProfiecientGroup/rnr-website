@@ -14,13 +14,9 @@ const HomeStyles = (theme: Theme) => {
       backgroundColor: theme.palette.primary.darkest,
       width: "100%",
       height: "auto",
-      paddingTop: "150px",
       display: "flex",
       justifyContent: "center",
       alignItems: "center",
-      [theme.breakpoints.down("sm")]: {
-        paddingTop: "50px",
-      },
     },
     experiFont: {
       fontFamily: "Kugile",
@@ -48,9 +44,9 @@ const HomeStyles = (theme: Theme) => {
     },
     chooseOurCarBox: {
       width: "100%",
-      height: "100%",
+      height: "auto",
       backgroundColor: "#0E0E0E",
-      padding: 4,
+      // padding: 4,
       background: "url(" + chooseOurCar.src + ")",
       backgroundSize: "cover",
       backgroundPosition: "center",
@@ -130,14 +126,10 @@ const HomeStyles = (theme: Theme) => {
       backgroundPosition: "center",
       backgroundColor: theme.palette.primary.darkest,
       width: "100%",
-      height: "100%",
-      paddingTop: "100px",
+      height: "auto",
       display: "flex",
       justifyContent: "center",
       alignItems: "center",
-      [theme.breakpoints.down("sm")]: {
-        paddingTop: "10px",
-      },
     },
   };
 };

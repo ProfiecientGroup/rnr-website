@@ -39,7 +39,6 @@ export const useSections = () => {
         {
           title: "Contact us",
           path: viewpaths.contactUs,
-          // isExpandable: true,
         },
       ],
     },

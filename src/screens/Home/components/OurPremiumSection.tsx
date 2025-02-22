@@ -52,21 +52,20 @@ const TestimonialSection = (props: CustomProps) => {
     const data = inViewTestimonialData();
 
     return data.map((step: any, index: number) => {
-      // Define the size and opacity based on the index
-      let scale = 1; // Default size for the largest (1st box)
-      let opacity = 1; // Default opacity for the largest (1st box)
-      let width = "450px";
-      let height = "350px";
+      let scale = 1;
+      let opacity = 1;
+      let width = isLgUp ? "450px" : "auto";
+      let height = isLgUp ? "350px" : "auto";
       if (index === 1) {
-        scale = 0.9; // Slightly smaller for the 2nd box
-        opacity = 1; // Reduced opacity for the 2nd box
-        width = "400px";
-        height = "360px";
+        scale = 0.9;
+        opacity = 1;
+        width = isLgUp ? "400px" : "auto";
+        height = isLgUp ? "360px" : "auto";
       } else if (index === 2) {
-        scale = 0.8; // Smallest size for the 3rd box
-        opacity = 1; // Reduced opacity for the 3rd box
-        width = "350px";
-        height = "360px";
+        scale = 0.8;
+        opacity = 1;
+        width = isLgUp ? "350px" : "auto";
+        height = isLgUp ? "360px" : "auto";
       }
 
       return (
@@ -102,19 +101,59 @@ const TestimonialSection = (props: CustomProps) => {
             },
           }}
         >
-          <Stack direction={"column"} spacing={2}>
-            <Typography gutterBottom>{step.title}</Typography>
-            <Typography gutterBottom>{step.subTitle}</Typography>
-            <img src={step.img} width={"200px"} />
-            <Stack direction={"row"} justifyContent={"space-between"}>
+          <Stack
+            direction={"column"}
+            spacing={2}
+            height="100%"
+            justifyContent={"space-between"}
+          >
+            <Box>
+              <Typography variant="body1">{step.title}</Typography>
+              <Typography
+                gutterBottom
+                variant="body2"
+                color={theme.palette.primary.lightest}
+              >
+                {step.subTitle}
+              </Typography>
+            </Box>
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <Box
+                component={"img"}
+                src={step.img}
+                width={index === 0 ? "250px" : "200px"}
+              />
+            </Box>
+            <Stack
+              direction={"row"}
+              justifyContent={"space-between"}
+              alignItems={"center"}
+            >
               <Stack direction={"column"} spacing={0}>
-                <Typography>Start From</Typography>
-                <Typography>£60.00 / Hour</Typography>
+                <Typography color={theme.palette.primary.lightest}>
+                  Start From
+                </Typography>
+                <Typography>
+                  {step.price}{" "}
+                  <span
+                    style={{
+                      color: theme.palette.primary.lightest,
+                    }}
+                  >
+                    / Hour
+                  </span>
+                </Typography>
               </Stack>
               <Button
                 sx={{
                   color: theme.palette.primary.main,
-                  padding: 0,
+                  cursor: "pointer !important",
                 }}
               >
                 <Typography variant="button">Book Now →</Typography>
@@ -191,15 +230,15 @@ const TestimonialSection = (props: CustomProps) => {
             variant="caption"
             gutterBottom
           >
-           Our Premium
+            Our Premium
           </Typography>
           <Typography
             sx={{
               fontFamily: "kugile",
               fontWeight: 400,
               fontSize: "40px",
-              textAlign: "end",
-              marginTop:"20px !important"
+              textAlign: isLgUp ? "end" : "center",
+              marginTop: "20px !important",
             }}
           >
             Take a Look at{" "}
@@ -207,7 +246,7 @@ const TestimonialSection = (props: CustomProps) => {
               Our Chauffeur Driven Cars
             </span>
           </Typography>
-          <Typography variant="body2" >
+          <Typography variant="body2">
             Our Chauffeur Driven Cars, Central London Price Guide.{" "}
           </Typography>
         </Stack>
@@ -223,7 +262,7 @@ const TestimonialSection = (props: CustomProps) => {
           display="flex"
           spacing={2}
         >
-          {isLgUp ? getDesktopTestimonialView() : ""}
+          {getDesktopTestimonialView()}
         </Stack>
         <Stack
           direction="row"

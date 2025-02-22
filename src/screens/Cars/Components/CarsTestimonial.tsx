@@ -83,7 +83,7 @@ const CarsTestimonialSection = (props: CustomProps) => {
     <Stack
       direction="row"
       spacing={isLgUp ? 2 : 0}
-      justifyContent={isLgUp ? "space-between" : "center"}  
+      justifyContent={isLgUp ? "space-between" : "center"}
       sx={{ flexWrap: "wrap" }}
     >
       {features.map((feature, index) => (
@@ -116,7 +116,7 @@ const CarsTestimonialSection = (props: CustomProps) => {
     <Stack
       direction={isLgUp ? "row" : "column"}
       spacing={2}
-      justifyContent={isLgUp ? "space-around" :"center"}
+      justifyContent={isLgUp ? "space-around" : "center"}
       sx={{
         // flexWrap: "wrap",
         border: "1px solid #DDB86352",
@@ -126,7 +126,13 @@ const CarsTestimonialSection = (props: CustomProps) => {
       }}
     >
       {ratings.map((rating, index) => (
-        <Stack direction={"row"} spacing={5} key={index} justifyContent="center" alignItems="center">
+        <Stack
+          direction={"row"}
+          spacing={5}
+          key={index}
+          justifyContent="center"
+          alignItems="center"
+        >
           <Stack
             direction={"column"}
             spacing={1}
@@ -274,7 +280,8 @@ const CarsTestimonialSection = (props: CustomProps) => {
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
-                      paddingTop: 10,
+                      paddingTop: isLgUp ? 5 : 5,
+                      paddingBottom: isLgUp ? 5 : 5,
                     }}
                   >
                     <Box sx={classes.verticalLine}></Box>

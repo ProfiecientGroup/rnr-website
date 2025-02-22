@@ -20,27 +20,31 @@ import car3 from "../../../assets/images/home/car3.svg";
 const testimonial = [
   {
     label: "Carousel 1",
-    subTitle: "Advantage Resourcing (Massachusetts, USA)",
-    title: "Ms. Oliver",
+    subTitle: "4 Passengers",
+    title: "Mercedes S-Class",
     img: car1.src,
+    price: "£60.00",
   },
   {
     label: "Carousel 2",
-    subTitle: "Co founder of a startup (San Francisco, USA)",
-    title: "N. Milton",
+    subTitle: "4 Passengers",
+    title: "Mercedes V-Class",
     img: car2.src,
+    price: "£50.00",
   },
   {
     label: "Carousel 3",
-    title: "Jim",
-    subTitle: "Director at credit card company, (Virginia, USA)",
+    title: "Mercedes E-Class",
+    subTitle: "4 Passengers",
     img: car3.src,
+    price: "£40.00",
   },
   {
     label: "Carousel 4",
-    title: "P. Jonas",
-    subTitle: "Doctor At Hospital ( PA, USA )",
+    title: "Mercedes EV-Class",
+    subTitle: "4 Passengers",
     img: car1.src,
+    price: "£50.00",
   },
 ];
 
@@ -53,7 +57,7 @@ const ChooseOurCarSection = () => {
     <Box
       sx={{
         ...classes.chooseOurCarBox,
-        padding:isLgUp ?   "60px 0" : "30px 0",
+        // padding:isLgUp ?   "60px 0" : "30px 0",
       }}
     >
       <Box>
@@ -64,7 +68,8 @@ const ChooseOurCarSection = () => {
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            paddingTop: 10,
+            paddingTop: isLgUp ? 10 : 5,
+            paddingBottom: isLgUp ? 10 : 5,
           }}
         >
           <Box sx={classes.verticalLine}></Box>
@@ -75,7 +80,7 @@ const ChooseOurCarSection = () => {
         maxWidth="xl"
         sx={{
           "&.MuiContainer-root": {
-            paddingLeft: 0,
+            paddingLeft: isLgUp ? 0 : "none",
             marginLeft: "inherit",
           },
         }}
@@ -83,7 +88,15 @@ const ChooseOurCarSection = () => {
         <Stack direction={"column"} spacing={2}>
           <Stack direction={isLgUp ? "row" : "column"} spacing={1}>
             <Stack direction={"column"} spacing={6} sx={{ flex: 1 }}>
-              <Stack direction={"row"} spacing={2} justifyContent="flex-end">
+              <Stack
+                direction={"row"}
+                spacing={2}
+                justifyContent="flex-end"
+                sx={{
+                  position: "relative",
+                  left: isLgUp ? "97px" : 0,
+                }}
+              >
                 {[
                   {
                     title: "Chauffeurs for any Big Events",
@@ -102,9 +115,9 @@ const ChooseOurCarSection = () => {
                     alignItems={"start"}
                     key={index}
                     sx={{
-                      padding: "20px",
+                      padding: "25px",
                       borderRadius: "50px",
-                      backgroundColor: theme.palette.primary.darkest,
+                      backgroundColor: theme.palette.primary.dark,
                       color: "#fff",
                       boxShadow: "0px 6px 15px rgba(0, 0, 0, 0.5)",
                       maxWidth: "280px",
@@ -137,11 +150,18 @@ const ChooseOurCarSection = () => {
                     </Typography>
                     <Button
                       sx={{
-                        color: theme.palette.primary.main,
                         padding: 0,
                       }}
                     >
-                      <Typography variant="button">Read More →</Typography>
+                      <Typography
+                        variant="body2"
+                        sx={{
+                          textTransform: "capitalize",
+                          color: theme.palette.primary.main,
+                        }}
+                      >
+                        Read More →
+                      </Typography>
                     </Button>
                   </Stack>
                 ))}
@@ -160,14 +180,14 @@ const ChooseOurCarSection = () => {
                 }}
               />
             </Stack>
-            <Stack direction={"column"} spacing={8} sx={{ flex: 1 }}>
+            <Stack direction={"column"} spacing={8} sx={{ flex: 1 }} pt={1}>
               <Stack
                 spacing={2}
-                alignItems="flex-end"
+                alignItems={isLgUp ? "flex-end" : "center"}
                 justifyContent={"flex-end"}
               >
                 <Typography
-                  sx={{ ...classes.addressBox, width: isLgUp ? "20%" : "auto" }}
+                  sx={{ ...classes.addressBox, width: "auto" }}
                   variant="caption"
                 >
                   Why RNR?
@@ -177,13 +197,14 @@ const ChooseOurCarSection = () => {
                     fontFamily: "kugile",
                     fontWeight: 400,
                     fontSize: "42px",
-                    textAlign: "end",
+                    textAlign: isLgUp ? "end" : "center",
                   }}
                 >
-                  Why choose our Car rental{" "}
+                  Why choose our Car <br /> rental{" "}
                   <span style={{ color: theme.palette.primary.main }}>
-                    Services?
+                    Services
                   </span>
+                  ?
                 </Typography>
                 <Typography variant="body2">
                   Look at our outstanding car services for you.
@@ -219,9 +240,9 @@ const ChooseOurCarSection = () => {
                     alignItems={"start"}
                     key={index}
                     sx={{
-                      padding: "20px",
+                      padding: "25px",
                       borderRadius: "50px",
-                      backgroundColor: theme.palette.primary.darkest,
+                      backgroundColor: theme.palette.primary.dark,
                       color: "#fff",
                       boxShadow: "0px 6px 15px rgba(0, 0, 0, 0.5)",
                       maxWidth: "280px",
@@ -254,11 +275,18 @@ const ChooseOurCarSection = () => {
                     </Typography>
                     <Button
                       sx={{
-                        color: theme.palette.primary.main,
                         padding: 0,
                       }}
                     >
-                      <Typography variant="button">Read More →</Typography>
+                      <Typography
+                        variant="body2"
+                        sx={{
+                          textTransform: "capitalize",
+                          color: theme.palette.primary.main,
+                        }}
+                      >
+                        Read More →
+                      </Typography>
                     </Button>
                   </Stack>
                 ))}
@@ -272,7 +300,8 @@ const ChooseOurCarSection = () => {
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            paddingTop: 10,
+            paddingTop: isLgUp ? 5 : 5,
+            paddingBottom: isLgUp ? 5 : 5,
           }}
         >
           <Box sx={classes.verticalLine}></Box>

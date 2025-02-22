@@ -11,7 +11,8 @@ import {
 import { isTruthy } from "helpers/methods";
 import { useState } from "react";
 import HomeStyles from "../HomeStyles";
-
+import backIcon from "assets/icons/backIcon.svg";
+import NextIcon from "assets/icons/NextIcon.svg";
 interface CustomProps {
   testimonialData?: any[];
 }
@@ -149,7 +150,7 @@ const Testimonial = (props: CustomProps) => {
               bottom: 0,
               zIndex: -1,
               borderRadius: "60px",
-              padding: "5px",
+              padding: "1px",
               background:
                 "linear-gradient(87.19deg, #DDB863 4.68%, #030303 49.2%, #AD904D 95.32%)",
               WebkitMask:
@@ -178,75 +179,50 @@ const Testimonial = (props: CustomProps) => {
 
   const getDesktopIndicators = () => {
     return (
-      <>
-        <Button
-          size="small"
+      <Stack direction="row" spacing={2}>
+        <Box
           onClick={handleBack}
           sx={{
             cursor: "pointer",
-            svg: {
-              color: "#314F70",
-              cursor: "pointer",
-              width: "53px",
-              height: "53px",
-              zIndex: 1,
-            },
             "&:focus": {
-              color: "#314F70",
-              backgroundColor: "#f9fcff",
+              backgroundColor: "transparent",
             },
             "&:hover": {
-              color: "#314F70",
-              backgroundColor: "#f9fcff",
+              backgroundColor: "transparent",
             },
             transition: "all ease 2s",
           }}
         >
-          Back{" "}
-          {/* <img
-              src={roundIcon.src}
-              style={{
-                position: "relative",
-                right: 22,
-                height: "40px",
-                width: "40px",
-              }}
-            /> */}
-        </Button>
-        <Button
-          size="small"
+          <img
+            src={backIcon.src}
+            style={{
+              height: "auto",
+              width: "auto",
+            }}
+          />
+        </Box>
+        <Box
           onClick={handleNext}
           sx={{
             cursor: "pointer",
-            svg: {
-              color: "#314F70",
-              cursor: "pointer",
-              width: "47px",
-              height: "47px",
-              position: "relative",
-              right: 22,
-            },
             "&:focus": {
-              color: "#314F70",
-              backgroundColor: "#f9fcff",
+              backgroundColor: "transparent",
             },
             "&:hover": {
-              color: "#314F70",
-              backgroundColor: "#f9fcff",
+              backgroundColor: "transparent",
             },
-            transition: "all ease 0.5s",
+            transition: "all ease 2s",
           }}
         >
-          {/* <img
-              src={roundIcon.src}
-              style={{
-                height: "40px",
-                width: "40px",
-              }}
-            /> */}
-          Next
-        </Button>
-      </>
+          <img
+            src={NextIcon.src}
+            style={{
+              height: "auto",
+              width: "auto",
+            }}
+          />
+        </Box>
+      </Stack>
     );
   };
 
