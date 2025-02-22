@@ -90,8 +90,8 @@ const About = () => {
       >
         <img
           src={ourStoryCar.src}
-          width={isLgUp ? "auto" :  "300px"}
-          height={isLgUp ? "400px" : "auto"}
+          width={isLgUp ? "100%" :  "300px"}
+          height={isLgUp ? "550px" : "auto"}
           alt="Luxury car"
           style={{
             marginTop: "30px",

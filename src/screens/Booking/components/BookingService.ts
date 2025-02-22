@@ -11,6 +11,16 @@ export const doBooking = async (body: any) => {
   }
 };
 
+export const doCorporateLogin = async (body: any) => {
+  try {
+    const callParams = getCallParams("POST", body);
+    const response = await makeCall(urls.corporateLoginApiCallEndpoint, callParams);
+    return response;
+  } catch (error: any) {
+    throw error;
+  }
+};
+
 export const googleApi = async (input: string) => {
   try {
     const callParams = getCallParams("GET", undefined);

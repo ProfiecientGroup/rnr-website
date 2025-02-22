@@ -5,7 +5,8 @@ class Urls {
 
   bookingApiCallEndpoint =
     "https://ff23-2409-4050-2ebc-f010-fcc6-68e-a00-d8e6.ngrok-free.app/calculate-booking-prices";
-
+  corporateLoginApiCallEndpoint =
+    "https://ff23-2409-4050-2ebc-f010-fcc6-68e-a00-d8e6.ngrok-free.app/calculate-booking-prices";
   Pricing = `/pricing`;
 
   // Book a demo

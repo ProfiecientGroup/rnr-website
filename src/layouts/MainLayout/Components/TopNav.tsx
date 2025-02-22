@@ -19,6 +19,7 @@ import { isTruthy } from "helpers/methods";
 import urls from "global/constants/urls";
 import ContactsBanner from "./ContactsBanner";
 import { useRouter } from "next/router";
+import LoginPopup from "./CorporateLoginPopup";
 
 const TOP_NAV_HEIGHT = 64;
 
@@ -34,6 +35,7 @@ const TopNav = (props: CustomProps) => {
   const theme = useTheme();
   const router = useRouter();
   const lgUp = useMediaQuery(theme.breakpoints.up("md"));
+  const [isLoginPopupOpen, setIsLoginPopupOpen] = useState(false);
 
   useEffect(() => {
     const handleClickOutside = () => {
@@ -109,177 +111,169 @@ const TopNav = (props: CustomProps) => {
   };
 
   return (
-    <Box
-      component="header"
-      position="fixed"
-      width="100%"
-      top={0}
-      left={0}
-      sx={{
-        zIndex: (theme) => theme.zIndex.appBar,
-        background: theme.palette.primary.darkest,
-      }}
-    >
-      {!lgUp ? null : <ContactsBanner />}
-      {/* {<ContactsBanner />} */}
-      <Container
-        maxWidth="lg"
+    <>
+      <Box
+        component="header"
+        position="fixed"
+        width="100%"
+        top={0}
+        left={0}
         sx={{
-          minHeight: TOP_NAV_HEIGHT,
-          // borderBottom:
-          //   "1px solid linear-gradient(90deg, #161616 12.08%, rgba(221, 184, 99, 0.5) 64.5%, #161616 86.27%);",
-          p: 2,
-          pl: lgUp ? 6 : 2,
-          pr: lgUp ? 6 : 2,
-          backgroundColor: theme.palette.primary.darkest,
-          "&::after": {
-            content: '""',
-            position: "absolute",
-            bottom: 0,
-            left: 0,
-            width: "100%",
-            height: "2px", // Adjust the height of the border
-            background:
-              "linear-gradient(90deg, #161616 12.08%, rgba(221, 184, 99, 0.5) 64.5%, #161616 86.27%)",
-          },
+          zIndex: (theme) => theme.zIndex.appBar,
+          background: theme.palette.primary.darkest,
         }}
       >
-        <Stack
-          alignItems="center"
-          direction="row"
-          justifyContent="space-between"
-          spacing={2}
+        {!lgUp ? null : <ContactsBanner />}
+        {/* {<ContactsBanner />} */}
+        <Container
+          maxWidth="lg"
+          sx={{
+            minHeight: TOP_NAV_HEIGHT,
+            // borderBottom:
+            //   "1px solid linear-gradient(90deg, #161616 12.08%, rgba(221, 184, 99, 0.5) 64.5%, #161616 86.27%);",
+            p: 2,
+            pl: lgUp ? 6 : 2,
+            pr: lgUp ? 6 : 2,
+            backgroundColor: theme.palette.primary.darkest,
+            "&::after": {
+              content: '""',
+              position: "absolute",
+              bottom: 0,
+              left: 0,
+              width: "100%",
+              height: "2px", // Adjust the height of the border
+              background:
+                "linear-gradient(90deg, #161616 12.08%, rgba(221, 184, 99, 0.5) 64.5%, #161616 86.27%)",
+            },
+          }}
         >
-          <Link passHref href={viewpaths.home} legacyBehavior>
-            <a href={viewpaths.home}>
-              <img
-                src={Logo.src}
-                aria-label="Logo"
-                height={lgUp ? "50px" : "55px"}
-                alt="Logo"
-              />
-            </a>
-          </Link>
-          {lgUp && (
-            <>
-              <Stack
-                alignItems="center"
-                component="nav"
-                direction="row"
-                spacing={4}
-              >
-                {props.sections.map((items: any, index: number) => {
-                  return items.items.map((section: any) => {
-                    if (section.isExpandable) {
-                      return (
-                        <Stack
-                          key={section.title}
-                          direction="row"
-                          alignItems="center"
-                          spacing={1}
-                          sx={{ cursor: "pointer" }}
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setDropdown(
-                              dropdown === section.title ? "" : section.title
-                            );
-                            props.setIsDrawerOpen(dropdown !== section.title);
-                          }}
-                        >
-                          {getDropdown(section.title, section.path)}
-                        </Stack>
-                      );
-                    } else {
-                      return (
-                        <Link
-                          key={section.title}
-                          passHref
-                          href={section.path}
-                          legacyBehavior
-                        >
-                          <a
-                            href={section.path}
+          <Stack
+            alignItems="center"
+            direction="row"
+            justifyContent="space-between"
+            spacing={2}
+          >
+            <Link passHref href={viewpaths.home} legacyBehavior>
+              <a href={viewpaths.home}>
+                <img
+                  src={Logo.src}
+                  aria-label="Logo"
+                  height={lgUp ? "50px" : "55px"}
+                  alt="Logo"
+                />
+              </a>
+            </Link>
+            {lgUp && (
+              <>
+                <Stack
+                  alignItems="center"
+                  component="nav"
+                  direction="row"
+                  spacing={4}
+                >
+                  {props.sections.map((items: any, index: number) => {
+                    return items.items.map((section: any) => {
+                      if (section.isExpandable) {
+                        return (
+                          <Stack
+                            key={section.title}
+                            direction="row"
+                            alignItems="center"
+                            spacing={1}
+                            sx={{ cursor: "pointer" }}
                             onClick={(e) => {
                               e.stopPropagation();
-                              setDropdown("");
-                              props.setIsDrawerOpen(false);
-                            }}
-                            style={{
-                              textDecoration: "none",
+                              setDropdown(
+                                dropdown === section.title ? "" : section.title
+                              );
+                              props.setIsDrawerOpen(dropdown !== section.title);
                             }}
                           >
-                            <Typography
-                              variant="body2"
-                              sx={[
-                                {
-                                  textTransform: "uppercase",
-                                },
-                                isActiveTab(section.path) && {
-                                  color: theme.palette.primary.main,
-                                  fontWeight: 400,
-                                  textTransform: "uppercase",
-                                },
-                              ]}
+                            {getDropdown(section.title, section.path)}
+                          </Stack>
+                        );
+                      } else {
+                        return (
+                          <Link
+                            key={section.title}
+                            passHref
+                            href={section.path}
+                            legacyBehavior
+                          >
+                            <a
+                              href={section.path}
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                setDropdown("");
+                                props.setIsDrawerOpen(false);
+                              }}
+                              style={{
+                                textDecoration: "none",
+                              }}
                             >
-                              {section.title}
-                            </Typography>
-                          </a>
-                        </Link>
-                      );
-                    }
-                  });
-                })}
-              </Stack>
-              <Stack
-                direction="row"
-                justifyContent="center"
-                alignItems="center"
-                spacing={1.5}
-              >
-                <Link
-                  color={theme.palette.primary.main}
-                  passHref
-                  href={urls.Facebook}
-                  legacyBehavior
+                              <Typography
+                                variant="body2"
+                                sx={[
+                                  {
+                                    textTransform: "uppercase",
+                                  },
+                                  isActiveTab(section.path) && {
+                                    color: theme.palette.primary.main,
+                                    fontWeight: 400,
+                                    textTransform: "uppercase",
+                                  },
+                                ]}
+                              >
+                                {section.title}
+                              </Typography>
+                            </a>
+                          </Link>
+                        );
+                      }
+                    });
+                  })}
+                </Stack>
+                <Stack
+                  direction="row"
+                  justifyContent="center"
+                  alignItems="center"
+                  spacing={1.5}
                 >
-                  <a
-                    href={urls.Facebook}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    style={{
-                      textDecoration: "none",
+                  <Typography
+                    variant="body2"
+                    sx={{
+                      textTransform: "uppercase",
+                      cursor:"pointer"
                     }}
+                    color={theme.palette.primary.main}
+                    onClick={() => setIsLoginPopupOpen(true)}
                   >
-                    <Typography
-                      variant="body2"
-                      sx={{
-                        textTransform: "uppercase",
-                      }}
-                      color={theme.palette.primary.main}
-                    >
-                      Login
-                    </Typography>
-                  </a>
-                </Link>
-                <Button
-                  variant="contained"
-                  href={urls.Facebook}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <Typography variant="button">Book</Typography>
-                </Button>
-              </Stack>
-            </>
-          )}
-          {!lgUp && (
-            <IconButton onClick={props.onMobileNavOpen}>
-              <img src={hamburger.src} alt="Hamburger Menu" />
-            </IconButton>
-          )}
-        </Stack>
-      </Container>
-    </Box>
+                    Corporate Login
+                  </Typography>
+
+                  <Button
+                    variant="contained"
+                    href={viewpaths.bookingViewPath}
+                    rel="noopener noreferrer"
+                  >
+                    <Typography variant="button">Book</Typography>
+                  </Button>
+                </Stack>
+              </>
+            )}
+            {!lgUp && (
+              <IconButton onClick={props.onMobileNavOpen}>
+                <img src={hamburger.src} alt="Hamburger Menu" />
+              </IconButton>
+            )}
+          </Stack>
+        </Container>
+      </Box>
+      <LoginPopup
+        open={isLoginPopupOpen}
+        onClose={() => setIsLoginPopupOpen(false)}
+      />
+    </>
   );
 };
 
