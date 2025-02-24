@@ -57,7 +57,6 @@ const ChooseOurCarSection = () => {
     <Box
       sx={{
         ...classes.chooseOurCarBox,
-        // padding:isLgUp ?   "60px 0" : "30px 0",
       }}
     >
       <Box>
@@ -91,7 +90,7 @@ const ChooseOurCarSection = () => {
               <Stack
                 direction={"row"}
                 spacing={2}
-                justifyContent="flex-end"
+                justifyContent={isLgUp ? "flex-end" : "center"}
                 sx={{
                   position: "relative",
                   left: isLgUp ? "97px" : 0,
@@ -180,7 +179,7 @@ const ChooseOurCarSection = () => {
                 }}
               />
             </Stack>
-            <Stack direction={"column"} spacing={8} sx={{ flex: 1 }} pt={1}>
+            <Stack direction={"column"} spacing={8} sx={{ flex: 1 }} pt={2}>
               <Stack
                 spacing={2}
                 alignItems={isLgUp ? "flex-end" : "center"}
@@ -200,7 +199,7 @@ const ChooseOurCarSection = () => {
                     textAlign: isLgUp ? "end" : "center",
                   }}
                 >
-                  Why choose our Car <br /> rental{" "}
+                  Why choose our Car {isLgUp ? <br /> : ""} rental{" "}
                   <span style={{ color: theme.palette.primary.main }}>
                     Services
                   </span>
@@ -221,7 +220,11 @@ const ChooseOurCarSection = () => {
                 </Button>
               </Stack>
 
-              <Stack direction={"row"} spacing={2} justifyContent="flex-end">
+              <Stack
+                direction={"row"}
+                spacing={2}
+                justifyContent={isLgUp ? "flex-end" : "center"}
+              >
                 {[
                   {
                     title: "Simple by the hour pricing",
@@ -300,8 +303,8 @@ const ChooseOurCarSection = () => {
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            paddingTop: isLgUp ? 5 : 5,
-            paddingBottom: isLgUp ? 5 : 5,
+            paddingTop: isLgUp ? 10 : 5,
+            paddingBottom: isLgUp ? 10 : 5,
           }}
         >
           <Box sx={classes.verticalLine}></Box>

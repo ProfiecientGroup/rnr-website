@@ -13,8 +13,6 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   }
 
   try {
-    console.log("Making request to Google API...");
-
     const response = await fetch(
       `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${encodeURIComponent(
         input
@@ -22,16 +20,16 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     );
 
     const responseText = await response.text();
-    console.log("Google API response:", responseText); // Log the raw Google API response
 
     // Check if the response is valid JSON, not HTML (such as an error page)
     if (responseText.startsWith("<!DOCTYPE html>")) {
-      console.error("Received HTML instead of JSON. The Google API might be down or the key is invalid.");
+      console.error(
+        "Received HTML instead of JSON. The Google API might be down or the key is invalid."
+      );
       throw new Error("Received HTML instead of JSON");
     }
 
     const data = JSON.parse(responseText); // Parse the JSON response
-    console.log("Parsed response:", data); // Log the parsed response
 
     if (response.ok) {
       return res.status(200).json(data); // Return the Google Places API response

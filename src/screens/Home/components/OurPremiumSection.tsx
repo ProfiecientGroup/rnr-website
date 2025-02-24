@@ -251,7 +251,7 @@ const TestimonialSection = (props: CustomProps) => {
           </Typography>
         </Stack>
         <Stack
-          direction={{ lg: "row", sm: "column" }}
+          direction={{ lg: "row", sm: "column",xs:"column" }}
           justifyContent={{
             lg: "center",
             sm: "center",

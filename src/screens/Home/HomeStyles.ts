@@ -20,7 +20,7 @@ const HomeStyles = (theme: Theme) => {
     },
     experiFont: {
       fontFamily: "Kugile",
-      fontSize: "42px",
+      fontSize: "48px",
       fontWeight: "400",
       textAlign: "center",
       lineHeight: "63px",

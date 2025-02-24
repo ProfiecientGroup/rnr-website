@@ -38,6 +38,7 @@ interface CustomProps {
 const MainLayout = (props: CustomProps) => {
   const { children } = props;
   const lgUp = useMediaQuery((theme: Theme) => theme.breakpoints.up("lg"));
+  const smUp = useMediaQuery((theme: Theme) => theme.breakpoints.up("sm"));
   const mobileNav = useMobileNav();
   const sections = useSections();
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -57,7 +58,7 @@ const MainLayout = (props: CustomProps) => {
           sections={sections}
         />
       )}
-      <LayoutRoot sx={{ paddingTop: lgUp ? 30 : 15 }}>
+      <LayoutRoot sx={{ paddingTop: lgUp ? 30 : smUp ? 22 : 15 }}>
         <LayoutContainer>{children}</LayoutContainer>
       </LayoutRoot>
       <Footer />

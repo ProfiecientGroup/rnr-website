@@ -117,8 +117,6 @@ const CustomContactNumberInput: React.FC<MUIPhoneProps> = ({
               >
                 {defaultCountries.map((c: any) => {
                   const country = parseCountry(c);
-                  console.log("country", country);
-
                   return (
                     <MenuItem
                       key={country.iso2}

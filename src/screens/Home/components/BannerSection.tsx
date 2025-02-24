@@ -67,22 +67,22 @@ const BannerSection = () => {
         maxWidth="lg"
         sx={{
           minHeight: TOP_NAV_HEIGHT,
-          // p: 2,
-          // pl: lgUp ? 6 : 2,
-          // pr: lgUp ? 6 : 1,
+          p: 2,
+          pl: lgUp ? 6 : 2,
+          pr: lgUp ? 6 : 1,
         }}
       >
         <Stack
-          alignItems="self-start"
-          direction={lgUp ? "row" : "column"}
-          justifyContent="space-between"
+          direction={{ lg: "row", md: "column", sm: "column", xs: "column" }}
           spacing={lgUp ? 10 : 1}
         >
           <Stack
-            alignItems="center"
             direction="column"
-            justifyContent="space-between"
             spacing={3}
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+            width="100%"
           >
             <Box>
               <Typography sx={classes.experiFont} variant="h6">
@@ -118,105 +118,113 @@ const BannerSection = () => {
               width={lgUp ? "auto" : "100%"}
             />
           </Stack>
-          <Stack
-            direction={"column"}
-            spacing={4}
+          <Box
             display="flex"
-            justifyContent={"center"}
-            alignItems={"center"}
-            sx={classes.contactBox}
+            alignItems="center"
+            justifyContent="center"
+            width="100%"
           >
             <Stack
-              direction={"row"}
-              spacing={3}
+              direction={"column"}
+              spacing={4}
               display="flex"
-              justifyContent={"center"}
-              alignItems={"center"}
+              alignItems="center"
+              justifyContent="center"
+              width="100%"
+              sx={classes.contactBox}
             >
-              <Typography sx={classes.addressBox} variant="caption">
-                Address
-              </Typography>
-              <Typography sx={classes.pickupBox} variant="caption">
-                Airport
-              </Typography>
-            </Stack>
-            <Box sx={classes.verticalLine}></Box>
-            <Stack
-              direction="column"
-              spacing={2}
-              display="flex"
-              justifyContent={"center"}
-              alignItems={"center"}
-              width={"100%"}
-            >
-              <TextField
-                placeholder="Enter your email"
-                variant="outlined"
-                value={email.value}
-                onChange={handleChange}
-                // InputProps={{
-                //   startAdornment: (
-                //     <InputAdornment position="start">
-                //       <MailOutlineIcon />
-                //     </InputAdornment>
-                //   ),
-                // }}
-                sx={classes.textInputField}
-              />
-              <TextField
-                placeholder="Enter your email"
-                variant="outlined"
-                value={email.value}
-                onChange={handleChange}
-                // InputProps={{
-                //   startAdornment: (
-                //     <InputAdornment position="start">
-                //       <MailOutlineIcon />
-                //     </InputAdornment>
-                //   ),
-                // }}
-                sx={classes.textInputField}
-              />
-              {isSuccess ? (
-                <Stack
-                  direction="row"
-                  justifyContent="center"
-                  spacing={0.5}
-                  pr={1}
-                >
-                  {/* <DoneIcon
+              <Stack
+                direction={"row"}
+                spacing={3}
+                display="flex"
+                justifyContent={"center"}
+                alignItems={"center"}
+              >
+                <Typography sx={classes.addressBox} variant="caption">
+                  Address
+                </Typography>
+                <Typography sx={classes.pickupBox} variant="caption">
+                  Airport
+                </Typography>
+              </Stack>
+              <Box sx={classes.verticalLine}></Box>
+              <Stack
+                direction="column"
+                spacing={2}
+                display="flex"
+                justifyContent={"center"}
+                alignItems={"center"}
+                width={"100%"}
+              >
+                <TextField
+                  placeholder="Enter your email"
+                  variant="outlined"
+                  value={email.value}
+                  onChange={handleChange}
+                  // InputProps={{
+                  //   startAdornment: (
+                  //     <InputAdornment position="start">
+                  //       <MailOutlineIcon />
+                  //     </InputAdornment>
+                  //   ),
+                  // }}
+                  sx={classes.textInputField}
+                />
+                <TextField
+                  placeholder="Enter your email"
+                  variant="outlined"
+                  value={email.value}
+                  onChange={handleChange}
+                  // InputProps={{
+                  //   startAdornment: (
+                  //     <InputAdornment position="start">
+                  //       <MailOutlineIcon />
+                  //     </InputAdornment>
+                  //   ),
+                  // }}
+                  sx={classes.textInputField}
+                />
+                {isSuccess ? (
+                  <Stack
+                    direction="row"
+                    justifyContent="center"
+                    spacing={0.5}
+                    pr={1}
+                  >
+                    {/* <DoneIcon
                                   fontSize="small"
                                   htmlColor="#ACC737"
                                 /> */}
-                  <Typography variant="subtitle2" color="#ACC737">
-                    Subscribed
-                  </Typography>
-                </Stack>
-              ) : (
-                <Button
-                  variant="contained"
-                  fullWidth
-                  onClick={handleSubmit}
-                  sx={{
-                    backgroundColor: theme.palette.primary.contrastText,
-                    color: "#fff",
-                    width: "100%",
-                    borderRadius: "100px",
-                    textTransform: "uppercase",
-                    "&:hover": {
+                    <Typography variant="subtitle2" color="#ACC737">
+                      Subscribed
+                    </Typography>
+                  </Stack>
+                ) : (
+                  <Button
+                    variant="contained"
+                    fullWidth
+                    onClick={handleSubmit}
+                    sx={{
                       backgroundColor: theme.palette.primary.contrastText,
-                    },
-                  }}
-                >
-                  {isLoading ? (
-                    <CircularProgress size="1.5rem" sx={{ width: "100%" }} />
-                  ) : (
-                    "Subscribe"
-                  )}
-                </Button>
-              )}
+                      color: "#fff",
+                      width: "100%",
+                      borderRadius: "100px",
+                      textTransform: "uppercase",
+                      "&:hover": {
+                        backgroundColor: theme.palette.primary.contrastText,
+                      },
+                    }}
+                  >
+                    {isLoading ? (
+                      <CircularProgress size="1.5rem" sx={{ width: "100%" }} />
+                    ) : (
+                      "Subscribe"
+                    )}
+                  </Button>
+                )}
+              </Stack>
             </Stack>
-          </Stack>
+          </Box>
         </Stack>
       </Container>
     </Box>

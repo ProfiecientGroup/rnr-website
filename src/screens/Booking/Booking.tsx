@@ -98,9 +98,6 @@ const Booking = () => {
     message: "",
   });
 
-  console.log(formData, "gjhjh");
-  console.log("bookingErrors", bookingErrors);
-
   const BookingDetailsValidate = async (): Promise<boolean> => {
     let newErrors = { ...bookingErrors };
     let isValid = true;

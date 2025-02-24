@@ -13,6 +13,10 @@ import { useState } from "react";
 import HomeStyles from "../HomeStyles";
 import backIcon from "assets/icons/backIcon.svg";
 import NextIcon from "assets/icons/NextIcon.svg";
+import SwipeableViews from "react-swipeable-views";
+import { autoPlay } from "react-swipeable-views-utils";
+const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
+
 interface CustomProps {
   testimonialData?: any[];
 }
@@ -40,60 +44,84 @@ const Testimonial = (props: CustomProps) => {
   const getMobileTestimonialView = () => {
     return (
       <>
-        {/* <AutoPlaySwipeableViews
-            axis={theme.direction === "rtl" ? "x-reverse" : "x"}
-            index={activeStep}
-            onChangeIndex={handleStepChange}
-            enableMouseEvents
-            style={{ width: "100%", maxWidth: "600px", margin: "0 auto" }}
-          >
-            {props.testimonialData?.map((step, index) => (
-              <Box
-                key={step.label}
-                sx={{
-                  display: "flex",
-                  justifyContent: "center",
-                }}
-              >
-                {Math.abs(activeStep - index + 1) <= 1 && (
-                  <Box
-                    sx={{
-                      height: "auto",
-                      width: "90vw",
-                      overflow: "hidden",
-                      backgroundColor: "#F9FCFF",
-                      boxShadow: "0px 4px 18px rgba(0, 0, 5, 0.05)",
-                      borderRadius: "30px",
-                      borderTopLeftRadius: 1,
-                      textAlign: "center",
-                      padding: 3,
-                      [theme.breakpoints.down("lg")]: {
-                        height: "auto",
-                        width: "267px",
-                        padding: "16px",
-                      },
+        <AutoPlaySwipeableViews
+          axis={theme.direction === "rtl" ? "x-reverse" : "x"}
+          index={activeStep}
+          onChangeIndex={handleStepChange}
+          enableMouseEvents
+          interval={10000}
+          springConfig={{
+            duration: "1s",
+            easeFunction: "1s ease-in-out",
+            delay: "1000s",
+          }}
+          autoPlay
+          style={{ width: "100%", maxWidth: "600px", margin: "0 auto" }}
+        >
+          {props.testimonialData?.map((step, index) => (
+            <Box
+              key={step.label}
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+              }}
+            >
+              {Math.abs(activeStep - index + 1) <= 1 && (
+                <Box
+                  sx={{
+                    borderRadius: "60px",
+                    margin: "10px",
+                    background: "#1A1A1A",
+                    height: "300px",
+                    width: "605.2px",
+                    maxHeight: "100%",
+                    overflow: "hidden",
+                    textAlign: "center",
+                    padding: 2,
+                    [theme.breakpoints.down("xl")]: {
+                      width: "378.2px",
+                      height: "50vh",
+                      maxHeight: "100%",
+                    },
+                    border: "1px solid transparent",
+                    position: "relative",
+                    opacity: 0.9,
+                    "::before": {
+                      content: '""',
+                      position: "absolute",
+                      top: 0,
+                      left: 0,
+                      right: 0,
+                      bottom: 0,
+                      zIndex: -1,
+                      borderRadius: "60px",
+                      padding: "1px",
+                      background:
+                        "linear-gradient(87.19deg, #DDB863 4.68%, #030303 49.2%, #AD904D 95.32%)",
+                      WebkitMask:
+                        "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
+                      WebkitMaskComposite: "destination-out",
+                      maskComposite: "exclude",
+                    },
+                  }}
+                >
+                  <Typography gutterBottom>{step.title}</Typography>
+                  <Typography gutterBottom>{step.subTitle}</Typography>
+                  <Typography gutterBottom>{step.des}</Typography>
+                  <Rating
+                    readOnly
+                    style={{
+                      top: "12px",
                     }}
-                  >
-                    <Typography gutterBottom sx={classes.imgText}>
-                      {step.title}
-                    </Typography>
-                    <Typography gutterBottom sx={classes.subTitleText}>
-                      {step.subTitle}
-                    </Typography>
-                    <Typography gutterBottom sx={classes.desText}>
-                      {step.des}
-                    </Typography>
-                    <Rating
-                      readOnly
-                      name="half-rating-read"
-                      defaultValue={4.5}
-                      precision={0.5}
-                    />
-                  </Box>
-                )}
-              </Box>
-            ))}
-          </AutoPlaySwipeableViews> */}
+                    name="half-rating-read"
+                    defaultValue={4.5}
+                    precision={0.5}
+                  />
+                </Box>
+              )}
+            </Box>
+          ))}
+        </AutoPlaySwipeableViews>
       </>
     );
   };
@@ -228,8 +256,13 @@ const Testimonial = (props: CustomProps) => {
 
   return (
     <>
-      <Container maxWidth="lg" sx={{ pb: 6 }}>
-        <Stack direction="row" spacing={2} justifyContent="space-between">
+      <Container maxWidth="lg" sx={{ pb: 6,pt:3 }}>
+        <Stack
+          direction={isDesktop ? "row" : "column"}
+          spacing={2}
+          justifyContent={isDesktop ? "space-between" : "center"}
+          alignItems={isDesktop ? "center" : "center"}
+        >
           <Box>
             <Typography sx={{ ...classes.addressBox }} variant="caption">
               Testimonial
@@ -240,7 +273,6 @@ const Testimonial = (props: CustomProps) => {
                 fontWeight: 400,
                 fontSize: "42px",
                 pt: 4,
-                // textAlign: "end",
               }}
             >
               What our{" "}
@@ -249,7 +281,15 @@ const Testimonial = (props: CustomProps) => {
               </span>
             </Typography>
           </Box>
-          <Typography>Our client sent </Typography>
+          <Typography
+            sx={{
+              wordBreak: "break-all",
+              width: isDesktop ? "26%" : "auto",
+            }}
+          >
+            Our client sent a bunch of smiles with our services and we love
+            them.{" "}
+          </Typography>
         </Stack>
       </Container>
       <Stack

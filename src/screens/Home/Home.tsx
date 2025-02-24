@@ -54,11 +54,7 @@ const Home = () => {
     );
   };
   const getAboutSection = () => {
-    return (
-      <Box>
-        <AboutSection />
-      </Box>
-    );
+    return <AboutSection />;
   };
   const getChooseOurCarSection = () => {
     return <ChooseOurCarSection />;

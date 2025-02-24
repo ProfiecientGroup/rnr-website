@@ -135,224 +135,127 @@ const Footer = () => {
           </Link>
         </Box>
         <Stack spacing={3}>
-          <Stack>
-            <Grid container spacing={2}>
-              <Grid item xs={12} md={8}>
-                <Grid container spacing={6}>
-                  <Grid item xs={6} md={4}>
-                    <Stack spacing={2.5}>
-                      <Typography variant="body2">
-                        Unparalleled levels of service for a surprisingly
-                        affordable price. The finest selection of vehicles –
-                        coupled with the best chauffeurs in the business.
-                      </Typography>
-                      <Link
-                        color="#212121"
-                        passHref
-                        href={viewpaths.contactUs}
-                        legacyBehavior
-                      >
-                        <a
-                          href={viewpaths.contactUs}
-                          style={{
-                            textDecoration: "none",
-                          }}
-                        >
-                          <Stack direction="row" spacing={1}>
-                            <img src={mainIcon.src} alt="Contact Us" />{" "}
-                            <Typography
-                              variant="body2"
-                              sx={{ color: theme.palette.primary.light }}
-                            >
-                              {strings.EMAIL}
-                            </Typography>
-                          </Stack>
-                        </a>
-                      </Link>
-                      <Link
-                        color="#212121"
-                        passHref
-                        href={viewpaths.contactUs}
-                        legacyBehavior
-                      >
-                        <a
-                          href={viewpaths.contactUs}
-                          style={{
-                            textDecoration: "none",
-                          }}
-                        >
-                          <Stack direction="row" spacing={1}>
-                            <img src={uk_flag_icon.src} alt="Contact Us" />{" "}
-                            <Typography
-                              variant="body2"
-                              sx={{ color: theme.palette.primary.light }}
-                            >
-                              {strings.PHONE}
-                            </Typography>
-                          </Stack>
-                        </a>
-                      </Link>
-                    </Stack>
-                  </Grid>
-                  <Grid item xs={6} md={4}>
-                    <Stack spacing={1}>
+          <Grid container spacing={3}>
+            <Grid
+              item
+              xs={12}
+              sm={4}
+              md={4}
+              display="flex"
+              justifyContent="center"
+              alignItems="start"
+              sx={{ paddingLeft: "0 !important" }}
+            >
+              <Stack spacing={2.5}>
+                <Typography variant="body2">
+                  Unparalleled levels of service for a surprisingly affordable
+                  price. The finest selection of vehicles – coupled with the
+                  best chauffeurs in the business.
+                </Typography>
+                <Link
+                  color="#212121"
+                  passHref
+                  href={viewpaths.contactUs}
+                  legacyBehavior
+                >
+                  <a
+                    href={viewpaths.contactUs}
+                    style={{
+                      textDecoration: "none",
+                    }}
+                  >
+                    <Stack direction="row" spacing={1}>
+                      <img src={mainIcon.src} alt="Contact Us" />{" "}
                       <Typography
-                        color={theme.palette.primary.lightest}
                         variant="body2"
-                        sx={{
-                          textTransform: "uppercase",
-                        }}
+                        sx={{ color: theme.palette.primary.light }}
                       >
-                        Our Cars
+                        {strings.EMAIL}
                       </Typography>
-                      <Stack spacing={0.5}>
-                        {getLinkItem("Mercedes V-Class & EQV", viewpaths.home)}
-                        {getLinkItem("Mercedes S-Class", viewpaths.home)}
-                        {getLinkItem("Mercedes E-Class", viewpaths.home)}
-                      </Stack>
                     </Stack>
-                  </Grid>
-                  <Grid item xs={6} md={4}>
-                    <Stack spacing={1}>
+                  </a>
+                </Link>
+                <Link
+                  color="#212121"
+                  passHref
+                  href={viewpaths.contactUs}
+                  legacyBehavior
+                >
+                  <a
+                    href={viewpaths.contactUs}
+                    style={{
+                      textDecoration: "none",
+                    }}
+                  >
+                    <Stack direction="row" spacing={1}>
+                      <img src={uk_flag_icon.src} alt="Contact Us" />{" "}
                       <Typography
-                        color={theme.palette.primary.lightest}
                         variant="body2"
-                        sx={{
-                          textTransform: "uppercase",
-                        }}
+                        sx={{ color: theme.palette.primary.light }}
                       >
-                        OUR SERVICES
+                        {strings.PHONE}
                       </Typography>
-                      <Stack spacing={0.5}>
-                        {getLinkItem("Events", viewpaths.terms)}
-                        {getLinkItem("One Way", viewpaths.terms)}
-                        {getLinkItem("By the Hour", viewpaths.terms)}
-                        {getLinkItem("Airport", viewpaths.terms)}
-                      </Stack>
                     </Stack>
-                  </Grid>
-                </Grid>
-              </Grid>
-              <Grid item xs={12} md={4} width="100%">
-                <Stack spacing={2}>
-                  <Typography
-                    variant="body2"
-                    color={theme.palette.primary.light}
-                  >
-                    JOIN THE CLUB
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    color={theme.palette.primary.lightest}
-                    fontSize="28px"
-                  >
-                    Sign up for the latest news on our cars, services &
-                    chauffeurs.
-                  </Typography>
-                  <Stack
-                    direction="column"
-                    spacing={1}
-                    sx={{ justifyContent: "center" }}
-                  >
-                    <TextField
-                      placeholder="Enter your email"
-                      variant="outlined"
-                      value={email.value}
-                      onChange={handleChange}
-                      InputProps={{
-                        startAdornment: (
-                          <InputAdornment position="start">
-                            <MailOutlineIcon />
-                          </InputAdornment>
-                        ),
-                      }}
-                      sx={{
-                        backgroundColor: "transparent",
-                        borderRadius: "100px",
-                        width: "100%",
-                        maxWidth: "400px",
-                        border: "1px solid #655737",
-                        "&.MuiTextField-root .MuiOutlinedInput-root:hover": {
-                          backgroundColor: "transparent",
-                        },
-                        "& .css-ovna53-MuiInputBase-input-MuiOutlinedInput-input":
-                          {
-                            backgroundColor: "transparent",
-                            padding: "10px 10px",
-                            borderRadius: "100px",
-                          },
-                        "& .css-fayl5t-MuiInputBase-input-MuiOutlinedInput-input":
-                          {
-                            backgroundColor: "transparent",
-                            color: "#FFFFFF",
-                          },
-                        "& .MuiInputBase-input": {
-                          border: "1px solid #101010",
-                        },
-                        "& .MuiOutlinedInput-root": {
-                          paddingRight: 0,
-                          "& fieldset": {
-                            borderColor: "transparent",
-                            border: "100px",
-                            borderTopLeftRadius: "100px",
-                            borderBottomLeftRadius: "100px",
-                            borderTopRightRadius: "100px",
-                            borderBottomRightRadius: "100px",
-                          },
-                        },
-                      }}
-                    />
-                    {isSuccess ? (
-                      <Stack
-                        direction="row"
-                        justifyContent="center"
-                        spacing={0.5}
-                        pr={1}
-                      >
-                        {/* <DoneIcon
-                                  fontSize="small"
-                                  htmlColor="#ACC737"
-                                /> */}
-                        <Typography variant="subtitle2" color="#ACC737">
-                          Subscribed
-                        </Typography>
-                      </Stack>
-                    ) : (
-                      <Button
-                        variant="contained"
-                        fullWidth
-                        onClick={handleSubmit}
-                        sx={{
-                          backgroundColor: theme.palette.primary.contrastText,
-                          color: "#fff",
-                          width: "100%",
-                          borderRadius: "100px",
-                          textTransform: "uppercase",
-                          "&:hover": {
-                            backgroundColor: theme.palette.primary.contrastText,
-                          },
-                        }}
-                      >
-                        {isLoading ? (
-                          <CircularProgress
-                            size="1.5rem"
-                            sx={{ width: "100%" }}
-                          />
-                        ) : (
-                          "Subscribe"
-                        )}
-                      </Button>
-                    )}
-                    {isTruthy(email.error) && (
-                      <FormHelperText error sx={{ pl: 1 }}>
-                        {email.error}
-                      </FormHelperText>
-                    )}
-                  </Stack>
-                </Stack>
-              </Grid>
+                  </a>
+                </Link>
+              </Stack>
             </Grid>
-          </Stack>
+            <Grid
+              item
+              xs={12}
+              sm={4}
+              md={4}
+              display="flex"
+              justifyContent={{ md: "end", sm: "end", sx: "start" }}
+              alignItems="start"
+              sx={{ paddingLeft: "0 !important" }}
+            >
+              <Stack spacing={1}>
+                <Typography
+                  color={theme.palette.primary.lightest}
+                  variant="body2"
+                  sx={{
+                    textTransform: "uppercase",
+                  }}
+                >
+                  Our Cars
+                </Typography>
+                <Stack spacing={0.5}>
+                  {getLinkItem("Mercedes V-Class & EQV", viewpaths.home)}
+                  {getLinkItem("Mercedes S-Class", viewpaths.home)}
+                  {getLinkItem("Mercedes E-Class", viewpaths.home)}
+                </Stack>
+              </Stack>
+            </Grid>
+            <Grid
+              item
+              xs={12}
+              sm={4}
+              md={4}
+              display="flex"
+              justifyContent={{ md: "end", sm: "end", sx: "start" }}
+              alignItems="start"
+              sx={{ paddingLeft: "0 !important" }}
+            >
+              <Stack spacing={1}>
+                <Typography
+                  color={theme.palette.primary.lightest}
+                  variant="body2"
+                  sx={{
+                    textTransform: "uppercase",
+                  }}
+                >
+                  OUR SERVICES
+                </Typography>
+                <Stack spacing={0.5}>
+                  {getLinkItem("Events", viewpaths.terms)}
+                  {getLinkItem("One Way", viewpaths.terms)}
+                  {getLinkItem("By the Hour", viewpaths.terms)}
+                  {getLinkItem("Airport", viewpaths.terms)}
+                </Stack>
+              </Stack>
+            </Grid>
+          </Grid>
           <Divider
             sx={{
               borderColor: "#E5E7EB33",
