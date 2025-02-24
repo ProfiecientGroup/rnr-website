@@ -36,11 +36,11 @@ const CarsBannerSection = () => {
         >
           <Stack
             direction={isLgUp ? "row" : "column"}
-            justifyContent={isLgUp ? "flex-end" : "center"}
+            justifyContent={isLgUp ? "flex-end" : "flex-end"}
             alignItems={isLgUp ? "center" : "flex-start"}
             spacing={4}
           >
-            <Stack direction={"column"} justifyContent={"center"} spacing={1}>
+            <Stack direction={"column"} justifyContent={"center"} spacing={1} p={1}>
               <Typography
                 sx={{
                   fontFamily: "kugile",
@@ -67,8 +67,10 @@ const CarsBannerSection = () => {
               src={bannerCar.src}
               width={isLgUp ? "65%" : isMdUp ? "80%" : "100%"}
               style={{
-                alignSelf: isLgUp ? "flex-start" : "center",
+                alignSelf: isLgUp ? "flex-start" : "end",
                 marginTop: isLgUp ? 0 : "20px",
+                position:"relative",
+                bottom:isLgUp?70 : 0
               }}
             />
           </Stack>

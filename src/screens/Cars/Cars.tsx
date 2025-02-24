@@ -12,11 +12,9 @@ import icon4 from "../../assets/images/cars/icon4.svg";
 const carTestimonialData = [
   {
     carsImages: [
-      { img: car1.src, text: "1" },
-      { img: car1.src, text: "2" },
-      { img: car1.src, text: "3" },
-      { img: car1.src, text: "4" },
-      { img: car1.src, text: "5" },
+      { img: car1.src },
+      { img: car1.src },
+      { img: car1.src },
     ],
     title: "Mercedes S-Class",
     des: "The Mercedes S-Class blends sophistication and practicality. With seating for three, it provides a comfortable travel experience, complemented by complimentary Wi-Fi. Ideal for those who appreciate a touch of luxury in a compact setting.",
@@ -39,34 +37,32 @@ const carTestimonialData = [
       },
     ],
     ratings: [
-      { price: "£75", title: "Hourly rate (minimum 3 hours)" },
-      { price: "£600", title: "Hourly rate (minimum 3 hours)" },
+      { price: "£40", title: "Hourly rate (minimum 3 hours)" },
+      { price: "£600", title: "Day rate (8 hours)" },
       { price: "", title: "Prices subject to VAT" },
       { price: "", title: "", btn: true },
     ],
   },
   {
     carsImages: [
-      { img: car1.src, text: "1" },
-      { img: car1.src, text: "2" },
-      { img: car1.src, text: "3" },
-      { img: car1.src, text: "4" },
-      { img: car1.src, text: "5" },
+      { img: car1.src },
+      { img: car1.src },
+      { img: car1.src },
     ],
-    title: "Mercedes S-Class",
+    title: "Mercedes V-Class",
     des: "The Mercedes S-Class blends sophistication and practicality. With seating for three, it provides a comfortable travel experience, complemented by complimentary Wi-Fi. Ideal for those who appreciate a touch of luxury in a compact setting.",
     keyFeatures: [
       {
         icon: icon1.src,
-        name: "4 Passengers",
+        name: "6/7 Passengers",
       },
       {
         icon: icon2.src,
-        name: "2 Suitcases",
+        name: "8 Suitcases",
       },
       {
         icon: icon3.src,
-        name: "Hybrid Available",
+        name: "Electric option",
       },
       {
         icon: icon4.src,
@@ -74,21 +70,19 @@ const carTestimonialData = [
       },
     ],
     ratings: [
-      { price: "£75", title: "Hourly rate (minimum 3 hours)" },
-      { price: "£600", title: "Hourly rate (minimum 3 hours)" },
+      { price: "£40", title: "Hourly rate (minimum 3 hours)" },
+      { price: "£600", title: "Day rate (8 hours)" },
       { price: "", title: "Prices subject to VAT" },
       { price: "", title: "", btn: true },
     ],
   },
   {
     carsImages: [
-      { img: car1.src, text: "1" },
-      { img: car1.src, text: "2" },
-      { img: car1.src, text: "3" },
-      { img: car1.src, text: "4" },
-      { img: car1.src, text: "5" },
+      { img: car1.src },
+      { img: car1.src },
+      { img: car1.src },
     ],
-    title: "Mercedes S-Class",
+    title: "Mercedes E-Class",
     des: "The Mercedes S-Class blends sophistication and practicality. With seating for three, it provides a comfortable travel experience, complemented by complimentary Wi-Fi. Ideal for those who appreciate a touch of luxury in a compact setting.",
     keyFeatures: [
       {
@@ -97,11 +91,11 @@ const carTestimonialData = [
       },
       {
         icon: icon2.src,
-        name: "2 Suitcases",
+        name: "2 Small cases",
       },
       {
         icon: icon3.src,
-        name: "Hybrid Available",
+        name: "2 Bags",
       },
       {
         icon: icon4.src,
@@ -109,7 +103,7 @@ const carTestimonialData = [
       },
     ],
     ratings: [
-      { price: "£75", title: "Hourly rate (minimum 3 hours)" },
+      { price: "£30", title: "Hourly rate (minimum 3 hours)" },
       { price: "£600", title: "Hourly rate (minimum 3 hours)" },
       { price: "", title: "Prices subject to VAT" },
       { price: "", title: "", btn: true },

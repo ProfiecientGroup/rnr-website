@@ -85,7 +85,8 @@ const AboutSection = () => {
             alignItems: "center",
             justifyContent: "center",
             paddingTop: isLgUp ? 10 : 5,
-            paddingBottom: isLgUp ? 10 : 5,          }}
+            paddingBottom: isLgUp ? 10 : 5,
+          }}
         >
           <Box sx={classes.verticalLine}></Box>
         </Box>

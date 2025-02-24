@@ -11,29 +11,32 @@ import {
 } from "@mui/material";
 import ServicesStyles from "../ServicesStyles";
 import bannerCar from "assets/images/services/bannerCar.png";
-import Sporting from "assets/images/services/sporting-icon.png";
+import sporting from "assets/images/services/sporting-icon.png";
+import awards from "assets/images/services/award-icon.png";
+import conferences from "assets/images/services/conferences-icon.png";
+import exhibitions from "assets/images/services/exhibitions-icon.png";
 import urls from "global/constants/urls";
 import viewpaths from "global/constants/viewPathConstants";
 const eventsData = [
   {
-    icon: Sporting.src,
-    text: "sporting",
+    icon: awards.src,
+    text: "Awards",
     des: "From the BAFTAs to the Brits let us help you organize your ground transportation.",
   },
   {
-    icon: Sporting.src,
-    text: "sporting",
-    des: "From the BAFTAs to the Brits let us help you organize your ground transportation.",
+    icon: conferences.src,
+    text: "Conferences",
+    des: "From science & academic conferences to news conferences. We move large groups safely.",
   },
   {
-    icon: Sporting.src,
-    text: "sporting",
-    des: "From the BAFTAs to the Brits let us help you organize your ground transportation.",
+    icon: exhibitions.src,
+    text: "Exhibitions",
+    des: "Luxury travel solutions to museums, galleries and exhibition halls.",
   },
   {
-    icon: Sporting.src,
-    text: "sporting",
-    des: "From the BAFTAs to the Brits let us help you organize your ground transportation.",
+    icon: sporting.src,
+    text: "Sporting Events",
+    des: "From Formula 1 to Rugby Internationals, we’ve excelled at them all.",
   },
 ];
 const BannerSection = () => {
@@ -44,16 +47,7 @@ const BannerSection = () => {
   return (
     <Box sx={classes.bgBox}>
       <Stack direction="column" spacing={2}>
-        <Container
-          maxWidth="lg"
-          // sx={{
-          //   "&.MuiContainer-root": {
-          //     paddingRight: 0,
-          //     paddingLeft: 9,
-          //     marginRight: "inherit",
-          //   },
-          // }}
-        >
+        <Container maxWidth="lg">
           <Stack direction="column" spacing={1}>
             <Typography sx={classes.kugileFont}>
               Chauffeur for any big{" "}
@@ -96,16 +90,25 @@ const BannerSection = () => {
           }}
         >
           <Stack direction={lgUp ? "row" : "column"} spacing={1} mt={3}>
-            <Grid container spacing={0} width={"100%"}>
+            <Grid container spacing={0} width={"100%"} p={1}>
               {eventsData.map((item: any, index: number) => {
                 return (
                   <Grid item lg={6}>
-                    <Stack direction="column" spacing={2} >
-                      <Stack direction="row" spacing={2}>
-                        <img src={item.icon} height={40} width={40} />
-                        <Typography>{item.text}</Typography>
+                    <Stack direction="column" spacing={2} mb={1}>
+                      <Stack direction="row" spacing={2} alignItems="center">
+                        <img src={item.icon} height={35} width={35} />
+                        <Typography
+                          sx={{
+                            fontFamily: "Kugile",
+                            fontSize: "23px",
+                            color: theme.palette.primary.main,
+                          }}
+                          variant="body1"
+                        >
+                          {item.text}
+                        </Typography>
                       </Stack>
-                      <Typography>{item.des}</Typography>
+                      <Typography variant="body2">{item.des}</Typography>
                     </Stack>
                   </Grid>
                 );
@@ -113,11 +116,11 @@ const BannerSection = () => {
             </Grid>
             <img
               src={bannerCar.src}
-              width={lgUp ? "830px" : "30%"}
+              width={lgUp ? "830px" : "100%"}
               height={lgUp ? "420px" : "auto"}
               style={{
                 position: "relative",
-                left: "190px",
+                left:lgUp ?  "190px" : 0,
               }}
             />
           </Stack>
@@ -126,7 +129,7 @@ const BannerSection = () => {
             href={viewpaths.bookingViewPath}
             target="_blank"
             rel="noopener noreferrer"
-            sx={{ width:lgUp ?  "12vw" : "auto", mt: "0px !important" }}
+            sx={{ width: lgUp ? "12vw" : "auto",height: "5vh", mt: lgUp ? "0px !important" : "10px" }}
           >
             Book Now
           </Button>

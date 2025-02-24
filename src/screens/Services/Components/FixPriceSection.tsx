@@ -16,16 +16,16 @@ import urls from "global/constants/urls";
 import viewpaths from "global/constants/viewPathConstants";
 const eventsData = [
   {
-    text: "sporting",
-    des: "From the BAFTAs to the Brits let us help you organize your ground transportation.",
+    text: "All inclusive prices",
+    des: "Fixed price journeys 24/7, whatever the traffic conditions. No hidden extras or surge pricing.",
   },
   {
-    text: "sporting",
-    des: "From the BAFTAs to the Brits let us help you organize your ground transportation.",
+    text: "No congestion charges",
+    des: "Congestion charges are included in the price for Central London journeys.",
   },
   {
-    text: "sporting",
-    des: "From the BAFTAs to the Brits let us help you organize your ground transportation.",
+    text: "No Hike Pricing",
+    des: "Whatever the time and traffic conditions you pay a fixed price. Any parking or tolls charged at cost.",
   },
 ];
 const FixPriceSection = () => {
@@ -39,8 +39,10 @@ const FixPriceSection = () => {
         <Container maxWidth="lg">
           <Stack direction="column" spacing={1}>
             <Typography sx={classes.kugileFont}>
-              Chauffeur for any big{" "}
-              <span style={{ color: theme.palette.primary.main }}>Events </span>
+              Fix Price single way journey
+              <span style={{ color: theme.palette.primary.main }}>
+                (One Way)
+              </span>
             </Typography>
             <Typography
               variant="body1"
@@ -48,7 +50,7 @@ const FixPriceSection = () => {
               gutterBottom
               pb={2}
             >
-              Arrive in Style, Leave an Impression
+              Transparent Pricing, Premium Journeys
             </Typography>
             <Divider
               variant="fullWidth"
@@ -61,11 +63,11 @@ const FixPriceSection = () => {
               }}
             />
             <Typography variant="body1" pt={2}>
-              Luxury chauffeur services for any big event, ensuring a seamless,
-              stylish, and stress-free journey. Whether it’s a wedding,
-              corporate event, prom, or special celebration, our professional
-              chauffeurs and premium vehicles guarantee an exceptional
-              experience from start to finish
+              Enjoy fixed-price, one-way journeys with RNR Chauffeurs, where
+              comfort meets clarity. No hidden charges or surprises—just
+              reliable, luxury travel tailored to your schedule. Experience a
+              smooth, stress-free ride with our professional chauffeurs at a
+              price you can count on.
             </Typography>
           </Stack>
         </Container>

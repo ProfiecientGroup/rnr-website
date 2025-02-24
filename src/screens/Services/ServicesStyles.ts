@@ -27,12 +27,15 @@ const ServicesStyles = (theme: Theme) => {
       display: "flex",
       justifyContent: "center",
       alignItems: "center",
+      [theme.breakpoints.down("md")]: {
+        paddingTop: "50px",
+      },
     },
     kugileFont: {
       fontFamily: "Kugile",
       fontSize: "42px",
       fontWeight: "400",
-    //   lineHeight: "63px",
+      //   lineHeight: "63px",
     },
   };
 };

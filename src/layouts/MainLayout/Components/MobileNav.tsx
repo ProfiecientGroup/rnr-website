@@ -18,7 +18,39 @@ import urls from "global/constants/urls";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import viewpaths from "global/constants/viewPathConstants";
 import { isTruthy } from "helpers/methods";
+import YouTube from "assets/icons/youtube.svg";
+import Facebook from "assets/icons/facebook.svg";
+import Instagram from "assets/icons/instagram.svg";
+import X from "assets/icons/x.svg";
+import LinkedIn from "assets/icons/linkedin.svg";
 
+const socialHandles = [
+  {
+    link: urls.Facebook,
+    alt: "Facebook",
+    image: Facebook.src,
+  },
+  {
+    link: urls.X,
+    alt: "X",
+    image: X.src,
+  },
+  {
+    link: urls.YouTube,
+    alt: "YouTube",
+    image: YouTube.src,
+  },
+  {
+    link: urls.LinkedIn,
+    alt: "LinkedIn",
+    image: LinkedIn.src,
+  },
+  {
+    link: urls.Instagram,
+    alt: "Instagram",
+    image: Instagram.src,
+  },
+];
 interface CustomProps {
   onClose: Function;
   open: boolean;
@@ -166,61 +198,31 @@ const MobileNav = (props: CustomProps) => {
           spacing={2}
           pb={{ xs: 2, md: 0 }}
         >
-          <Link
-            color="#212121"
-            passHref
-            href={urls.Facebook}
-            legacyBehavior
-          >
-            <a
-              href={urls.Facebook}
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{
-                textDecoration: "none",
-              }}
-            >
-              <Typography
-                variant="body1"
-                sx={{ fontSize: "16px !important" }}
-                color={theme.palette.common.white}
-              >
-                Login
-              </Typography>
-            </a>
-          </Link>
           <Button
             variant="contained"
             fullWidth
-            href={urls.Facebook}
+            href={viewpaths.bookingViewPath}
             target="_blank"
             rel="noopener noreferrer"
             endIcon={<ChevronRightIcon />}
           >
-            Sign Up Free!
+           Book Now !
           </Button>
-          <Link
-            color="#212121"
-            passHref
-            href={viewpaths.contactUs}
-            legacyBehavior
-          >
-            <a
-              href={viewpaths.contactUs}
-              style={{
-                textDecoration: "none",
-              }}
-            >
-              <Typography
-                variant="body1"
-                sx={{ fontSize: "16px !important" }}
-                color={theme.palette.common.white}
-                onClick={() => props.onClose()}
-              >
-                Contact Us
-              </Typography>
-            </a>
-          </Link>
+          <Stack direction="row" spacing={1}>
+            {socialHandles.map((handle: any, index: number) => (
+              <Link passHref href={handle.link} legacyBehavior key={index}>
+                <a href={handle.link} target="_blank" rel="noopener noreferrer">
+                  <img
+                    src={handle.image}
+                    alt={handle.alt}
+                    loading="lazy"
+                    height="28px"
+                    width="28px"
+                  />
+                </a>
+              </Link>
+            ))}
+          </Stack>
         </Stack>
       </Stack>
     </Drawer>

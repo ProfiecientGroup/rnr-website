@@ -117,11 +117,11 @@ const ContactUs = () => {
               For help upgrading, changing or canceling your RNR account, please
               call the RNR Response Center toll free at +1234567890.
             </Typography>
-            <Stack direction={isLgUp ? "row" : "column"} spacing={2}>
+            <Stack direction={isLgUp ? "row" : "column"} spacing={2} pt={2} >
               <Box
                 sx={{
                   border: "1px solid rgba(221, 184, 99, 0.5)",
-                  width: { xs: "100%", sm: "416px" },
+                  width: { md: "100%", lg: "416px" },
                   // padding: { xs: 3, sm: 4 },
                   backgroundColor: theme.palette.primary.dark,
                   borderRadius: "25px",
@@ -141,7 +141,7 @@ const ContactUs = () => {
                         key={index}
                         textAlign={"start"}
                       >
-                        <Typography variant="body2" sx={{ color: "#DDB863" }}>
+                        <Typography variant="body2" sx={{ color: "#DDB863" }} mt={1}>
                           {i.value}
                         </Typography>
 
@@ -170,11 +170,11 @@ const ContactUs = () => {
               <Box
                 sx={{
                   width: "100%",
-                  backgroundColor: "#FCFBFD",
+                  backgroundColor: theme.palette.primary.dark,
                   borderRadius: theme.spacing(3),
                   padding: theme.spacing(4),
                   boxShadow: "0px 4px 16px rgba(0, 0, 0, 0.1)",
-                  background: "url(" + formBg.src + ")",
+                  // background: "url(" + formBg.src + ")",
                   backgroundSize: "cover",
                   backgroundPosition: "center",
                   backgroundRepeat: "no-repeat",

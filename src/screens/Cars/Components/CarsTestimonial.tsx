@@ -12,6 +12,7 @@ import {
 import HomeStyles from "screens/Home/HomeStyles";
 import { isTruthy } from "helpers/methods";
 import urls from "global/constants/urls";
+import viewpaths from "global/constants/viewPathConstants";
 
 interface CarTestimonialData {
   carsImages: any[];
@@ -62,7 +63,6 @@ const CarsTestimonialSection = (props: CustomProps) => {
             borderRadius: "30px",
             textAlign: "center",
             padding: 2,
-            margin: "10px",
             opacity: index === active ? 1 : 0.3,
             transition: "opacity 0.3s ease",
           }}
@@ -118,7 +118,6 @@ const CarsTestimonialSection = (props: CustomProps) => {
       spacing={2}
       justifyContent={isLgUp ? "space-around" : "center"}
       sx={{
-        // flexWrap: "wrap",
         border: "1px solid #DDB86352",
         padding: "10px",
         borderRadius: "10px",
@@ -132,6 +131,7 @@ const CarsTestimonialSection = (props: CustomProps) => {
           key={index}
           justifyContent="center"
           alignItems="center"
+          sx={{ width: "100%" }}
         >
           <Stack
             direction={"column"}
@@ -146,25 +146,24 @@ const CarsTestimonialSection = (props: CustomProps) => {
             {rating.btn && (
               <Button
                 variant="contained"
-                href={urls.Facebook}
+                href={viewpaths.bookingViewPath}
                 target="_blank"
                 rel="noopener noreferrer"
-                sx={{ width: isLgUp ? "12vw" : "100%", mt: "0px !important" }}
+                sx={{ width: isLgUp ? "12vw" : "auto", mt: "0px !important" }}
               >
                 <Typography variant="button">GET A PRICE & BOOK</Typography>
               </Button>
             )}
           </Stack>
-          {index !== ratings.length - 1 && (
+
+          {isLgUp && index !== ratings.length - 1 && (
             <Divider
               variant="fullWidth"
               orientation="vertical"
-              sx={{
-                borderColor: "#DDB86352",
-              }}
+              sx={{ borderColor: "#DDB86352" }}
             />
           )}
-        </Stack>
+          </Stack>
       ))}
     </Stack>
   );
@@ -217,7 +216,7 @@ const CarsTestimonialSection = (props: CustomProps) => {
         <Stack spacing={4} alignItems="center">
           {props.carTestimonialData &&
             props.carTestimonialData.map((data, index) => (
-              <Box key={index} sx={{ textAlign: "center" }} pt={8}>
+              <Box key={index} sx={{ textAlign: "center" }} pt={2}>
                 <Stack
                   direction={{ lg: "row", sm: "column" }}
                   justifyContent="center"
@@ -281,7 +280,7 @@ const CarsTestimonialSection = (props: CustomProps) => {
                       alignItems: "center",
                       justifyContent: "center",
                       paddingTop: isLgUp ? 5 : 5,
-                      paddingBottom: isLgUp ? 5 : 5,
+                      // paddingBottom: isLgUp ? 5 : 5,
                     }}
                   >
                     <Box sx={classes.verticalLine}></Box>

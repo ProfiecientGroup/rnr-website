@@ -31,9 +31,9 @@ const ContactUsStyles = (theme: Theme) => {
       display: "flex",
       justifyContent: "center",
       alignItems: "center",
-      [theme.breakpoints.down("md")]: {
-      height: "40vh",
-      backgroundSize: "contain",
+      [theme.breakpoints.down("lg")]: {
+        height: "100%",
+        backgroundSize: "contain",
       },
     },
     textBox: {
