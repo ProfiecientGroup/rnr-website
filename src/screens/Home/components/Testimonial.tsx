@@ -151,6 +151,7 @@ const Testimonial = (props: CustomProps) => {
       }
       return (
         <Box
+          key={index}
           sx={{
             borderRadius: "60px",
             margin: "10px",
@@ -256,7 +257,7 @@ const Testimonial = (props: CustomProps) => {
 
   return (
     <>
-      <Container maxWidth="lg" sx={{ pb: 6,pt:3 }}>
+      <Container maxWidth="lg" sx={{ pb: 6, pt: 3 }}>
         <Stack
           direction={isDesktop ? "row" : "column"}
           spacing={2}

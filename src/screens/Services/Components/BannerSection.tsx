@@ -93,7 +93,7 @@ const BannerSection = () => {
             <Grid container spacing={0} width={"100%"} p={1}>
               {eventsData.map((item: any, index: number) => {
                 return (
-                  <Grid item lg={6}>
+                  <Grid item lg={6} key={index}>
                     <Stack direction="column" spacing={2} mb={1}>
                       <Stack direction="row" spacing={2} alignItems="center">
                         <img src={item.icon} height={35} width={35} />
