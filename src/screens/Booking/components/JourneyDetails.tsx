@@ -694,22 +694,21 @@ const JourneyDetails = (props: CustomProps) => {
           </Stack>
 
           {/* Trip Type Step */}
-          <Stack direction={"column"} spacing={3}>
+          <Stack direction={"column"} spacing={2}>
             <Typography variant="body2">Select Trip Type</Typography>
             <Stepper activeStep={props.tripTypeActiveStep} alternativeLabel>
               {tripType.map((label, index) => (
                 <StepLabel
                   key={index}
                   onClick={() => handleTripTypeStepClick(index)}
-                  sx={{}}
                 >
                   <Typography
                     variant="body2"
                     sx={{
                       cursor: "pointer",
                       ...(index === props.tripTypeActiveStep
-                        ? { ...classes.addressBox, marginRight: 2 }
-                        : { ...classes.pickupBox, marginRight: 2 }),
+                        ? { ...classes.addressBox, marginRight: 1 }
+                        : { ...classes.pickupBox, marginRight: 1 }),
                     }}
                   >
                     {label}
@@ -717,7 +716,6 @@ const JourneyDetails = (props: CustomProps) => {
                 </StepLabel>
               ))}
             </Stepper>
-            {/* DateTime Picker for Trip Type */}
             {props.tripTypeActiveStep === 0 && (
               <LocalizationProvider dateAdapter={AdapterMoment}>
                 <DateTimePicker
@@ -738,84 +736,87 @@ const JourneyDetails = (props: CustomProps) => {
                 )}
               </LocalizationProvider>
             )}
-            {props.tripTypeActiveStep === 1 && (
-              <>
-                <LocalizationProvider dateAdapter={AdapterMoment}>
-                  <DateTimePicker
-                    value={
-                      props.formData.start_datetime
-                        ? moment(props.formData.start_datetime)
-                        : null
+            <Stack>
+              {props.tripTypeActiveStep === 1 && (
+                <>
+                  <LocalizationProvider dateAdapter={AdapterMoment}>
+                    <DateTimePicker
+                      value={
+                        props.formData.start_datetime
+                          ? moment(props.formData.start_datetime)
+                          : null
+                      }
+                      onChange={(newValue) =>
+                        handleDateAndTimeChange(newValue, "start_datetime")
+                      }
+                      sx={classes.timePicker}
+                    />
+                    {!isTruthy(props.formData.start_datetime) && (
+                      <FormHelperText error>
+                        {props.errors.start_datetime}
+                      </FormHelperText>
+                    )}
+                  </LocalizationProvider>
+                  <LocalizationProvider dateAdapter={AdapterMoment}>
+                    <DateTimePicker
+                      value={
+                        props.formData.end_datetime
+                          ? moment(props.formData.end_datetime)
+                          : null
+                      }
+                      onChange={(newValue) =>
+                        handleDateAndTimeChange(newValue, "end_datetime")
+                      }
+                      sx={classes.timePicker}
+                    />
+                    {!isTruthy(props.formData.end_datetime) && (
+                      <FormHelperText error>
+                        {props.errors.end_datetime}
+                      </FormHelperText>
+                    )}
+                  </LocalizationProvider>
+                </>
+              )}
+            </Stack>
+            <Stack spacing={1}>
+              {props.tripTypeActiveStep === 2 && (
+                <>
+                  <LocalizationProvider dateAdapter={AdapterMoment}>
+                    <DateTimePicker
+                      value={
+                        props.formData.start_datetime
+                          ? moment(props.formData.start_datetime)
+                          : null
+                      }
+                      onChange={(newValue) =>
+                        handleDateAndTimeChange(newValue, "start_datetime")
+                      }
+                      sx={classes.timePicker}
+                    />
+                    {!isTruthy(props.formData.start_datetime) && (
+                      <FormHelperText error>
+                        {props.errors.start_datetime}
+                      </FormHelperText>
+                    )}
+                  </LocalizationProvider>
+                  <TextField
+                    placeholder="Enter Hours"
+                    variant="outlined"
+                    type="number"
+                    value={props.formData.hours}
+                    onChange={(e) =>
+                      props.setFormData({
+                        ...props.formData,
+                        hours: Number(e.target.value),
+                      })
                     }
-                    onChange={(newValue) =>
-                      handleDateAndTimeChange(newValue, "start_datetime")
-                    }
-                    sx={classes.timePicker}
+                    sx={classes.textInputField}
+                    error={!!props.errors.hours}
+                    helperText={props.errors.hours || ""}
                   />
-                  {!isTruthy(props.formData.start_datetime) && (
-                    <FormHelperText error>
-                      {props.errors.start_datetime}
-                    </FormHelperText>
-                  )}
-                </LocalizationProvider>
-                <LocalizationProvider dateAdapter={AdapterMoment}>
-                  <DateTimePicker
-                    value={
-                      props.formData.end_datetime
-                        ? moment(props.formData.end_datetime)
-                        : null
-                    }
-                    onChange={(newValue) =>
-                      handleDateAndTimeChange(newValue, "end_datetime")
-                    }
-                    sx={classes.timePicker}
-                  />
-                  {!isTruthy(props.formData.end_datetime) && (
-                    <FormHelperText error>
-                      {props.errors.end_datetime}
-                    </FormHelperText>
-                  )}
-                </LocalizationProvider>
-              </>
-            )}
-
-            {props.tripTypeActiveStep === 2 && (
-              <>
-                <LocalizationProvider dateAdapter={AdapterMoment}>
-                  <DateTimePicker
-                    value={
-                      props.formData.start_datetime
-                        ? moment(props.formData.start_datetime)
-                        : null
-                    }
-                    onChange={(newValue) =>
-                      handleDateAndTimeChange(newValue, "start_datetime")
-                    }
-                    sx={classes.timePicker}
-                  />
-                  {!isTruthy(props.formData.start_datetime) && (
-                    <FormHelperText error>
-                      {props.errors.start_datetime}
-                    </FormHelperText>
-                  )}
-                </LocalizationProvider>
-                <TextField
-                  placeholder="Enter Hours"
-                  variant="outlined"
-                  type="number"
-                  value={props.formData.hours}
-                  onChange={(e) =>
-                    props.setFormData({
-                      ...props.formData,
-                      hours: Number(e.target.value),
-                    })
-                  }
-                  sx={classes.textInputField}
-                  error={!!props.errors.hours}
-                  helperText={props.errors.hours || ""}
-                />
-              </>
-            )}
+                </>
+              )}
+            </Stack>
           </Stack>
 
           <Stack direction={"row"} spacing={2}>

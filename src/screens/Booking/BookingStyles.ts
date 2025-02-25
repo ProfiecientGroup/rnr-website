@@ -22,6 +22,10 @@ const BookingStyles = (theme: Theme) => {
       fontWeight: "400",
       textAlign: "center",
       lineHeight: "90px",
+      [theme.breakpoints.down("sm")]: {
+        fontSize: "25px",
+        lineHeight: "40px",
+      },
     },
     addressBox: {
       width: "Fill (167px)px",
@@ -54,12 +58,15 @@ const BookingStyles = (theme: Theme) => {
       // alignItems: "center",
       padding: 3,
       borderRadius: "18px",
+      [theme.breakpoints.down("md")]: {
+        width: "auto",
+      },
     },
     textInputField: {
       "& .MuiOutlinedInput-root": {
         borderRadius: "25px",
         fontSize: 20,
-        color:"#fff  !important"
+        color: "#fff  !important",
       },
       "& input:-webkit-autofill": {
         WebkitBoxShadow: "0 0 0 100px #1a1a1a inset !important",
@@ -135,36 +142,47 @@ const BookingStyles = (theme: Theme) => {
       // alignItems: "center",
       padding: 3,
       borderRadius: "18px",
+      [theme.breakpoints.down("md")]: {
+        width: "auto",
+      },
     },
     selectMenu: {
       width: "100%",
       borderRadius: "25px",
+      border: "0.5px solid #DDB863",
       "& .MuiInputBase-root": {
         borderRadius: "25px",
+        border: "0.5px solid #DDB863",
         "& .MuiOutlinedInput-notchedOutline": {
           borderColor: "#DDB863",
           borderRadius: "25px",
+          border: "0.5px solid #DDB863",
         },
         "&:hover .MuiOutlinedInput-notchedOutline": {
           borderColor: "#DDB863",
           borderRadius: "25px",
+          border: "0.5px solid #DDB863",
         },
         "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
           borderColor: "#DDB863",
           borderRadius: "25px",
+          border: "0.5px solid #DDB863",
         },
       },
       "& .MuiSelect-select": {
         borderRadius: "25px !important",
+        border: "0.5px solid #DDB863",
       },
       "& .MuiInputBase-input": {
         borderRadius: "25px",
         padding: "12px 12px",
         background: "transparent",
+        border: "0.5px solid #DDB863",
       },
       "& .MuiMenu-paper": {
         background: "transparent",
         borderRadius: "25px",
+        border: "0.5px solid #DDB863",
       },
     },
     optionStyle: {
@@ -191,16 +209,16 @@ const BookingStyles = (theme: Theme) => {
     },
     timePicker: {
       paddingTop: "12px",
-      borderRadius: "25px",
+      borderRadius: "25px !important",
       "& .MuiOutlinedInput-root": {
-        borderRadius: "25px",
+        borderRadius: "25px !important",
         backgroundColor: "transparent",
       },
       "& .MuiOutlinedInput-input": {
         padding: "8.5px 14px",
         paddingRight: "1px",
         borderColor: "#DDB863",
-        borderRadius: "25px",
+        borderRadius: "25px !important",
       },
       "& .MuiInputAdornment-root": {
         marginLeft: "0px",
@@ -212,11 +230,12 @@ const BookingStyles = (theme: Theme) => {
       "& .MuiFilledInput-input": {
         paddingTop: "12px",
         borderColor: "#DDB863",
-        borderRadius: "25px",
+        borderRadius: "25px !important",
       },
       backgroundColor: "transparent",
-      "& .css-4fgus2-MuiInputBase-root-MuiFilledInput-root": {
+      "& .css-zpr72u-MuiInputBase-root-MuiFilledInput-root": {
         borderRadius: "25px !important",
+        padding: 1,
       },
     },
   };

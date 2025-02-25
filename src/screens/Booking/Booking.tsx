@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  Grid,
   Stack,
   Step,
   StepLabel,
@@ -144,9 +145,7 @@ const Booking = () => {
       newErrors.message = "Please enter a message.";
       isValid = false;
     }
-
     setBookingErrors(newErrors);
-
     if (isValid) {
       try {
         setIsLoading(true);
@@ -267,14 +266,6 @@ const Booking = () => {
     return isValid;
   };
 
-  const isStepSkipped = (step: number) => {
-    return skipped.has(step);
-  };
-
-  const handleNext = () => {
-    setCurrentStep((prevActiveStep) => prevActiveStep + 1);
-  };
-
   const handleBack = () => {
     setCurrentStep((prevActiveStep) => prevActiveStep - 1);
   };
@@ -336,7 +327,7 @@ const Booking = () => {
           />
         );
       case 2:
-        return <ChooseACar bookingData={bookingData}/>;
+        return <ChooseACar bookingData={bookingData} />;
       case 3:
         return <Payment />;
       default:
@@ -352,16 +343,15 @@ const Booking = () => {
         spacing={3}
         justifyContent={"center"}
         alignItems={"center"}
-        p={3}
       >
         <Box>
           <Typography sx={classes.experiFont} variant="h6">
             <span>
               <img
                 src={whiteStar.src}
-                height="20px"
-                width="20px"
-                style={{ position: "relative", bottom: 35 }}
+                height={lgUp ? "20px" : "13px"}
+                width={lgUp ? "20px" : "13px"}
+                style={{ position: "relative", bottom: 15 }}
               />
             </span>{" "}
             <span>Book your</span>
@@ -373,29 +363,98 @@ const Booking = () => {
             <span>
               <img
                 src={goldStar.src}
-                height="20px"
-                width="20px"
-                style={{ position: "relative", bottom: 15 }}
+                height={lgUp ? "20px" : "13px"}
+                width={lgUp ? "20px" : "13px"}
+                style={{ position: "relative", bottom: 10 }}
               />
             </span>
           </Typography>
         </Box>
-        <Stepper activeStep={currentStep}>
-          {steps.map((label, index) => (
-            <StepLabel
-              sx={
-                index === currentStep
-                  ? { ...classes.addressBox, marginRight: 2, cursor: "pointer" }
-                  : { ...classes.pickupBox, marginRight: 2, cursor: "pointer" }
-              }
-              key={index}
-              onClick={() => handleStepClick(index)}
+        <Grid
+          container
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <Grid
+            item
+            xs={12}
+            sm={12}
+            md={12}
+            lg={12}
+            xl={12}
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              "& .scrollable::-webkit-scrollbar": {
+                width: "5px",
+                height: "5px",
+                transition: "width 0.3s ease", // Add transition for smooth change
+              },
+              "& .scrollable:hover::-webkit-scrollbar": {
+                width: "10px", // Width when hovering over the parent container
+              },
+              "& .scrollable::-webkit-scrollbar-track": {
+                boxShadow: "inset 0 0 6px rgba(0,0,0,0.3)",
+                borderRadius: "10px",
+              },
+              "& .scrollable::-webkit-scrollbar-thumb": {
+                borderRadius: "10px",
+                background: "#000053", // Color for thumb
+              },
+            }}
+          >
+            <Box
+              sx={{
+                [theme.breakpoints.down("md")]: {
+                  overflowX: "scroll",
+                  padding:1
+                },
+              }}
             >
-              {label}
-            </StepLabel>
-          ))}
-        </Stepper>
-        <Box>{getBookingSteppers(currentStep)}</Box>
+              <Stepper activeStep={currentStep}>
+                {steps.map((label, index) => (
+                  <StepLabel
+                    sx={
+                      index === currentStep
+                        ? {
+                            ...classes.addressBox,
+                            marginRight: 2,
+                            cursor: "pointer",
+                          }
+                        : {
+                            ...classes.pickupBox,
+                            marginRight: 2,
+                            cursor: "pointer",
+                          }
+                    }
+                    key={index}
+                    onClick={() => handleStepClick(index)}
+                  >
+                    {label}
+                  </StepLabel>
+                ))}
+              </Stepper>
+            </Box>
+          </Grid>
+          <Grid
+            xs={12}
+            sm={12}
+            md={12}
+            lg={12}
+            xl={12}
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            {getBookingSteppers(currentStep)}
+          </Grid>
+        </Grid>
       </Stack>
     </>
   );

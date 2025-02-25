@@ -39,13 +39,6 @@ const testimonial = [
     img: car3.src,
     price: "£40.00",
   },
-  {
-    label: "Carousel 4",
-    title: "Mercedes EV-Class",
-    subTitle: "4 Passengers",
-    img: car1.src,
-    price: "£50.00",
-  },
 ];
 
 const ChooseOurCarSection = () => {

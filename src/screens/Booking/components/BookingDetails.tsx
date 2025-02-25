@@ -252,11 +252,16 @@ const BookingDetails = (props: CustomProps) => {
                 },
               }}
               sx={classes.selectMenu}
+              renderValue={
+                props.formData.bookingDetails?.noOfPassenger !== ""
+                  ? () => props.formData.bookingDetails?.noOfPassenger
+                  : () => "Select no of passenger"
+              }
               displayEmpty
               error={
                 !isTruthy(props.formData.bookingDetails.noOfPassenger) &&
                 props.error.noOfPassenger
-              } // Apply error state
+              }
             >
               {noOfPassenger?.map((passenger, index) => (
                 <MenuItem
@@ -306,6 +311,11 @@ const BookingDetails = (props: CustomProps) => {
                 },
               }}
               sx={classes.selectMenu}
+              renderValue={
+                props.formData.bookingDetails?.noOfSuitcase !== ""
+                  ? () => props.formData.bookingDetails?.noOfSuitcase
+                  : () => "Select no of suitcase"
+              }
               displayEmpty
               error={
                 !isTruthy(props.formData.bookingDetails.noOfSuitcase) &&
@@ -408,24 +418,21 @@ const BookingDetails = (props: CustomProps) => {
   };
 
   return (
-    <Box sx={classes.journeyDetailsBg}>
-      <Stack direction={"column"} spacing={2}>
-        <Typography
-          variant="h2"
-          sx={{
-            ...classes.experiFont,
-            fontSize: "24px !important",
-            textAlign: "start",
-          }}
-        >
-          <span style={{ color: theme.palette.primary.main }}>Step 3.</span>{" "}
-          Booking Details
-        </Typography>
-        <Container maxWidth="lg">{getForm()}</Container>
-        {getSnackBar()}
-
-        {getBackDrop()}
-      </Stack>
+    <Box sx={classes.journeyDetailsBg} mt={3}>
+      <Typography
+        variant="h2"
+        sx={{
+          ...classes.experiFont,
+          fontSize: "24px !important",
+          textAlign: "start",
+        }}
+      >
+        <span style={{ color: theme.palette.primary.main }}>Step 2.</span>{" "}
+        Booking Details
+      </Typography>
+      <Container maxWidth="lg">{getForm()}</Container>
+      {getSnackBar()}
+      {getBackDrop()}
     </Box>
   );
 };

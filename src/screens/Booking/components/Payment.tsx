@@ -31,7 +31,7 @@ const Payment = () => {
   };
 
   return (
-    <Box sx={classes.chooseACarBg}>
+    <Box sx={classes.chooseACarBg} mt={3}>
       <Stack direction="column" spacing={4}>
         <Typography
           variant="h2"
@@ -42,7 +42,7 @@ const Payment = () => {
             lineHeight: "36px",
           }}
         >
-          <span style={{ color: theme.palette.primary.main }}>Step 2.</span>{" "}
+          <span style={{ color: theme.palette.primary.main }}>Step 4.</span>{" "}
           Payment Details
         </Typography>
         <Stack direction="column" spacing={2} sx={carItemStyle}>

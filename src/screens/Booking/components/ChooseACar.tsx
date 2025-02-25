@@ -35,14 +35,6 @@ const carData = [
       "First class chauffeur Free 60 mins airport parking & waiting Free 15 mins waiting for other journeys Includes meet & greet Free cancellation within 24 hours",
     price: "£320.00",
   },
-  {
-    model: "ESTATE",
-    description: ["4 adults", "2 suitcases", "2 carry bags", "WiFi"],
-    imgSrc: car1.src,
-    extraInfo:
-      "First class chauffeur Free 60 mins airport parking & waiting Free 15 mins waiting for other journeys Includes meet & greet Free cancellation within 24 hours",
-    price: "£320.00",
-  },
 ];
 interface CustomProps {
   bookingData: any;
@@ -65,9 +57,11 @@ const ChooseACar = (props: CustomProps) => {
 
   // Map carData and replace price with the corresponding final_price
   const updatedCarData = carData.map((car) => {
-    const matchingPrice = bookingData.prices.find(
-      (p: any) => p.car_class === car.model.toUpperCase().replace(" ", "_")
-    );
+    const matchingPrice =
+      bookingData &&
+      bookingData?.prices?.find(
+        (p: any) => p.car_class === car.model.toUpperCase().replace(" ", "_")
+      );
 
     return {
       ...car,
@@ -78,7 +72,7 @@ const ChooseACar = (props: CustomProps) => {
   });
 
   return (
-    <Box sx={classes.chooseACarBg}>
+    <Box sx={classes.chooseACarBg} mt={3}>
       <Stack direction="column" spacing={1}>
         <Typography
           variant="h2"
@@ -89,7 +83,7 @@ const ChooseACar = (props: CustomProps) => {
             lineHeight: "36px",
           }}
         >
-          <span style={{ color: theme.palette.primary.main }}>Step 2.</span>{" "}
+          <span style={{ color: theme.palette.primary.main }}>Step 3.</span>{" "}
           Available Cars
         </Typography>
         <Typography variant="body2" color={theme.palette.primary.main}>
