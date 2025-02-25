@@ -52,8 +52,6 @@ const JourneyDetails = (props: CustomProps) => {
   const theme = useTheme();
   const classes = BookingStyles(theme);
   const [isLoading, setIsLoading] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false);
-  const [message, setMessage] = useState<string>("");
 
   const handleTripTypeStepClick = (step: number) => {
     props.setTripTypeActiveStep(step);
@@ -509,51 +507,58 @@ const JourneyDetails = (props: CustomProps) => {
                   helperText={props.errors.dropoffs?.[0]?.address}
                 />
               ) : (
-                <Select
-                  placeholder="Select airport"
-                  id="address"
-                  name="address"
-                  value={props.formData.dropoffs[0].address || ""}
-                  onChange={(e) =>
-                    handleFieldChangeDropoffs(0, "address", e.target.value)
-                  }
-                  input={<OutlinedInput />}
-                  MenuProps={{
-                    PaperProps: {
-                      sx: { ...classes.menuItems },
-                    },
-                  }}
-                  sx={classes.selectMenu}
-                  style={{
-                    color:
-                      props.formData.dropoffs[0].address === ""
-                        ? "#B3B3B3"
-                        : "",
-                    width: "100%",
-                    background: "transparent",
-                    borderRadius: "25px",
-                  }}
-                  renderValue={
-                    props.formData.dropoffs[0].address !== ""
-                      ? () => props.formData.dropoffs[0].address
-                      : () => "Select address"
-                  }
-                  displayEmpty
-                  error={
-                    !isTruthy(props.formData.dropoffs[0].address) &&
-                    props.errors.dropoffs[0].address
-                  }
-                >
-                  {addresses?.map((address: any, index: number) => (
-                    <MenuItem
-                      sx={classes.optionStyle}
-                      value={address}
-                      key={index}
-                    >
-                      {address}
-                    </MenuItem>
-                  ))}
-                </Select>
+                <Stack direction="column" spacing={0} width="100%">
+                  <Select
+                    placeholder="Select airport"
+                    id="address"
+                    name="address"
+                    value={props.formData.dropoffs[0].address || ""}
+                    onChange={(e) =>
+                      handleFieldChangeDropoffs(0, "address", e.target.value)
+                    }
+                    input={<OutlinedInput />}
+                    MenuProps={{
+                      PaperProps: {
+                        sx: { ...classes.menuItems },
+                      },
+                    }}
+                    sx={classes.selectMenu}
+                    style={{
+                      color:
+                        props.formData.dropoffs[0].address === ""
+                          ? "#B3B3B3"
+                          : "",
+                      width: "100%",
+                      background: "transparent",
+                      borderRadius: "25px",
+                    }}
+                    renderValue={
+                      props.formData.dropoffs[0].address !== ""
+                        ? () => props.formData.dropoffs[0].address
+                        : () => "Select address"
+                    }
+                    displayEmpty
+                    error={
+                      !isTruthy(props.formData.dropoffs[0].address) &&
+                      props.errors.dropoffs[0].address
+                    }
+                  >
+                    {addresses?.map((address: any, index: number) => (
+                      <MenuItem
+                        sx={classes.optionStyle}
+                        value={address}
+                        key={index}
+                      >
+                        {address}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                  {!isTruthy(props.formData.dropoffs[0].address) && (
+                    <FormHelperText error>
+                      {props.errors.dropoffs[0].address}
+                    </FormHelperText>
+                  )}
+                </Stack>
               )}
               <IconButton onClick={() => handleAddFieldDropoffs("address")}>
                 <AddCircleOutlineIcon sx={{ color: "#FFD700" }} />
