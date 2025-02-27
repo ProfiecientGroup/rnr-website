@@ -10,6 +10,7 @@ import {
 import SClassCar from "../../../assets/images/home/SClass-car.png";
 import HomeStyles from "../HomeStyles";
 import urls from "global/constants/urls";
+import viewpaths from "global/constants/viewPathConstants";
 
 const WhatAreWaitingSection = () => {
   const theme = useTheme();
@@ -56,7 +57,7 @@ const WhatAreWaitingSection = () => {
             </Stack>
             <Button
               variant="contained"
-              href={urls.Facebook}
+              href={viewpaths.bookingViewPath}
               target="_blank"
               rel="noopener noreferrer"
               size="small"
@@ -66,7 +67,7 @@ const WhatAreWaitingSection = () => {
             </Button>
             <Button
               variant="outlined"
-              href={urls.Facebook}
+              href={viewpaths.bookingViewPath}
               target="_blank"
               rel="noopener noreferrer"
               size="small"

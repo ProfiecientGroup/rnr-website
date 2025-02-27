@@ -13,6 +13,7 @@ import HomeStyles from "../HomeStyles";
 import aboutCar1 from "../../../assets/images/home/about-car.webp";
 import urls from "global/constants/urls";
 import strings from "global/constants/strings";
+import viewpaths from "global/constants/viewPathConstants";
 
 const TOP_NAV_HEIGHT = 64;
 
@@ -60,7 +61,7 @@ const AboutSection = () => {
             </Typography>
             <Button
               variant="contained"
-              href={urls.Facebook}
+              href={viewpaths.bookingViewPath}
               target="_blank"
               rel="noopener noreferrer"
             >

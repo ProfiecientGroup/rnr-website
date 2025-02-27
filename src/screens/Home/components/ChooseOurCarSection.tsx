@@ -16,6 +16,7 @@ import TestimonialSection from "./OurPremiumSection";
 import car1 from "../../../assets/images/home/car1.svg";
 import car2 from "../../../assets/images/home/car2.svg";
 import car3 from "../../../assets/images/home/car3.svg";
+import viewpaths from "global/constants/viewPathConstants";
 
 const testimonial = [
   {
@@ -203,7 +204,7 @@ const ChooseOurCarSection = () => {
                 </Typography>
                 <Button
                   variant="contained"
-                  href={urls.Facebook}
+                  href={viewpaths.bookingViewPath}
                   target="_blank"
                   rel="noopener noreferrer"
                   size="small"

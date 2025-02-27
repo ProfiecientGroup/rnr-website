@@ -54,17 +54,17 @@ const TestimonialSection = (props: CustomProps) => {
     return data.map((step: any, index: number) => {
       let scale = 1;
       let opacity = 1;
-      let width = isLgUp ? "450px" : "auto";
+      let width = isLgUp ? "450px" : "100%";
       let height = isLgUp ? "350px" : "auto";
       if (index === 1) {
-        scale = 0.9;
+        scale = isLgUp ? 0.9 : 1;
         opacity = 1;
-        width = isLgUp ? "400px" : "auto";
+        width = isLgUp ? "400px" : "100%";
         height = isLgUp ? "360px" : "auto";
       } else if (index === 2) {
-        scale = 0.8;
+        scale = isLgUp ? 0.8 : 1;
         opacity = 1;
-        width = isLgUp ? "350px" : "auto";
+        width = isLgUp ? "350px" : "100%";
         height = isLgUp ? "360px" : "auto";
       }
 
@@ -98,6 +98,11 @@ const TestimonialSection = (props: CustomProps) => {
                 "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
               WebkitMaskComposite: "destination-out",
               maskComposite: "exclude",
+              [theme.breakpoints.down("md")]: {
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "space-between",
+              },
             },
           }}
         >
@@ -251,7 +256,7 @@ const TestimonialSection = (props: CustomProps) => {
           </Typography>
         </Stack>
         <Stack
-          direction={{ lg: "row", sm: "column",xs:"column" }}
+          direction={{ lg: "row", sm: "column", xs: "column" }}
           justifyContent={{
             lg: "center",
             sm: "center",
