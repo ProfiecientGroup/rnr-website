@@ -153,11 +153,13 @@ const Booking = () => {
     if (isValid) {
       try {
         setIsLoading(true);
-        // const response = await fetch("/api/proxy", {
-        //   method: "POST",
-        //   headers: { "Content-Type": "application/json" },
-        //   body: JSON.stringify(formData),
-        // });
+
+        // First, send a preflight OPTIONS request (optional but ensures CORS works)
+        await fetch("http://13.60.40.222/calculate-booking-prices", {
+          method: "OPTIONS",
+        });
+
+        // Now send the actual POST request
         const response = await fetch(
           "http://13.60.40.222/calculate-booking-prices",
           {
@@ -166,6 +168,10 @@ const Booking = () => {
             body: JSON.stringify(formData),
           }
         );
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch booking data");
+        }
 
         const data = await response.json();
         setBookingData(data);
@@ -177,7 +183,6 @@ const Booking = () => {
     } else {
       console.log("Validation failed!", newErrors);
     }
-
     return isValid;
   };
 
