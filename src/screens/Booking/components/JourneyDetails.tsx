@@ -29,15 +29,25 @@ import moment from "moment";
 import { isTruthy } from "helpers/methods";
 
 const addresses = [
-  "Heathrow  terminal2",
-  "Heathrow  terminal3",
-  "Heathrow  terminal4",
-  "Heathrow  terminal5",
-  "gatwick south and north",
-  "luton",
-  "standsted",
-  "city airport",
+  "Heathrow Terminal 2",
+  "Heathrow Terminal 3",
+  "Heathrow Terminal 4",
+  "Heathrow Terminal 5",
+  "Gatwick South Terminals",
+  "Gatwick North Terminals",
+  "Luton Airport",
+  "Stansted Airport",
+  "City Airport",
+  "St Pancras (Train Station)",
+  "Farnborough Airport",
+  "RAF Northolt",
+  "Southend On Sea",
+  "Reading Station",
+  "Twyford Station",
+  "Bracknell Station",
+  "Southampton Docks",
 ];
+
 const tripType = ["One Way", "Round Trip", "By the Hour"];
 interface CustomProps {
   handleNext?: Function;

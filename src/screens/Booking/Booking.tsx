@@ -153,11 +153,20 @@ const Booking = () => {
     if (isValid) {
       try {
         setIsLoading(true);
-        const response = await fetch("/api/proxy", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(formData),
-        });
+        // const response = await fetch("/api/proxy", {
+        //   method: "POST",
+        //   headers: { "Content-Type": "application/json" },
+        //   body: JSON.stringify(formData),
+        // });
+        const response = await fetch(
+          "http://13.60.40.222/calculate-booking-prices",
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(formData),
+          }
+        );
+
         const data = await response.json();
         setBookingData(data);
         setIsLoading(false);
