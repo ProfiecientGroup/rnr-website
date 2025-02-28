@@ -211,14 +211,14 @@ const BookingDetails = (props: CustomProps) => {
             //   !isTruthy(props.formData.bookingDetails.phone) &&
             //   props.error.phone
             // }
-            onError={
-              !isTruthy(props.formData.bookingDetails.phone) &&
-              props.error.phone
-            }
-            helperText={
-              !isTruthy(props.formData.bookingDetails.phone) &&
-              props.error.phone
-            } // Display error message
+            // onError={
+            //   !isTruthy(props.formData.bookingDetails.phone) &&
+            //   props.error.phone
+            // }
+            // helperText={
+            //   !isTruthy(props.formData.bookingDetails.phone) &&
+            //   props.error.phone
+            // } // Display error message
           />
         </Grid>
 
@@ -364,10 +364,10 @@ const BookingDetails = (props: CustomProps) => {
                 message: "",
               });
             }}
-            error={
-              !isTruthy(props.formData.bookingDetails.message) &&
-              props.error.message
-            }
+            // error={
+            //   !isTruthy(props.formData.bookingDetails.message) &&
+            //   props.error.message
+            // }
 
             // helperText={props.error.message} // Display error message
           />

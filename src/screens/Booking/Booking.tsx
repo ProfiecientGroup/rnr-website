@@ -96,10 +96,10 @@ const Booking = () => {
     firstName: "",
     lastName: "",
     email: "",
-    phone: "",
+    // phone: "",
     noOfPassenger: "",
     noOfSuitcase: "",
-    message: "",
+    // message: "",
   });
 
   const BookingDetailsValidate = async (): Promise<boolean> => {
@@ -110,10 +110,10 @@ const Booking = () => {
       firstName,
       lastName,
       email,
-      phone,
+      // phone,
       noOfPassenger,
       noOfSuitcase,
-      message,
+      // message,
     } = formData.bookingDetails;
 
     if (!firstName) {
@@ -132,10 +132,10 @@ const Booking = () => {
       newErrors.email = "Please enter a valid email.";
       isValid = false;
     }
-    if (!phone || !isPhoneValid(phone)) {
-      newErrors.phone = "Please enter a valid phone number.";
-      isValid = false;
-    }
+    // if (!phone || !isPhoneValid(phone)) {
+    //   newErrors.phone = "Please enter a valid phone number.";
+    //   isValid = false;
+    // }
     if (!noOfPassenger) {
       newErrors.noOfPassenger = "Please select number of passengers.";
       isValid = false;
@@ -144,10 +144,10 @@ const Booking = () => {
       newErrors.noOfSuitcase = "Please select number of suitcases.";
       isValid = false;
     }
-    if (!message) {
-      newErrors.message = "Please enter a message.";
-      isValid = false;
-    }
+    // if (!message) {
+    //   newErrors.message = "Please enter a message.";
+    //   isValid = false;
+    // }
     setBookingErrors(newErrors);
 
     if (isValid) {
@@ -451,7 +451,7 @@ const Booking = () => {
                           }
                     }
                     key={index}
-                    onClick={() => handleStepClick(index)}
+                    // onClick={() => handleStepClick(index)}
                   >
                     {label}
                   </StepLabel>
