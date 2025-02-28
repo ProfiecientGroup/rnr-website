@@ -16,7 +16,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     const response = await fetch(
       `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${encodeURIComponent(
         input
-      )}&key=${GOOGLE_MAPS_API_KEY}`
+      )}&key=AIzaSyAh3BlCUTtjDCrtl9b0cViB6YVX9qKwUxs`
     );
 
     const responseText = await response.text();
