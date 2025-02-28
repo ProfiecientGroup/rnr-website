@@ -153,13 +153,6 @@ const Booking = () => {
     if (isValid) {
       try {
         setIsLoading(true);
-
-        // First, send a preflight OPTIONS request (optional but ensures CORS works)
-        await fetch("http://13.60.40.222/calculate-booking-prices", {
-          method: "OPTIONS",
-        });
-
-        // Now send the actual POST request
         const response = await fetch(
           "http://13.60.40.222/calculate-booking-prices",
           {
