@@ -44,8 +44,6 @@ const Booking = () => {
   const [message, setMessage] = useState<string>("");
   const [isButtonClicked, setIsButtonClicked] = useState(false);
   const [bookingData, setBookingData] = useState<any>();
-  console.log("bookingData", bookingData);
-
   const [formData, setFormData] = useState({
     pickups: [
       {
@@ -151,19 +149,24 @@ const Booking = () => {
       isValid = false;
     }
     setBookingErrors(newErrors);
+
     if (isValid) {
       try {
         setIsLoading(true);
-        const res = await doBooking(formData);
-        setBookingData(res);
-        // openSuccessNotification("F");
+        const response = await fetch("/api/proxy", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(formData),
+        });
+        const data = await response.json();
+        setBookingData(data);
         setIsLoading(false);
       } catch (error: any) {
         setIsLoading(false);
-        const errorMessage =
-          error.errorMessage || error.message || strings.GENERIC_ERROR;
-        openErrorNotification(errorMessage);
+        openErrorNotification(error.message || "Something went wrong");
       }
+    } else {
+      console.log("Validation failed!", newErrors);
     }
 
     return isValid;

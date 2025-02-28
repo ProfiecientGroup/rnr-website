@@ -235,8 +235,11 @@ const BookingStyles = (theme: Theme) => {
       backgroundColor: "transparent",
       "& .css-zpr72u-MuiInputBase-root-MuiFilledInput-root": {
         borderRadius: "25px !important",
-        padding: 1,
+        // padding: 1,
       },
+      "&.css-1va5fdl-MuiButtonBase-root-MuiButton-root":{
+
+      }
     },
   };
 };

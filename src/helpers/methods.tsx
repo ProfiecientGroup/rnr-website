@@ -72,7 +72,7 @@ export const getCallParams = (
       method,
       body,
       headers: {
-        Origin: urls.BASE_WEBAPP_URL,
+        // Removed 'Origin' header
       },
     };
   }
@@ -82,7 +82,7 @@ export const getCallParams = (
       body: JSON.stringify(body),
       headers: {
         "Content-Type": "application/json",
-        Origin: urls.BASE_WEBAPP_URL,
+        // Removed 'Origin' header
       },
     };
   }
@@ -90,18 +90,26 @@ export const getCallParams = (
     method,
     headers: {
       "Content-Type": "application/json",
-      Origin: urls.BASE_WEBAPP_URL,
+      // Removed 'Origin' header
     },
   };
 };
-
 export const makeCall = async (url: string, requestOptions: any) => {
   try {
     const response = await fetch(url, requestOptions);
-    if (response && response.ok) {
-      return await response.json();
+
+    // Try parsing JSON only if response has content
+    let data;
+    try {
+      data = await response.json();
+    } catch (jsonError) {
+      data = null; // Handle cases where response is empty
+    }
+
+    if (response.ok) {
+      return data;
     } else {
-      throw await response.json();
+      throw data || { message: "Unknown error occurred" };
     }
   } catch (error: any) {
     throw error;
