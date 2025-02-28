@@ -1,5 +1,5 @@
 class Strings {
-  GENERIC_ERROR = "An error occurred";
+  GENERIC_ERROR = "Something went wrong! Please try again";
   notification = "notification";
   error = "error";
   success = "success";

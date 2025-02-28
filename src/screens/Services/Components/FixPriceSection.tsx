@@ -87,7 +87,7 @@ const FixPriceSection = () => {
               height={"420px"}
               style={{
                 position: "relative",
-                right: lgUp ? "190px" : "0px",
+                right: lgUp ? "35px" : "0px",
               }}
             />
             <Grid container spacing={0} width={"100%"} p={1}>

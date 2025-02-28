@@ -19,9 +19,14 @@ import JourneyDetails from "./components/JourneyDetails";
 import ChooseACar from "./components/ChooseACar";
 import BookingDetails from "./components/BookingDetails";
 import Payment from "./components/Payment";
-import { isPhoneValid } from "helpers/methods";
+import {
+  isPhoneValid,
+  openErrorNotification,
+  openSuccessNotification,
+} from "helpers/methods";
 import moment from "moment";
 import { doBooking } from "./components/BookingService";
+import strings from "global/constants/strings";
 
 const steps = ["Journey details", "Booking Details", "Choose a Car", "Payment"];
 
@@ -151,9 +156,13 @@ const Booking = () => {
         setIsLoading(true);
         const res = await doBooking(formData);
         setBookingData(res);
+        // openSuccessNotification("F");
         setIsLoading(false);
       } catch (error: any) {
         setIsLoading(false);
+        const errorMessage =
+          error.errorMessage || error.message || strings.GENERIC_ERROR;
+        openErrorNotification(errorMessage);
       }
     }
 
@@ -411,7 +420,7 @@ const Booking = () => {
               sx={{
                 [theme.breakpoints.down("md")]: {
                   overflowX: "scroll",
-                  padding:1
+                  padding: 1,
                 },
               }}
             >

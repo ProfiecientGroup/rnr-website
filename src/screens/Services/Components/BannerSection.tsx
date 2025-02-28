@@ -120,7 +120,7 @@ const BannerSection = () => {
               height={lgUp ? "420px" : "auto"}
               style={{
                 position: "relative",
-                left:lgUp ?  "190px" : 0,
+                left:lgUp ?  "32px" : 0,
               }}
             />
           </Stack>

@@ -18,7 +18,7 @@ import {
   useTheme,
 } from "@mui/material";
 import ContactUsStyles from "./ContactUsStyles";
-import { isTruthy } from "helpers/methods";
+import { isTruthy, openErrorNotification } from "helpers/methods";
 import CustomContactNumberInput from "global/components/CustomContactNumberInput/CustomContactNumberInput";
 import { contactUsForm, validateData } from "./ContactUsStateAndValidation";
 import formBg from "../../assets/images/contactUs/formBg.webp";
@@ -42,7 +42,6 @@ const ContactUs = () => {
   const [open, setOpen] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [message, setMessage] = useState<string>("");
-  const [checked, setChecked] = useState(false);
 
   const handleClose = (
     event?: React.SyntheticEvent | Event,
@@ -52,10 +51,6 @@ const ContactUs = () => {
       return;
     }
     setOpen(false);
-  };
-
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setChecked(event.target.checked);
   };
 
   const validateFormData = () => {
@@ -69,23 +64,26 @@ const ContactUs = () => {
     try {
       setIsLoading(true);
       if (validateFormData()) {
-        const body = {
-          firstName: formFields.firstName.value,
-          emailId: formFields.email.value,
-          contactNo: formFields.phone.value,
-          comments: formFields.message.value,
-        };
+        if (validateFormData()) {
+          const subject = encodeURIComponent("Contact Form Submission");
+          const body = encodeURIComponent(
+            `Name: ${formFields.firstName.value}\nEmail: ${formFields.email.value}\nPhone: ${formFields.phone.value}\nMessage: ${formFields.message.value}`
+          );
+
+          window.location.href = `mailto:seemi0085@gmail.com?subject=${subject}&body=${body}`;
+        }
         setFormFields(contactUsForm());
         setOpen(true);
         setIsSuccess(true);
-        setChecked(false);
       }
     } catch (error: any) {
+      const errorMessage =
+        error.errorMessage || error.message || strings.GENERIC_ERROR;
+      openErrorNotification(errorMessage);
       setMessage(error.message);
       setOpen(true);
       setIsSuccess(false);
       setFormFields(contactUsForm());
-      setChecked(false);
     } finally {
       setIsLoading(false);
     }
@@ -117,7 +115,7 @@ const ContactUs = () => {
               For help upgrading, changing or canceling your RNR account, please
               call the RNR Response Center toll free at +1234567890.
             </Typography>
-            <Stack direction={isLgUp ? "row" : "column"} spacing={2} pt={2} >
+            <Stack direction={isLgUp ? "row" : "column"} spacing={2} pt={2}>
               <Box
                 sx={{
                   border: "1px solid rgba(221, 184, 99, 0.5)",
@@ -141,7 +139,11 @@ const ContactUs = () => {
                         key={index}
                         textAlign={"start"}
                       >
-                        <Typography variant="body2" sx={{ color: "#DDB863" }} mt={1}>
+                        <Typography
+                          variant="body2"
+                          sx={{ color: "#DDB863" }}
+                          mt={1}
+                        >
                           {i.value}
                         </Typography>
 
@@ -337,7 +339,6 @@ const ContactUs = () => {
   return (
     <>
       {getSnackBar()}
-
       {getBannerSection()}
       {getBackDrop()}
     </>
