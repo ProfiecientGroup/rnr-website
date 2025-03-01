@@ -1,8 +1,15 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // output: "export", // Enable static export
   reactStrictMode: true,
-  trailingSlash: true, // Ensures correct routing in S3
-};
+  env: {
+    NEXT_PUBLIC_GOOGLE_MAPS_API_KEY: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY,
+  },
+  // For S3 deployment
+  images: {
+    unoptimized: true,
+  },
+  // If you're exporting static files for S3
+  output: 'export',
+}
 
-module.exports = nextConfig;
+module.exports = nextConfig
