@@ -94,28 +94,48 @@ export const getCallParams = (
     },
   };
 };
+
+// export const makeCall = async (url: string, requestOptions: any) => {
+//   try {
+//     console.log("Making request to:", url);
+
+//     const response = await fetch(url, requestOptions);
+
+//     if (!response.ok) {
+//       const errorData = await response.json();
+//       console.error("Fetch error:", response.status, errorData);
+//       throw new Error(
+//         `HTTP ${response.status}: ${errorData.error_message || "Unknown error"}`
+//       );
+//     }
+
+//     return await response.json();
+//   } catch (error: any) {
+//     console.error("Network error:", error);
+//     throw new Error("Failed to fetch API data");
+//   }
+// };
+
 export const makeCall = async (url: string, requestOptions: any) => {
   try {
+    console.log("Making request to:", url);
+
     const response = await fetch(url, requestOptions);
 
-    // Try parsing JSON only if response has content
-    let data;
-      try {
-        data = await response.json();
-      } catch (jsonError) {
-      data = null; // Handle cases where response is empty
+    if (!response.ok) {
+      const errorData = await response.json();
+      console.error("Fetch error:", response.status, errorData);
+      throw new Error(
+        `HTTP ${response.status}: ${errorData.error_message || "Unknown error"}`
+      );
     }
 
-    if (response.ok) {
-      return data;
-    } else {
-      throw data || { message: "Unknown error occurred" };
-    }
+    return await response.json();
   } catch (error: any) {
-    throw error;
+    console.error("Network error:", error);
+    throw new Error("Failed to fetch API data");
   }
 };
-
 export const isPhoneValid = (phone: string) => {
   try {
     const phoneUtil = PhoneNumberUtil.getInstance();
