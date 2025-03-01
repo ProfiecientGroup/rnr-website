@@ -9,7 +9,7 @@ const nextConfig = {
     unoptimized: true,
   },
   // If you're exporting static files for S3
-  output: 'export',
+  // output: 'export',
 }
 
 module.exports = nextConfig

@@ -100,9 +100,9 @@ export const makeCall = async (url: string, requestOptions: any) => {
 
     // Try parsing JSON only if response has content
     let data;
-    try {
-      data = await response.json();
-    } catch (jsonError) {
+      try {
+        data = await response.json();
+      } catch (jsonError) {
       data = null; // Handle cases where response is empty
     }
 

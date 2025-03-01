@@ -14,7 +14,10 @@ export const doBooking = async (body: any) => {
 export const doCorporateLogin = async (body: any) => {
   try {
     const callParams = getCallParams("POST", body);
-    const response = await makeCall(urls.corporateLoginApiCallEndpoint, callParams);
+    const response = await makeCall(
+      urls.corporateLoginApiCallEndpoint,
+      callParams
+    );
     return response;
   } catch (error: any) {
     throw error;
@@ -35,8 +38,7 @@ export const googleApi = async (input: string) => {
       data = response;
     }
     return data;
-  } catch (error) {
-    console.error("Error fetching Google Autocomplete data:", error);
-    throw new Error("Failed to fetch Google Autocomplete data");
+  } catch (error: any) {
+    throw error;
   }
 };

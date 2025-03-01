@@ -37,7 +37,7 @@ const GoogleAutocompleteInput: React.FC<GoogleAutocompleteInputProps> = ({
     setLoading(true);
     try {
       const response = await googleApi(inputValue); // Fetch predictions from Google API
-      setOptions(response.predictions || []);
+      setOptions(response?.predictions || []);
     } catch (error) {
       console.error("Error fetching Google Places data", error);
     } finally {
