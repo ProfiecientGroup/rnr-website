@@ -63,7 +63,7 @@ const Home = () => {
     return <WhatAreWaitingSection />;
   };
   return (
-    <Box >
+    <Box mt={2}>
       {getBannerSection()}
       {getAboutSection()}
       {getChooseOurCarSection()}
