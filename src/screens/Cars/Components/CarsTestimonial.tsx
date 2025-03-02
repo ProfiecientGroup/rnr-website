@@ -54,7 +54,7 @@ const CarsTestimonialSection = (props: CustomProps) => {
     const data = inViewTestimonialData(carsImages);
     const active = data.length >= 3 ? Math.ceil(data.length / 3) : 0;
     return data.map((step: any, index: number) => {
-      const width = index === active ? "700px" : "300px";
+      const width = index === active ? "700px" : "450px";
       return (
         <Box
           key={index}
@@ -163,7 +163,7 @@ const CarsTestimonialSection = (props: CustomProps) => {
               sx={{ borderColor: "#DDB86352" }}
             />
           )}
-          </Stack>
+        </Stack>
       ))}
     </Stack>
   );
@@ -206,7 +206,7 @@ const CarsTestimonialSection = (props: CustomProps) => {
   };
 
   return (
-    <Box sx={{ width: "100%", padding: "20px 0" }}>
+    <Box sx={{ width: "100%", padding: "20px 0", overflow: "hidden" }}>
       <Container
         maxWidth="xl"
         sx={{
@@ -217,12 +217,24 @@ const CarsTestimonialSection = (props: CustomProps) => {
           {props.carTestimonialData &&
             props.carTestimonialData.map((data, index) => (
               <Box key={index} sx={{ textAlign: "center" }} pt={2}>
+                <Box
+                  sx={{
+                    width: "100%",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    paddingTop: isLgUp ? 5 : 5,
+                    paddingBottom: isLgUp ? 10 : 5,
+                  }}
+                >
+                  <Box sx={classes.verticalLine}></Box>
+                </Box>
                 <Stack
                   direction={{ lg: "row", sm: "column" }}
                   justifyContent="center"
                   alignItems="center"
                   display="flex"
-                  spacing={2}
+                  spacing={0}
                   sx={{ overflow: "hidden" }}
                 >
                   {renderCarImages(data.carsImages)}
@@ -270,7 +282,7 @@ const CarsTestimonialSection = (props: CustomProps) => {
                     </Stack>
                   </Stack>
                 </Container>
-                {index !==
+                {/* {index !==
                   (props.carTestimonialData &&
                     props.carTestimonialData?.length - 1) && (
                   <Box
@@ -285,7 +297,7 @@ const CarsTestimonialSection = (props: CustomProps) => {
                   >
                     <Box sx={classes.verticalLine}></Box>
                   </Box>
-                )}
+                )} */}
               </Box>
             ))}
         </Stack>

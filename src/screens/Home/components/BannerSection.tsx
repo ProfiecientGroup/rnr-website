@@ -12,8 +12,8 @@ import {
 } from "@mui/material";
 import HomeStyles from "../HomeStyles";
 import SClassCar from "../../../assets/images/home/SClass-car.png";
-import whiteStar from "../../../assets/images/home/whiteStar.png";
-import goldStar from "../../../assets/images/home/goldStar.png";
+import whiteStar from "../../../assets/images/home/whiteStar.webp";
+import goldStar from "../../../assets/images/home/goldStar.webp";
 import { isTruthy } from "helpers/methods";
 
 const TOP_NAV_HEIGHT = 64;

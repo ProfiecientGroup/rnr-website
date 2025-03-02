@@ -10,13 +10,13 @@ import {
   useTheme,
 } from "@mui/material";
 import ServicesStyles from "../ServicesStyles";
-import bannerCar from "assets/images/services/bannerCar.png";
-import sporting from "assets/images/services/sporting-icon.png";
-import awards from "assets/images/services/award-icon.png";
-import conferences from "assets/images/services/conferences-icon.png";
-import exhibitions from "assets/images/services/exhibitions-icon.png";
-import urls from "global/constants/urls";
+import bannerCar from "assets/images/services/bannerCar.webp";
+import sporting from "assets/images/services/sporting-icon.webp";
+import awards from "assets/images/services/award-icon.webp";
+import conferences from "assets/images/services/conferences-icon.webp";
+import exhibitions from "assets/images/services/exhibitions-icon.webp";
 import viewpaths from "global/constants/viewPathConstants";
+
 const eventsData = [
   {
     icon: awards.src,
@@ -45,7 +45,7 @@ const BannerSection = () => {
   const classes = ServicesStyles(theme);
 
   return (
-    <Box sx={classes.bgBox}>
+    <Box sx={classes.bgBox} overflow={"hidden"}>
       <Stack direction="column" spacing={2}>
         <Container maxWidth="lg">
           <Stack direction="column" spacing={1}>
@@ -80,21 +80,13 @@ const BannerSection = () => {
             </Typography>
           </Stack>
         </Container>
-        <Container
-          maxWidth="lg"
-          sx={{
-            "&.MuiContainer-root": {
-              paddingRight: 0,
-              marginRight: "inherit",
-            },
-          }}
-        >
-          <Stack direction={lgUp ? "row" : "column"} spacing={1} mt={3}>
-            <Grid container spacing={0} width={"100%"} p={1}>
+        <Container maxWidth="lg">
+          <Stack direction={lgUp ? "row" : "column"} spacing={5} mt={3}>
+            <Grid container width={"100%"}>
               {eventsData.map((item: any, index: number) => {
                 return (
-                  <Grid item lg={6} key={index}>
-                    <Stack direction="column" spacing={2} mb={1}>
+                  <Grid item lg={6} key={index} mt={2}>
+                    <Stack direction="column" spacing={2} mb={1} pr={4}>
                       <Stack direction="row" spacing={2} alignItems="center">
                         <img src={item.icon} height={35} width={35} />
                         <Typography
@@ -102,6 +94,7 @@ const BannerSection = () => {
                             fontFamily: "Kugile",
                             fontSize: "23px",
                             color: theme.palette.primary.main,
+                            pt: 1.5,
                           }}
                           variant="body1"
                         >
@@ -114,24 +107,22 @@ const BannerSection = () => {
                 );
               })}
             </Grid>
-            <img
-              src={bannerCar.src}
-              width={lgUp ? "830px" : "100%"}
-              height={lgUp ? "420px" : "auto"}
-              style={{
-                position: "relative",
-                left:lgUp ?  "32px" : 0,
-              }}
-            />
+            <Stack sx={{ justifyContent: "flex-end", width: "100%" }}>
+              <img src={bannerCar.src} width={"100%"} height={"auto"} />
+            </Stack>
           </Stack>
+
           <Button
             variant="contained"
             href={viewpaths.bookingViewPath}
             target="_blank"
             rel="noopener noreferrer"
-            sx={{ width: lgUp ? "12vw" : "auto",height: "5vh", mt: lgUp ? "0px !important" : "10px" }}
+            sx={{
+              width: lgUp ? "15vw" : "auto",
+              mt: lgUp ? "30px !important" : "10px",
+            }}
           >
-            Book Now
+            BOOK NOW
           </Button>
         </Container>
       </Stack>

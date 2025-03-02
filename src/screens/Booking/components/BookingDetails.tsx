@@ -392,7 +392,7 @@ const BookingDetails = (props: CustomProps) => {
               }}
               onClick={() => props.handleBack()}
             >
-              <Typography variant="body2">Back To HOME</Typography>
+              <Typography variant="body2">Back To Journey Details</Typography>
             </Button>
             <Button
               variant="contained"
@@ -418,7 +418,7 @@ const BookingDetails = (props: CustomProps) => {
   };
 
   return (
-    <Box sx={classes.journeyDetailsBg} mt={3}>
+    <Box sx={classes.bookingDetailsBg} mt={3}>
       <Typography
         variant="h2"
         sx={{

@@ -22,6 +22,7 @@ import Logo from "assets/images/rnr-logo.svg";
 import mainIcon from "assets/icons/Navbar/mail_icon.svg";
 import uk_flag_icon from "assets/icons/Navbar/uk_flag_icon.svg";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
+import footerBg from "assets/images/footerBg.webp";
 
 const Footer = () => {
   const [email, setEmail] = useState<any>({
@@ -109,8 +110,7 @@ const Footer = () => {
   return (
     <Box
       sx={{
-        background: "#1A1A1A",
-        mt: 5,
+        // mt: 5,
         p: 4,
         width: "auto",
         borderTop: "1px solid",
@@ -119,6 +119,10 @@ const Footer = () => {
         borderImageSlice: 1,
         borderTopRightRadius: "50px",
         borderTopLeftRadius: "50px",
+        background: "url(" + footerBg.src + ")",
+        backgroundSize: "cover",
+        // backgroundPosition: "center",
+        backgroundColor: theme.palette.primary.darkest,
       }}
     >
       <Container maxWidth="lg">

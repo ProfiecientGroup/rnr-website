@@ -25,7 +25,7 @@ export const createComponents = (): Components => {
         },
         text: {
           textTransform: "none",
-          color: "#222222",
+          color: "#fff",
         },
         contained: {
           borderRadius: "100px",
@@ -33,6 +33,7 @@ export const createComponents = (): Components => {
           color: "#FFFFFF",
           boxShadow: "0px 7px 20px 0px #0000000F",
           textTransform: "none",
+          height: "51px",
           "&:hover": {
             background: "#A04747",
           },
@@ -389,7 +390,7 @@ export const createComponents = (): Components => {
       styleOverrides: {
         primary: {
           fontSize: "14px",
-          fontWeight: 500,
+          fontWeight: 400,
         },
       },
     },

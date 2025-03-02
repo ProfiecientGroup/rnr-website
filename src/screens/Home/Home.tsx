@@ -63,13 +63,13 @@ const Home = () => {
     return <WhatAreWaitingSection />;
   };
   return (
-    <>
+    <Box >
       {getBannerSection()}
       {getAboutSection()}
       {getChooseOurCarSection()}
       <Testimonial testimonialData={testimonial} />
       {getWhatAreWaitingSection()}
-    </>
+    </Box>
   );
 };
 

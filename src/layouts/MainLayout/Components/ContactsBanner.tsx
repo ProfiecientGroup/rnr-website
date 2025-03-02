@@ -20,7 +20,7 @@ import X from "../../../assets/icons/x.svg";
 import LinkedIn from "../../../assets/icons/linkedin.svg";
 import strings from "global/constants/strings";
 
-const TOP_NAV_HEIGHT = 64;
+const TOP_NAV_HEIGHT = 40;
 
 const socialHandles = [
   {
@@ -61,9 +61,9 @@ const ContactsBanner = () => {
         p={1}
         textAlign="center"
         sx={{
-          background: "#1A1A1A"
+          background: "#1A1A1A",
           // background:
-            // "linear-gradient(286deg, #1A1A1A 20.08%, rgb(221 184 99 / 26%) 30.5%, #1A1A1A 51.27%)",
+          // "linear-gradient(286deg, #1A1A1A 20.08%, rgb(221 184 99 / 26%) 30.5%, #1A1A1A 51.27%)",
           // "-webkit-background-clip": "text",
           // "-webkit-text-fill-color": "transparent",
         }}
@@ -105,10 +105,13 @@ const ContactsBanner = () => {
                 }}
               >
                 <Stack direction="row" spacing={1}>
-                  <img src={mainIcon.src} alt="Contact Us" />{" "}
+                  <img src={mainIcon.src} alt="Contact Us" width="15px" />{" "}
                   <Typography
                     variant="body2"
-                    sx={{ color: theme.palette.primary.light }}
+                    sx={{
+                      color: theme.palette.primary.light,
+                      fontSize: "14px",
+                    }}
                   >
                     {strings.EMAIL}
                   </Typography>
@@ -140,10 +143,10 @@ const ContactsBanner = () => {
                 }}
               >
                 <Stack direction="row" spacing={1}>
-                  <img src={uk_flag_icon.src} alt="Contact Us" />{" "}
+                  <img src={uk_flag_icon.src} alt="Contact Us" width="15px"/>{" "}
                   <Typography
                     variant="body2"
-                    sx={{ color: theme.palette.primary.light }}
+                    sx={{ color: theme.palette.primary.light, fontSize: "14px", }}
                   >
                     {strings.PHONE}
                   </Typography>
@@ -159,8 +162,8 @@ const ContactsBanner = () => {
                     src={handle.image}
                     alt={handle.alt}
                     loading="lazy"
-                    height="28px"
-                    width="28px"
+                    height="22px"
+                    width="22px"
                   />
                 </a>
               </Link>

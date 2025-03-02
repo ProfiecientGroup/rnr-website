@@ -23,7 +23,7 @@ const ServicesStyles = (theme: Theme) => {
       backgroundColor: theme.palette.primary.darkest,
       width: "100%",
       height: "auto",
-      paddingTop: "180px",
+      paddingTop: "100px",
       display: "flex",
       justifyContent: "center",
       alignItems: "center",

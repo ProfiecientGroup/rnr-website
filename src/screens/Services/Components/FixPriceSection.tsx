@@ -10,7 +10,7 @@ import {
   useTheme,
 } from "@mui/material";
 import ServicesStyles from "../ServicesStyles";
-import bannerCar2 from "assets/images/services/car2.png";
+import bannerCar2 from "assets/images/services/bannercar2.webp";
 import Sporting from "assets/images/services/sporting-icon.png";
 import urls from "global/constants/urls";
 import viewpaths from "global/constants/viewPathConstants";
@@ -34,7 +34,7 @@ const FixPriceSection = () => {
   const classes = ServicesStyles(theme);
 
   return (
-    <Box sx={classes.bgBox1}>
+    <Box sx={classes.bgBox1} overflow={"hidden"}>
       <Stack direction="column" spacing={2}>
         <Container maxWidth="lg">
           <Stack direction="column" spacing={1}>
@@ -71,31 +71,25 @@ const FixPriceSection = () => {
             </Typography>
           </Stack>
         </Container>
-        <Container
-          maxWidth="lg"
-          sx={{
-            "&.MuiContainer-root": {
-              paddingLeft: 0,
-              marginLeft: "inherit",
-            },
-          }}
-        >
-          <Stack direction={lgUp ? "row" : "column"} spacing={1} mt={3}>
-            <img
-              src={bannerCar2.src}
-              width={lgUp ? "1000px" : "100%"}
-              height={"420px"}
-              style={{
-                position: "relative",
-                right: lgUp ? "35px" : "0px",
-              }}
-            />
+        <Container maxWidth="lg">
+          <Stack direction={lgUp ? "row" : "column"} spacing={13} mt={3}>
+            <Stack sx={{ justifyContent: "flex-start", width: "100%" }}>
+              <img src={bannerCar2.src} width={"100%"} height={"auto"} />
+            </Stack>
             <Grid container spacing={0} width={"100%"} p={1}>
               {eventsData.map((item: any, index: number) => {
                 return (
                   <Grid item lg={12} key={index}>
                     <Stack direction="column" spacing={1} width={"100%"}>
-                      <Typography>{item.text}</Typography>
+                      <Typography
+                        sx={{
+                          ...classes.kugileFont,
+                          fontSize: "25px",
+                          color: theme.palette.primary.main,
+                        }}
+                      >
+                        {item.text}
+                      </Typography>
                       <Typography>{item.des}</Typography>
                     </Stack>
                   </Grid>
@@ -107,12 +101,11 @@ const FixPriceSection = () => {
                 target="_blank"
                 rel="noopener noreferrer"
                 sx={{
-                  width: lgUp ? "12vw" : "auto",
-                  height: "5vh",
-                  mt: "10px !important",
+                  width: lgUp ? "15vw" : "auto",
+                  mt: "15px !important",
                 }}
               >
-                Book Now
+                BOOK NOW
               </Button>
             </Grid>
           </Stack>

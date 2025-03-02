@@ -194,9 +194,10 @@ const AirportTransferSection = () => {
                   <Typography
                     sx={{
                       fontFamily: "Kugile",
-                      fontSize: "32px",
+                      fontSize: "28px",
                       fontWeight: "400",
                       color: theme.palette.primary.main,
+                      textAlign:"start"
                     }}
                   >
                     {item.title}
@@ -213,9 +214,8 @@ const AirportTransferSection = () => {
           <Stack
             direction={lgUp ? "row" : "column"}
             spacing={2}
-            alignItems="center"
             justifyContent="center"
-            sx={{ pt: 5 }}
+            sx={{ py  : 5 }}
           >
             {pricingHour.map((car, index) => (
               <Box
@@ -282,8 +282,7 @@ const AirportTransferSection = () => {
                     rel="noopener noreferrer"
                     sx={{
                       width: "auto",
-                      height: "5vh",
-                      mt: "15px !important",
+                      mt: "20px !important",
                     }}
                   >
                     BOOK THIS CAR

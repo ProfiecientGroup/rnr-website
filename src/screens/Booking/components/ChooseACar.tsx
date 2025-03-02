@@ -38,6 +38,7 @@ const carData = [
 ];
 interface CustomProps {
   bookingData: any;
+  handleBack: Function;
 }
 
 const ChooseACar = (props: CustomProps) => {
@@ -73,7 +74,7 @@ const ChooseACar = (props: CustomProps) => {
 
   return (
     <Box sx={classes.chooseACarBg} mt={3}>
-      <Stack direction="column" spacing={1}>
+      <Stack direction="column" spacing={2}>
         <Typography
           variant="h2"
           sx={{
@@ -135,6 +136,24 @@ const ChooseACar = (props: CustomProps) => {
             </Stack>
           )
         )}
+        <Button
+          variant="contained"
+          fullWidth
+          onClick={() => props.handleBack && props.handleBack()}
+          sx={{
+            backgroundColor: theme.palette.primary.darkest,
+            border: `1px solid ${theme.palette.primary.contrastText}`,
+            color: "#fff",
+            width: "100%",
+            borderRadius: "100px",
+            textTransform: "uppercase",
+            "&:hover": {
+              backgroundColor: theme.palette.primary.darkest,
+            },
+          }}
+        >
+          <Typography variant="body2">Back To Booking Details</Typography>
+        </Button>
       </Stack>
     </Box>
   );

@@ -14,7 +14,7 @@ const Document = () => {
           }}
         ></script>
       </Head>
-      <body style={{backgroundColor:"black"}}>
+      <body style={{backgroundColor:"#030303"}}>
         <noscript>
           <iframe
             src="https://www.googletagmanager.com/ns.html?id=GTM-TMBHXMN"

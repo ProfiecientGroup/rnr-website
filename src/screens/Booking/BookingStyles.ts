@@ -1,12 +1,12 @@
 import { Theme } from "@mui/material";
 import journeyDetailsBg from "../../assets/images/booking/journeyDetailsBg.webp";
 import chooseACarBg from "../../assets/images/booking/chooseACarBg.webp";
-import aboutBg from "../../assets/images/home//aboutBg.webp";
+import BookingBg from "../../assets/images/booking/BookingBg.webp";
 
 const BookingStyles = (theme: Theme) => {
   return {
     bgBox: {
-      background: "url(" + aboutBg.src + ")",
+      background: "url(" + BookingBg.src + ")",
       backgroundSize: "cover",
       backgroundPosition: "center",
       backgroundColor: theme.palette.primary.darkest,
@@ -47,9 +47,29 @@ const BookingStyles = (theme: Theme) => {
       backgroundColor: "#1A1A1A",
     },
     journeyDetailsBg: {
-      background: "url(" + journeyDetailsBg.src + ")",
+      background: "url(" + chooseACarBg.src + ")",
       backgroundSize: "cover",
-      backgroundPosition: "center",
+      // backgroundPosition: "center",
+      // borderRadius:"16px",
+
+      // backgroundColor: theme.palette.primary.darkest,
+      width: "50vw",
+      height: "auto",
+      // display: "flex",
+      // justifyContent: "center",
+      // alignItems: "center",
+      padding: 3,
+      borderRadius: "18px",
+      [theme.breakpoints.down("md")]: {
+        width: "auto",
+      },
+    },
+    bookingDetailsBg: {
+      background: "url(" + chooseACarBg.src + ")",
+      backgroundSize: "cover",
+      // backgroundPosition: "center",
+      // borderRadius:"16px",
+
       // backgroundColor: theme.palette.primary.darkest,
       width: "50vw",
       height: "auto",
@@ -133,7 +153,25 @@ const BookingStyles = (theme: Theme) => {
     chooseACarBg: {
       background: "url(" + chooseACarBg.src + ")",
       backgroundSize: "cover",
-      backgroundPosition: "center",
+      // backgroundPosition: "center",
+      // backgroundColor: theme.palette.primary.darkest,
+      width: "50vw",
+      height: "auto",
+      // display: "flex",
+      // justifyContent: "center",
+      // alignItems: "center",
+      padding: 3,
+      borderRadius: "18px",
+      [theme.breakpoints.down("md")]: {
+        width: "auto",
+      },
+    },
+    paymentBg: {
+      background: "url(" + journeyDetailsBg.src + ")",
+      backgroundSize: "cover",
+      // backgroundPosition: "center",
+      // borderRadius:"16px",
+
       // backgroundColor: theme.palette.primary.darkest,
       width: "50vw",
       height: "auto",
@@ -224,11 +262,12 @@ const BookingStyles = (theme: Theme) => {
         marginLeft: "0px",
       },
       "& .MuiSvgIcon-root": {
-        height: "15px",
-        width: "15px",
+        height: "20px",
+        width: "20px",
+        color: "#DDB863",
       },
       "& .MuiFilledInput-input": {
-        paddingTop: "12px",
+        py: "16px",
         borderColor: "#DDB863",
         borderRadius: "25px !important",
       },
@@ -237,9 +276,9 @@ const BookingStyles = (theme: Theme) => {
         borderRadius: "25px !important",
         // padding: 1,
       },
-      "&.css-1va5fdl-MuiButtonBase-root-MuiButton-root":{
-
-      }
+      "& .MuiButtonBase-root-MuiButton-root": {
+        color: "#fff",
+      },
     },
   };
 };

@@ -88,7 +88,7 @@ const TestimonialSection = (props: CustomProps) => {
               content: '""',
               position: "absolute",
               inset: 0,
-              padding: "1px", // Thickness of the border
+              padding: "1px", 
               borderRadius: "50px",
               background:
                 index === 0

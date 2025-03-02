@@ -1,5 +1,5 @@
 import React from "react";
-import { useTheme } from "@mui/material";
+import { Box, useTheme } from "@mui/material";
 import urls from "global/constants/urls";
 import BannerSection from "./Components/BannerSection";
 import ServicesStyles from "./ServicesStyles";
@@ -10,12 +10,12 @@ import AirportTransferSection from "./Components/AirportTransfer";
 const Home = () => {
 
   return (
-    <>
+    <Box mt={6}>
       <BannerSection />
       <FixPriceSection />
       <PricingHourSection />
       <AirportTransferSection />
-    </>
+    </Box>
   );
 };
 

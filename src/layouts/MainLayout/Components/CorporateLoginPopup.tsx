@@ -73,30 +73,30 @@ const LoginPopup: React.FC<LoginPopupProps> = ({ open, onClose }) => {
   };
 
   return (
-    <Dialog open={open} onClose={onClose} fullWidth >
-     
+    <Dialog open={open} onClose={onClose} fullWidth>
       <DialogContent
         sx={{
           border: "1px solid #DDB86352",
           borderRadius: "10px",
+          backgroundColor: "#1A1A1A",
           p: 5,
         }}
       >
-         <IconButton
-        aria-label="close"
-        onClick={onClose}
-        sx={{
-          position: "absolute",
-          right: 8,
-          top: 8,
-          color: (theme) => theme.palette.grey[500],
-        }}
-      >
-        <CloseIcon />
-      </IconButton>
+        <IconButton
+          aria-label="close"
+          onClick={onClose}
+          sx={{
+            position: "absolute",
+            right: 8,
+            top: 8,
+            color: (theme) => theme.palette.grey[500],
+          }}
+        >
+          <CloseIcon />
+        </IconButton>
         <TextField
           variant="outlined"
-          placeholder="Your email"
+          placeholder="Email Address"
           name="email"
           value={formData.email}
           fullWidth
@@ -107,7 +107,7 @@ const LoginPopup: React.FC<LoginPopupProps> = ({ open, onClose }) => {
         />
         <TextField
           variant="outlined"
-          placeholder="Your password"
+          placeholder="Password"
           type="password"
           name="password"
           value={formData.password}
@@ -124,7 +124,7 @@ const LoginPopup: React.FC<LoginPopupProps> = ({ open, onClose }) => {
           disabled={isLoading}
           fullWidth
         >
-          {isLoading ? "Logging in..." : "Login"}
+          {isLoading ? "Logging in..." : "LOG IN"}
         </Button>
       </DialogContent>
     </Dialog>

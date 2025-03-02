@@ -1,6 +1,6 @@
 import { Theme } from "@mui/material";
-import aboutBanner from "../../assets/images/about/aboutBanner.png";
-import outStoryBg from "../../assets/images/home/aboutBg.webp";
+import aboutBanner from "../../assets/images/about/aboutBanner.webp";
+import outStoryBg from "../../assets/images/about/ourStoryBg.webp";
 import leadershipBg from "../../assets/images/about/leadershipBg.webp";
 
 const AbouStyles = (theme: Theme) => {
@@ -23,11 +23,11 @@ const AbouStyles = (theme: Theme) => {
     ourStoryBox: {
       background: "url(" + outStoryBg.src + ")",
       backgroundSize: "cover",
-      backgroundPosition: "center",
+      // backgroundPosition: "center",
       backgroundRepeat: "no-repeat",
       backgroundColor: theme.palette.primary.darkest,
       width: "100%",
-      height: "auto",
+      height: "130vh",
       // padding: "50px 20px",
       display: "flex",
       justifyContent: "center",
@@ -47,7 +47,7 @@ const AbouStyles = (theme: Theme) => {
       height: "auto",
       position: "relative",
       bottom: "200px",
-      right: "140px",
+      right: "230px",
       [theme.breakpoints.down("md")]: {
         position: "relative",
         bottom: "0px",

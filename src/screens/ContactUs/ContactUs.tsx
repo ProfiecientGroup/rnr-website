@@ -22,7 +22,6 @@ import { isTruthy, openErrorNotification } from "helpers/methods";
 import CustomContactNumberInput from "global/components/CustomContactNumberInput/CustomContactNumberInput";
 import { contactUsForm, validateData } from "./ContactUsStateAndValidation";
 import formBg from "../../assets/images/contactUs/formBg.webp";
-import { title } from "process";
 import strings from "global/constants/strings";
 
 const TOP_NAV_HEIGHT = 64;
@@ -176,7 +175,7 @@ const ContactUs = () => {
                   borderRadius: theme.spacing(3),
                   padding: theme.spacing(4),
                   boxShadow: "0px 4px 16px rgba(0, 0, 0, 0.1)",
-                  // background: "url(" + formBg.src + ")",
+                  background: "url(" + formBg.src + ")",
                   backgroundSize: "cover",
                   backgroundPosition: "center",
                   backgroundRepeat: "no-repeat",
@@ -196,12 +195,22 @@ const ContactUs = () => {
     return (
       <Grid container spacing={2} alignItems="center" justifyContent="center">
         <Grid item lg={12} xl={12} md={12} sm={12} xs={12}>
-          <Typography>Write a Message</Typography>
+          <Typography
+            sx={{
+              fontFamily: "Kugile",
+              fontWeight: "400",
+              fontSize: "32px",
+              lineHeight: "48px",
+              letterSpacing: "5%",
+            }}
+          >
+            Write a Message
+          </Typography>
         </Grid>
         <Grid item lg={12} xl={12} md={12} sm={12} xs={12}>
           <TextField
             variant="outlined"
-            placeholder="Your First Name"
+            placeholder="First Name"
             fullWidth
             value={formFields.firstName.value}
             onChange={(event) => {
@@ -221,7 +230,7 @@ const ContactUs = () => {
         <Grid item lg={6} xl={6} md={6} sm={12} xs={12}>
           <TextField
             variant="outlined"
-            placeholder="Your Email"
+            placeholder="Email Address"
             value={formFields.email.value}
             fullWidth
             onChange={(event) => {
@@ -266,7 +275,7 @@ const ContactUs = () => {
             variant="outlined"
             minRows={2}
             multiline
-            placeholder="Your Message"
+            placeholder="Write Your Message"
             fullWidth
             value={formFields.message.value}
             error={isTruthy(formFields.message.error)}

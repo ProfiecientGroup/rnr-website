@@ -95,7 +95,7 @@ const Payment = () => {
               },
             }}
           >
-            <Typography variant="body2">Back To HOME</Typography>
+            <Typography variant="body2">Back To Choose A Car</Typography>
           </Button>
           <Button
             variant="contained"

@@ -13,7 +13,7 @@ const HomeStyles = (theme: Theme) => {
       backgroundPosition: "center",
       backgroundColor: theme.palette.primary.darkest,
       width: "100%",
-      height: "auto",
+      height: "80vh",
       display: "flex",
       justifyContent: "center",
       alignItems: "center",
@@ -121,7 +121,7 @@ const HomeStyles = (theme: Theme) => {
       },
     },
     aboutBgBox: {
-      background: "url(" + aboutBg.src + ")",
+      // background: "url(" + aboutBg.src + ")",
       backgroundSize: "cover",
       backgroundPosition: "center",
       backgroundColor: theme.palette.primary.darkest,

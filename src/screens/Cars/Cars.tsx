@@ -1,5 +1,5 @@
 import { useTheme, useMediaQuery } from "@mui/material";
-import bannerCar from "../../assets/images/cars/bannerCar.webp";
+import bannerCar from "../../assets/images/cars/carBanner.webp";
 import HomeStyles from "screens/Home/HomeStyles";
 import CarsBannerSection from "./Components/CarBannerSection";
 import CarsTestimonialSection from "./Components/CarsTestimonial";
@@ -11,11 +11,7 @@ import icon4 from "../../assets/images/cars/icon4.svg";
 
 const carTestimonialData = [
   {
-    carsImages: [
-      { img: car1.src },
-      { img: car1.src },
-      { img: car1.src },
-    ],
+    carsImages: [{ img: car1.src }, { img: car1.src }, { img: car1.src }],
     title: "Mercedes S-Class",
     des: "The Mercedes S-Class blends sophistication and practicality. With seating for three, it provides a comfortable travel experience, complemented by complimentary Wi-Fi. Ideal for those who appreciate a touch of luxury in a compact setting.",
     keyFeatures: [
@@ -44,11 +40,7 @@ const carTestimonialData = [
     ],
   },
   {
-    carsImages: [
-      { img: car1.src },
-      { img: car1.src },
-      { img: car1.src },
-    ],
+    carsImages: [{ img: car1.src }, { img: car1.src }, { img: car1.src }],
     title: "Mercedes V-Class",
     des: "The Mercedes S-Class blends sophistication and practicality. With seating for three, it provides a comfortable travel experience, complemented by complimentary Wi-Fi. Ideal for those who appreciate a touch of luxury in a compact setting.",
     keyFeatures: [
@@ -77,11 +69,7 @@ const carTestimonialData = [
     ],
   },
   {
-    carsImages: [
-      { img: car1.src },
-      { img: car1.src },
-      { img: car1.src },
-    ],
+    carsImages: [{ img: car1.src }, { img: car1.src }, { img: car1.src }],
     title: "Mercedes E-Class",
     des: "The Mercedes S-Class blends sophistication and practicality. With seating for three, it provides a comfortable travel experience, complemented by complimentary Wi-Fi. Ideal for those who appreciate a touch of luxury in a compact setting.",
     keyFeatures: [
@@ -119,9 +107,10 @@ const CarsComponent = () => {
 
   return (
     <>
-      <CarsBannerSection />
+      <img src={bannerCar.src} />
+      {/* <CarsBannerSection /> */}
       <CarsTestimonialSection carTestimonialData={carTestimonialData} />
     </>
   );
 };
-export default CarsComponent;
+export default CarsComponent; 

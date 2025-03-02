@@ -13,8 +13,8 @@ class Strings {
 
   readMore="Read More";
   APP_NAME = "rnr";
-  EMAIL = "helloRNR@demo.com";
-  PHONE = "+44 (0)12 1234 1234";
+  EMAIL = "booking@rnrchauffeurs.com";
+  PHONE = "+44 118 2272 637";
   ORGANIZATION = "rnr";
   LOCATION = "";
   SEARCH_TIME_OUT = 350;

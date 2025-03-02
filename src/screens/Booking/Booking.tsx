@@ -10,8 +10,8 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import whiteStar from "../../assets/images/home/whiteStar.png";
-import goldStar from "../../assets/images/home/goldStar.png";
+import whiteStar from "../../assets/images/home/whiteStar.webp";
+import goldStar from "../../assets/images/home/goldStar.webp";
 import { useState } from "react";
 import React from "react";
 import BookingStyles from "screens/Booking/BookingStyles";
@@ -346,7 +346,7 @@ const Booking = () => {
           />
         );
       case 2:
-        return <ChooseACar bookingData={bookingData} />;
+        return <ChooseACar bookingData={bookingData} handleBack={handleBack} />;
       case 3:
         return <Payment />;
       default:
@@ -362,6 +362,7 @@ const Booking = () => {
         spacing={3}
         justifyContent={"center"}
         alignItems={"center"}
+        py={8}
       >
         <Box>
           <Typography sx={classes.experiFont} variant="h6">
@@ -427,6 +428,7 @@ const Booking = () => {
             }}
           >
             <Box
+              py={3}
               sx={{
                 [theme.breakpoints.down("md")]: {
                   overflowX: "scroll",
@@ -451,7 +453,7 @@ const Booking = () => {
                           }
                     }
                     key={index}
-                    // onClick={() => handleStepClick(index)}
+                    onClick={() => handleStepClick(index)}
                   >
                     {label}
                   </StepLabel>

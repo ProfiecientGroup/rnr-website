@@ -39,7 +39,7 @@ const pricingHour = [
   },
   {
     carImg: car2.src,
-    title: "Mercedes S-Class",
+    title: "Mercedes V-Class & EQV",
     des: [
       {
         subTitle: "Hourly rate in Central London",
@@ -61,7 +61,7 @@ const pricingHour = [
   },
   {
     carImg: car3.src,
-    title: "Mercedes S-Class",
+    title: "Mercedes E-Class",
     des: [
       {
         subTitle: "Hourly rate in Central London",
@@ -89,7 +89,7 @@ const PricingHourSection = () => {
   const classes = ServicesStyles(theme);
 
   return (
-    <Box sx={classes.bgBox1}>
+    <Box sx={classes.bgBox}  pt={17}>
       <Stack direction="column" spacing={2}>
         <Container maxWidth="lg">
           <Stack direction="column" spacing={1}>
@@ -119,11 +119,11 @@ const PricingHourSection = () => {
               }}
             />
             <Typography variant="body1" pt={2}>
-              ith RNR Chauffeurs`&apos;` simple by-the-hour pricing,
-              you`&apos;`re in control. Book our premium vehicles and
-              professional chauffeurs for as long as you need, with no rush and
-              no hassle. Perfect for business trips, sightseeing, or special
-              occasions, we provide the flexibility to match your plans.
+              ith RNR Chauffeurs&apos; simple by-the-hour pricing, you&apos;re
+              in control. Book our premium vehicles and professional chauffeurs
+              for as long as you need, with no rush and no hassle. Perfect for
+              business trips, sightseeing, or special occasions, we provide the
+              flexibility to match your plans.
             </Typography>
           </Stack>
         </Container>
@@ -131,18 +131,17 @@ const PricingHourSection = () => {
           <Stack
             direction={lgUp ? "row" : "column"}
             spacing={2}
-            alignItems="center"
             justifyContent="center"
           >
             {pricingHour.map((car, index) => (
-              <Box
+                <Box
                 key={index}
                 sx={{
                   borderRadius: "50px",
                   backgroundColor: "#65573733",
                   padding: 4,
-                  width: { xs: "100%", sm: "50%", md: "417px" },
                   height: "auto",
+                  width: { xs: "100%", sm: "50%", md: "417px" },
                   transform: `scale(${1})`,
                   opacity: 0.9,
                   transition: "transform 0.3s ease, opacity 0.3s ease",
@@ -167,24 +166,30 @@ const PricingHourSection = () => {
                   },
                 }}
               >
-                <Stack direction="column" spacing={2}>
+                <Stack direction="column" spacing={3}>
                   <img
                     src={car.carImg}
                     alt={car.title}
                     style={{ width: "100%", borderRadius: "10px" }}
                   />
-                  <Stack direction="column" spacing={1}>
-                    <Typography variant="h6">{car.title}</Typography>
-                    {car.des.map((item, index) => (
-                      <Stack
-                        key={index}
-                        direction="row"
-                        justifyContent="space-between"
-                      >
-                        <Typography>{item.subTitle}</Typography>
-                        <Typography>{item.price}</Typography>
-                      </Stack>
-                    ))}
+                  <Stack direction="column" spacing={2}>
+                    <Typography variant="caption" gutterBottom>
+                      {car.title}
+                    </Typography>
+                    <Stack direction="column" spacing={0.5}>
+                      {car.des.map((item, index) => (
+                        <Stack
+                          key={index}
+                          direction="row"
+                          justifyContent="space-between"
+                        >
+                          <Typography variant="body1" fontSize="15px">
+                            {item.subTitle}
+                          </Typography>
+                          <Typography variant="body1">{item.price}</Typography>
+                        </Stack>
+                      ))}
+                    </Stack>
                   </Stack>
                   <Button
                     variant="contained"
@@ -192,9 +197,8 @@ const PricingHourSection = () => {
                     target="_blank"
                     rel="noopener noreferrer"
                     sx={{
-                      width: "100%",
-                      height: "5vh",
-                      mt: "10px !important",
+                      width: "auto",
+                      mt: "20px !important",
                     }}
                   >
                     BOOK THIS CAR

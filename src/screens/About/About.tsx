@@ -94,7 +94,7 @@ const About = () => {
           height={isLgUp ? "550px" : "auto"}
           alt="Luxury car"
           style={{
-            marginTop: "30px",
+            marginTop: "100px",
             borderRadius: "10px",
           }}
         />
@@ -123,7 +123,7 @@ const About = () => {
   );
 
   const getLeadershipSection = () => (
-    <Box sx={classes.leadershipBox}>
+    <Box sx={classes.leadershipBox} py={4}>
       <Container
         maxWidth="lg"
         sx={{

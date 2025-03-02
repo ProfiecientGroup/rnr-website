@@ -147,7 +147,7 @@ const Testimonial = (props: CustomProps) => {
       if (active === 0) {
         opacity = 1;
       } else {
-        opacity = index === active ? 0.9 : 0.1;
+        opacity = index === active ? 0.9 : 0.20;
       }
       return (
         <Box
@@ -305,6 +305,7 @@ const Testimonial = (props: CustomProps) => {
         display="flex"
         spacing={2}
         borderRadius="60px"
+        mt={4}
       >
         {isDesktop ? getDesktopTestimonialView() : getMobileTestimonialView()}
       </Stack>
