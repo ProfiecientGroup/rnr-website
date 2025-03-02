@@ -453,7 +453,7 @@ const Booking = () => {
                           }
                     }
                     key={index}
-                    onClick={() => handleStepClick(index)}
+                    // onClick={() => handleStepClick(index)}
                   >
                     {label}
                   </StepLabel>
