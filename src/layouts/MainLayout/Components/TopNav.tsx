@@ -158,7 +158,7 @@ const TopNav = (props: CustomProps) => {
                 <img
                   src={Logo.src}
                   aria-label="Logo"
-                  height={lgUp ? "50px" : "55px"}
+                  height={lgUp ? "50px" : "30px"}
                   alt="Logo"
                 />
               </a>

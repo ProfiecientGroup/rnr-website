@@ -65,6 +65,12 @@ const ContactUs = () => {
       if (validateFormData()) {
         if (validateFormData()) {
           const subject = encodeURIComponent("Contact Form Submission");
+          // const body={
+          //   name:"",
+          //   email:"",
+          //   phoneNo:"",
+          //   message:""
+          // }
           const body = encodeURIComponent(
             `Name: ${formFields.firstName.value}\nEmail: ${formFields.email.value}\nPhone: ${formFields.phone.value}\nMessage: ${formFields.message.value}`
           );
@@ -173,7 +179,7 @@ const ContactUs = () => {
                   width: "100%",
                   backgroundColor: theme.palette.primary.dark,
                   borderRadius: theme.spacing(3),
-                  padding: theme.spacing(4),
+                  padding: isLgUp ? theme.spacing(4) : theme.spacing(1),
                   boxShadow: "0px 4px 16px rgba(0, 0, 0, 0.1)",
                   background: "url(" + formBg.src + ")",
                   backgroundSize: "cover",

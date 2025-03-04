@@ -17,6 +17,9 @@ const HomeStyles = (theme: Theme) => {
       display: "flex",
       justifyContent: "center",
       alignItems: "center",
+      [theme.breakpoints.down("md")]: {
+        height: "auto",
+      },
     },
     experiFont: {
       fontFamily: "Kugile",

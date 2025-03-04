@@ -147,7 +147,6 @@ const CarsTestimonialSection = (props: CustomProps) => {
               <Button
                 variant="contained"
                 href={viewpaths.bookingViewPath}
-                target="_blank"
                 rel="noopener noreferrer"
                 sx={{ width: isLgUp ? "12vw" : "auto", mt: "0px !important" }}
               >

@@ -278,7 +278,6 @@ const AirportTransferSection = () => {
                   <Button
                     variant="contained"
                     href={viewpaths.bookingViewPath}
-                    target="_blank"
                     rel="noopener noreferrer"
                     sx={{
                       width: "auto",

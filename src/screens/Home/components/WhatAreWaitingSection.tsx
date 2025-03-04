@@ -58,7 +58,6 @@ const WhatAreWaitingSection = () => {
             <Button
               variant="contained"
               href={viewpaths.bookingViewPath}
-              target="_blank"
               rel="noopener noreferrer"
               size="small"
               sx={{ width: "100%" }}
@@ -68,7 +67,6 @@ const WhatAreWaitingSection = () => {
             <Button
               variant="outlined"
               href={viewpaths.bookingViewPath}
-              target="_blank"
               rel="noopener noreferrer"
               size="small"
               sx={{

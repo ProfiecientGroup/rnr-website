@@ -80,7 +80,7 @@ const Testimonial = (props: CustomProps) => {
                     padding: 2,
                     [theme.breakpoints.down("xl")]: {
                       width: "378.2px",
-                      height: "50vh",
+                      height: "auto",
                       maxHeight: "100%",
                     },
                     border: "1px solid transparent",

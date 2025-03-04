@@ -62,7 +62,6 @@ const AboutSection = () => {
             <Button
               variant="contained"
               href={viewpaths.bookingViewPath}
-              target="_blank"
               rel="noopener noreferrer"
             >
               <Typography variant="button">{strings.readMore}</Typography>

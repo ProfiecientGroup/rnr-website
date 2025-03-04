@@ -63,15 +63,7 @@ const BannerSection = () => {
 
   return (
     <Box sx={classes.bgBox}>
-      <Container
-        maxWidth="lg"
-        sx={{
-          minHeight: TOP_NAV_HEIGHT,
-          p: 2,
-          pl: lgUp ? 6 : 2,
-          pr: lgUp ? 6 : 1,
-        }}
-      >
+      <Container maxWidth="lg">
         <Stack
           direction={{ lg: "row", md: "column", sm: "column", xs: "column" }}
           spacing={lgUp ? 10 : 1}

@@ -202,7 +202,6 @@ const MobileNav = (props: CustomProps) => {
             variant="contained"
             fullWidth
             href={viewpaths.bookingViewPath}
-            target="_blank"
             rel="noopener noreferrer"
             endIcon={<ChevronRightIcon />}
           >

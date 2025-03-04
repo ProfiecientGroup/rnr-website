@@ -98,7 +98,6 @@ const FixPriceSection = () => {
               <Button
                 variant="contained"
                 href={viewpaths.bookingViewPath}
-                target="_blank"
                 rel="noopener noreferrer"
                 sx={{
                   width: lgUp ? "15vw" : "auto",

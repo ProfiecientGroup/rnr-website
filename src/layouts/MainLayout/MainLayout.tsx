@@ -59,8 +59,7 @@ const MainLayout = (props: CustomProps) => {
         />
       )}
       <LayoutRoot
-        sx={{ pt: 18 }}
-        // sx={{ paddingTop: lgUp ? 30 : smUp ? 22 : 15 }}
+        sx={{ pt: lgUp ? 18 : 10 }}
       >
         <LayoutContainer>{children}</LayoutContainer>
       </LayoutRoot>
