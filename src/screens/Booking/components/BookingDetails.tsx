@@ -392,7 +392,7 @@ const BookingDetails = (props: CustomProps) => {
               }}
               onClick={() => props.handleBack()}
             >
-              <Typography variant="body2">Back To Journey Details</Typography>
+              <Typography variant="body2">Back To Choose Car</Typography>
             </Button>
             <Button
               variant="contained"
@@ -427,7 +427,7 @@ const BookingDetails = (props: CustomProps) => {
           textAlign: "start",
         }}
       >
-        <span style={{ color: theme.palette.primary.main }}>Step 2.</span>{" "}
+        <span style={{ color: theme.palette.primary.main }}>Step 3.</span>{" "}
         Booking Details
       </Typography>
       <Container maxWidth="lg">{getForm()}</Container>

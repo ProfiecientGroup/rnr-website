@@ -16,10 +16,17 @@ const paymentDetails = [
   { title: "Payable Amount", value: "£320.00" },
 ];
 
-const Payment = () => {
+interface CustomProps {
+  handleBack: Function;
+  formData: any;
+}
+
+const Payment = (props: CustomProps) => {
   const theme = useTheme();
   const classes = BookingStyles(theme);
   const isLgUp = useMediaQuery(theme.breakpoints.up("lg"));
+  const selectedCar = props.formData.selectedCar;
+  const bookingDetails = props.formData.bookingDetails;
 
   const carItemStyle = {
     borderColor: theme.palette.primary.main,
@@ -45,40 +52,50 @@ const Payment = () => {
           <span style={{ color: theme.palette.primary.main }}>Step 4.</span>{" "}
           Payment Details
         </Typography>
-        <Stack direction="column" spacing={2} sx={carItemStyle}>
-          <Stack direction={isLgUp ? "row" : "column"} spacing={2}>
-            <img src={car1.src} width={isLgUp ? "300px" : "100%"} alt={"car"} />
-            <Stack direction="column" spacing={2}>
-              <Typography>Mercedes S-Class</Typography>
-              <Typography>Tuesday 3 December 2024</Typography>
-              <Typography>John Grey</Typography>
-              <Typography>john123@demo.com</Typography>
-              <Typography>+44 (0)12 1234 1234</Typography>
+        {selectedCar && (
+          <Stack direction="column" spacing={2} sx={carItemStyle}>
+            <Stack direction={isLgUp ? "row" : "column"} spacing={2}>
+              <img
+                src={selectedCar.imgSrc}
+                width={isLgUp ? "300px" : "100%"}
+                alt={selectedCar.model}
+              />
+              <Stack direction="column" spacing={2}>
+                <Typography>{selectedCar.model}</Typography>
+                <Typography>
+                  {props.formData.start_datetime
+                    ? new Date(props.formData.start_datetime).toDateString()
+                    : "Not Selected"}
+                </Typography>
+                <Typography>
+                  {bookingDetails.firstName} {bookingDetails.lastName}
+                </Typography>
+                <Typography>{bookingDetails.email}</Typography>
+                <Typography>{bookingDetails.phone}</Typography>
+              </Stack>
+            </Stack>
+            <Box
+              sx={{
+                background: "#DDB863",
+                borderTop: "1px solid",
+                borderImageSource:
+                  "linear-gradient(87.19deg, #030303 4.68%, #DDB863 49.2%, #030303 95.32%)",
+              }}
+            ></Box>
+            <Stack
+              direction={isLgUp ? "row" : "column"}
+              spacing={1}
+              width={"100%"}
+              alignItems={isLgUp ? "center" : "start"}
+              justifyContent={"space-between"}
+            >
+              <Box>
+                <Typography>Price</Typography>
+                <Typography>{selectedCar.final_price}</Typography>
+              </Box>
             </Stack>
           </Stack>
-          <Box
-            sx={{
-              background: "#DDB863",
-              borderTop: "1px solid",
-              borderImageSource:
-                "linear-gradient(87.19deg, #030303 4.68%, #DDB863 49.2%, #030303 95.32%)",
-            }}
-          ></Box>
-          <Stack
-            direction={isLgUp ? "row" : "column"}
-            spacing={1}
-            width={"100%"}
-            alignItems={isLgUp ? "center" : "start"}
-            justifyContent={"space-between"}
-          >
-            {paymentDetails.map((item, i) => (
-              <Box key={i}>
-                <Typography key={i}>{item.title} </Typography>
-                <Typography key={i}>{item.value} </Typography>
-              </Box>
-            ))}
-          </Stack>
-        </Stack>
+        )}
         <Stack direction={"row"} spacing={2}>
           <Button
             variant="contained"
@@ -94,8 +111,9 @@ const Payment = () => {
                 backgroundColor: theme.palette.primary.darkest,
               },
             }}
+            onClick={() => props.handleBack()}
           >
-            <Typography variant="body2">Back To Choose A Car</Typography>
+            <Typography variant="body2">Back To Booking Details</Typography>
           </Button>
           <Button
             variant="contained"

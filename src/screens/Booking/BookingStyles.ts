@@ -246,6 +246,7 @@ const BookingStyles = (theme: Theme) => {
       outline: 0,
     },
     timePicker: {
+      width:"100%",
       paddingTop: "12px",
       borderRadius: "25px !important",
       "& .MuiOutlinedInput-root": {

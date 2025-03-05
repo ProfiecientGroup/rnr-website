@@ -39,13 +39,14 @@ const carData = [
 interface CustomProps {
   bookingData: any;
   handleBack: Function;
+  handleCarSelection: Function;
 }
 
 const ChooseACar = (props: CustomProps) => {
   const { bookingData } = props;
   const theme = useTheme();
   const classes = BookingStyles(theme);
-  const isLgUp = useMediaQuery(theme.breakpoints.up("xl"));
+  const isLgUp = useMediaQuery(theme.breakpoints.up("lg"));
 
   const carItemStyle = {
     borderColor: theme.palette.primary.main,
@@ -84,58 +85,58 @@ const ChooseACar = (props: CustomProps) => {
             lineHeight: "36px",
           }}
         >
-          <span style={{ color: theme.palette.primary.main }}>Step 3.</span>{" "}
+          <span style={{ color: theme.palette.primary.main }}>Step 2.</span>{" "}
           Available Cars
         </Typography>
         <Typography variant="body2" color={theme.palette.primary.main}>
           {updatedCarData.length} Cars Available
         </Typography>
-        {updatedCarData.map(
-          ({ model, description, imgSrc, extraInfo, final_price }, index) => (
-            <Stack
-              direction={isLgUp ? "row" : "column"}
-              spacing={2}
-              sx={carItemStyle}
-              key={index}
-            >
-              <Stack direction="column" spacing={2}>
-                <Typography>{model}</Typography>
-                <Stack direction={isLgUp ? "row" : "column"} spacing={2}>
-                  {description.map((item, i) => (
-                    <Typography key={i}>
-                      {item} {i !== description.length - 1 && "|"}{" "}
-                    </Typography>
-                  ))}
-                </Stack>
-                <img
-                  src={imgSrc}
-                  width={isLgUp ? "400px" : "100%"}
-                  alt={model}
-                />
+        {updatedCarData.map((car, index) => (
+          <Stack
+            direction={{ sm: "column", md: "column", lg: "column", xl: "row" }}
+            spacing={2}
+            sx={carItemStyle}
+            key={index}
+          >
+            <Stack direction="column" spacing={2}>
+              <Typography>{car.model}</Typography>
+              <Stack direction={isLgUp ? "row" : "column"} spacing={2}>
+                {car.description.map((item, i) => (
+                  <Typography key={i}>
+                    {item} {i !== car.description.length - 1 && "|"}{" "}
+                  </Typography>
+                ))}
               </Stack>
-              <Stack direction="column" spacing={2}>
-                <Typography>{extraInfo}</Typography>
-                <Typography>Your Journey Price</Typography>
-                <Typography>{final_price}</Typography>
-                <Button
-                  variant="contained"
-                  sx={{
-                    backgroundColor: theme.palette.primary.contrastText,
-                    color: "#fff",
-                    width: "100%",
-                    borderRadius: "100px",
-                    textTransform: "uppercase",
-                    "&:hover": {
-                      backgroundColor: theme.palette.primary.contrastText,
-                    },
-                  }}
-                >
-                  <Typography variant="body2">BOOK NOW</Typography>
-                </Button>
-              </Stack>
+              <img
+                src={car.imgSrc}
+                width={isLgUp ? "400px" : "100%"}
+                alt={car.model}
+              />
             </Stack>
-          )
-        )}
+
+            <Stack direction="column" spacing={2}>
+              <Typography>{car.extraInfo}</Typography>
+              <Typography>Your Journey Price</Typography>
+              <Typography>{car.final_price}</Typography>
+              <Button
+                variant="contained"
+                sx={{
+                  backgroundColor: theme.palette.primary.contrastText,
+                  color: "#fff",
+                  width: "100%",
+                  borderRadius: "100px",
+                  textTransform: "uppercase",
+                  "&:hover": {
+                    backgroundColor: theme.palette.primary.contrastText,
+                  },
+                }}
+                onClick={() => props.handleCarSelection(car)} // Pass selected car data
+              >
+                <Typography variant="body2">BOOK NOW</Typography>
+              </Button>
+            </Stack>
+          </Stack>
+        ))}
         <Button
           variant="contained"
           fullWidth
@@ -152,7 +153,7 @@ const ChooseACar = (props: CustomProps) => {
             },
           }}
         >
-          <Typography variant="body2">Back To Booking Details</Typography>
+          <Typography variant="body2">Back To Journey Details</Typography>
         </Button>
       </Stack>
     </Box>

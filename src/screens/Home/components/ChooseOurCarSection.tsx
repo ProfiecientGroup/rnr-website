@@ -82,9 +82,28 @@ const ChooseOurCarSection = () => {
           <Stack direction={isLgUp ? "row" : "column"} spacing={1}>
             <Stack direction={"column"} spacing={6} sx={{ flex: 1 }}>
               <Stack
-                direction={"row"}
+                direction={{
+                  xl: "row",
+                  lg: "row",
+                  md: "row",
+                  sm: "column",
+                  xs: "column",
+                }}
                 spacing={2}
-                justifyContent={isLgUp ? "flex-end" : "center"}
+                justifyContent={{
+                  xl: "flex-end",
+                  lg: "flex-end",
+                  md: "flex-end",
+                  sm: "center",
+                  xs: "center",
+                }}
+                alignItems={{
+                  xl: "flex-end",
+                  lg: "flex-end",
+                  md: "flex-end",
+                  sm: "center",
+                  xs: "center",
+                }}
                 sx={{
                   position: "relative",
                   left: isLgUp ? "97px" : 0,
@@ -205,7 +224,6 @@ const ChooseOurCarSection = () => {
                 <Button
                   variant="contained"
                   href={viewpaths.bookingViewPath}
-                  target="_blank"
                   rel="noopener noreferrer"
                   size="small"
                   sx={{ width: isLgUp ? "20%" : "auto" }}
@@ -215,9 +233,28 @@ const ChooseOurCarSection = () => {
               </Stack>
 
               <Stack
-                direction={"row"}
+                direction={{
+                  xl: "row",
+                  lg: "row",
+                  md: "row",
+                  sm: "column",
+                  xs: "column",
+                }}
                 spacing={2}
-                justifyContent={isLgUp ? "flex-end" : "center"}
+                justifyContent={{
+                  xl: "flex-end",
+                  lg: "flex-end",
+                  md: "flex-end",
+                  sm: "center",
+                  xs: "center",
+                }}
+                alignItems={{
+                  xl: "inherit",
+                  lg: "inherit",
+                  md: "inherit",
+                  sm: "center",
+                  xs: "center",
+                }}
               >
                 {[
                   {

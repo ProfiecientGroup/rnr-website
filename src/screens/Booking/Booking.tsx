@@ -28,18 +28,15 @@ import moment from "moment";
 import { doBooking } from "./components/BookingService";
 import strings from "global/constants/strings";
 
-const steps = ["Journey details", "Booking Details", "Choose a Car", "Payment"];
+const steps = ["Journey details", "Choose a Car", "Booking Details", "Payment"];
 
 const Booking = () => {
   const theme = useTheme();
   const classes = BookingStyles(theme);
   const lgUp = useMediaQuery(theme.breakpoints.up("md"));
   const [currentStep, setCurrentStep] = useState(0);
-
-  const [skipped, setSkipped] = useState(new Set<number>());
   const [tripTypeActiveStep, setTripTypeActiveStep] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
-  const [open, setOpen] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [message, setMessage] = useState<string>("");
   const [isButtonClicked, setIsButtonClicked] = useState(false);
@@ -75,6 +72,7 @@ const Booking = () => {
       noOfSuitcase: "",
       message: "",
     },
+    selectedCar: null,
   });
   const [journeyDetailsErrors, setJourneyDetailsErrors] = useState<any>({
     trip_type: "",
@@ -150,36 +148,36 @@ const Booking = () => {
     // }
     setBookingErrors(newErrors);
 
-    if (isValid) {
-      try {
-        setIsLoading(true);
-        const response = await fetch(
-          "http://13.60.40.222/calculate-booking-prices",
-          {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(formData),
-          }
-        );
+    // if (isValid) {
+    //   try {
+    //     setIsLoading(true);
+    //     const response = await fetch(
+    //       "http://13.60.40.222/calculate-booking-prices",
+    //       {
+    //         method: "POST",
+    //         headers: { "Content-Type": "application/json" },
+    //         body: JSON.stringify(formData),
+    //       }
+    //     );
 
-        if (!response.ok) {
-          throw new Error("Failed to fetch booking data");
-        }
+    //     if (!response.ok) {
+    //       throw new Error("Failed to fetch booking data");
+    //     }
 
-        const data = await response.json();
-        setBookingData(data);
-        setIsLoading(false);
-      } catch (error: any) {
-        setIsLoading(false);
-        openErrorNotification(error.message || "Something went wrong");
-      }
-    } else {
-      console.log("Validation failed!", newErrors);
-    }
+    //     const data = await response.json();
+    //     setBookingData(data);
+    //     setIsLoading(false);
+    //   } catch (error: any) {
+    //     setIsLoading(false);
+    //     openErrorNotification(error.message || "Something went wrong");
+    //   }
+    // } else {
+    //   console.log("Validation failed!", newErrors);
+    // }
     return isValid;
   };
 
-  const bookingJourneyValidate = () => {
+  const bookingJourneyValidate = async () => {
     let newErrors = { ...journeyDetailsErrors };
     let isValid = true;
 
@@ -282,7 +280,37 @@ const Booking = () => {
     }
 
     setJourneyDetailsErrors(newErrors);
+    if (isValid) {
+      try {
+        setIsLoading(true);
+        const response = await fetch(
+          "http://13.60.40.222/calculate-booking-prices",
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(formData),
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch booking data");
+        }
+
+        const data = await response.json();
+        setBookingData(data);
+        setIsLoading(false);
+      } catch (error: any) {
+        setIsLoading(false);
+        openErrorNotification(error.message || "Something went wrong");
+      }
+    } else {
+      console.log("Validation failed!", newErrors);
+    }
     return isValid;
+  };
+
+  const handleNext = () => {
+    setCurrentStep((prevActiveStep) => prevActiveStep + 1);
   };
 
   const handleBack = () => {
@@ -293,17 +321,23 @@ const Booking = () => {
     setCurrentStep(step);
   };
 
+
+  const handleCarSelection = (car:any) => {
+    setFormData((prev) => ({ ...prev, selectedCar: car }));
+    handleNext(); 
+  };
+
   const handleValidationNext = async () => {
     let isValid = false;
     switch (currentStep) {
       case 0:
-        isValid = bookingJourneyValidate();
+        isValid = await bookingJourneyValidate();
         break;
       case 1:
-        isValid = await BookingDetailsValidate();
+        isValid = true;
         break;
       case 2:
-        isValid = true;
+        isValid = await BookingDetailsValidate();
         break;
       case 3:
         isValid = true;
@@ -332,6 +366,14 @@ const Booking = () => {
         );
       case 1:
         return (
+          <ChooseACar
+            bookingData={bookingData}
+            handleBack={handleBack}
+            handleCarSelection={handleCarSelection}
+          />
+        );
+      case 2:
+        return (
           <BookingDetails
             handleBack={handleBack}
             formData={formData}
@@ -345,10 +387,8 @@ const Booking = () => {
             isSuccess={isSuccess}
           />
         );
-      case 2:
-        return <ChooseACar bookingData={bookingData} handleBack={handleBack} />;
       case 3:
-        return <Payment />;
+        return <Payment handleBack={handleBack} formData={formData}/>;
       default:
         return null;
     }
@@ -362,7 +402,7 @@ const Booking = () => {
         spacing={3}
         justifyContent={"center"}
         alignItems={"center"}
-        py={8}
+        py={lgUp ? 8 : 2}
       >
         <Box>
           <Typography sx={classes.experiFont} variant="h6">
@@ -396,6 +436,7 @@ const Booking = () => {
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
+            padding: 2,
           }}
         >
           <Grid
@@ -453,7 +494,7 @@ const Booking = () => {
                           }
                     }
                     key={index}
-                    // onClick={() => handleStepClick(index)}
+                    onClick={() => handleStepClick(index)}
                   >
                     {label}
                   </StepLabel>

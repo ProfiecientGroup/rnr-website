@@ -27,6 +27,7 @@ import { doBooking } from "./BookingService";
 import GoogleAutocompleteInput from "./GoogleAutocompleteInput ";
 import moment from "moment";
 import { isTruthy } from "helpers/methods";
+import viewpaths from "global/constants/viewPathConstants";
 
 const addresses = [
   "Heathrow Terminal 2",
@@ -408,7 +409,7 @@ const JourneyDetails = (props: CustomProps) => {
                             error={
                               (!isTruthy(pickup.address) &&
                                 (props.errors.pickups[index + 1] || {})
-                                  .address) ||
+                                  ?.address) ||
                               ""
                             }
                           />
@@ -447,7 +448,7 @@ const JourneyDetails = (props: CustomProps) => {
                             }
                             displayEmpty
                             error={
-                              props.errors.pickups[index + 1].address || ""
+                              props.errors.pickups[index + 1]?.address || ""
                             }
                             // error={
                             //   !isTruthy(pickup.address) &&
@@ -544,7 +545,10 @@ const JourneyDetails = (props: CustomProps) => {
                     !isTruthy(props.formData.dropoffs[0].address) &&
                     props.errors.dropoffs[0].address
                   }
-                  helperText={props.errors.dropoffs?.[0]?.address}
+                  helperText={
+                    !isTruthy(props.formData.dropoffs[0].address) &&
+                    props.errors.dropoffs[0].address
+                  }
                 />
               ) : (
                 <Stack direction="column" spacing={0} width="100%">
@@ -783,88 +787,140 @@ const JourneyDetails = (props: CustomProps) => {
               ))}
             </Stepper>
             {props.tripTypeActiveStep === 0 && (
-              <LocalizationProvider dateAdapter={AdapterMoment}>
-                <DateTimePicker
-                  value={
-                    props.formData.start_datetime
-                      ? moment(props.formData.start_datetime)
-                      : null
-                  }
-                  onChange={(newValue) =>
-                    handleDateAndTimeChange(newValue, "start_datetime")
-                  }
-                  sx={classes.timePicker}
-                />
+              <Box width="100%">
+                <LocalizationProvider dateAdapter={AdapterMoment}>
+                  <DateTimePicker
+                    value={
+                      props.formData.start_datetime
+                        ? moment(props.formData.start_datetime)
+                        : null
+                    }
+                    onChange={(newValue) =>
+                      handleDateAndTimeChange(newValue, "start_datetime")
+                    }
+                    sx={{
+                      ...classes.timePicker,
+                      "& .MuiFilledInput-root": {
+                        borderColor: props.errors.start_datetime
+                          ? "#F04438 !important"
+                          : theme.palette.primary.main,
+                      },
+                    }}
+                    onError={
+                      !isTruthy(props.formData.start_datetime) &&
+                      props.errors.start_datetime
+                    }
+                  />
+                </LocalizationProvider>
                 {!isTruthy(props.formData.start_datetime) && (
-                  <FormHelperText error>
+                  <FormHelperText error sx={{ ml: 2 }}>
                     {props.errors.start_datetime}
                   </FormHelperText>
                 )}
-              </LocalizationProvider>
+              </Box>
             )}
             <Stack>
               {props.tripTypeActiveStep === 1 && (
                 <>
-                  <LocalizationProvider dateAdapter={AdapterMoment}>
-                    <DateTimePicker
-                      value={
-                        props.formData.start_datetime
-                          ? moment(props.formData.start_datetime)
-                          : null
-                      }
-                      onChange={(newValue) =>
-                        handleDateAndTimeChange(newValue, "start_datetime")
-                      }
-                      sx={classes.timePicker}
-                    />
+                  <Box>
+                    <LocalizationProvider dateAdapter={AdapterMoment}>
+                      <DateTimePicker
+                        value={
+                          props.formData.start_datetime
+                            ? moment(props.formData.start_datetime)
+                            : null
+                        }
+                        onChange={(newValue) =>
+                          handleDateAndTimeChange(newValue, "start_datetime")
+                        }
+                        sx={{
+                          ...classes.timePicker,
+                          "& .MuiFilledInput-root": {
+                            borderColor: props.errors.start_datetime
+                              ? "#F04438 !important"
+                              : theme.palette.primary.main,
+                          },
+                        }}
+                        onError={
+                          !isTruthy(props.formData.start_datetime) &&
+                          props.errors.start_datetime
+                        }
+                      />
+                    </LocalizationProvider>
                     {!isTruthy(props.formData.start_datetime) && (
-                      <FormHelperText error>
+                      <FormHelperText error sx={{ ml: 2 }}>
                         {props.errors.start_datetime}
                       </FormHelperText>
                     )}
-                  </LocalizationProvider>
-                  <LocalizationProvider dateAdapter={AdapterMoment}>
-                    <DateTimePicker
-                      value={
-                        props.formData.end_datetime
-                          ? moment(props.formData.end_datetime)
-                          : null
-                      }
-                      onChange={(newValue) =>
-                        handleDateAndTimeChange(newValue, "end_datetime")
-                      }
-                      sx={classes.timePicker}
-                    />
+                  </Box>
+                  <Box>
+                    <LocalizationProvider dateAdapter={AdapterMoment}>
+                      <DateTimePicker
+                        value={
+                          props.formData.end_datetime
+                            ? moment(props.formData.end_datetime)
+                            : null
+                        }
+                        onChange={(newValue) =>
+                          handleDateAndTimeChange(newValue, "end_datetime")
+                        }
+                        sx={{
+                          ...classes.timePicker,
+                          "& .MuiFilledInput-root": {
+                            borderColor: props.errors.end_datetime
+                              ? "#F04438 !important"
+                              : theme.palette.primary.main,
+                          },
+                        }}
+                        onError={
+                          !isTruthy(props.formData.end_datetime) &&
+                          props.errors.end_datetime
+                        }
+                      />
+                    </LocalizationProvider>
                     {!isTruthy(props.formData.end_datetime) && (
-                      <FormHelperText error>
+                      <FormHelperText error sx={{ ml: 2 }}>
                         {props.errors.end_datetime}
                       </FormHelperText>
                     )}
-                  </LocalizationProvider>
+                  </Box>
                 </>
               )}
             </Stack>
             <Stack spacing={1}>
               {props.tripTypeActiveStep === 2 && (
                 <>
-                  <LocalizationProvider dateAdapter={AdapterMoment}>
-                    <DateTimePicker
-                      value={
-                        props.formData.start_datetime
-                          ? moment(props.formData.start_datetime)
-                          : null
-                      }
-                      onChange={(newValue) =>
-                        handleDateAndTimeChange(newValue, "start_datetime")
-                      }
-                      sx={classes.timePicker}
-                    />
+                  <Box>
+                    <LocalizationProvider dateAdapter={AdapterMoment}>
+                      <DateTimePicker
+                        value={
+                          props.formData.start_datetime
+                            ? moment(props.formData.start_datetime)
+                            : null
+                        }
+                        onChange={(newValue) =>
+                          handleDateAndTimeChange(newValue, "start_datetime")
+                        }
+                        sx={{
+                          ...classes.timePicker,
+                          "& .MuiFilledInput-root": {
+                            borderColor: props.errors.start_datetime
+                              ? "#F04438 !important"
+                              : theme.palette.primary.main,
+                          },
+                        }}
+                        onError={
+                          !isTruthy(props.formData.start_datetime) &&
+                          props.errors.start_datetime
+                        }
+                      />
+                    </LocalizationProvider>
                     {!isTruthy(props.formData.start_datetime) && (
-                      <FormHelperText error>
+                      <FormHelperText error sx={{ ml: 2 }}>
                         {props.errors.start_datetime}
                       </FormHelperText>
                     )}
-                  </LocalizationProvider>
+                  </Box>
                   <TextField
                     placeholder="Enter Hours"
                     variant="outlined"
@@ -889,6 +945,8 @@ const JourneyDetails = (props: CustomProps) => {
             <Button
               variant="contained"
               fullWidth
+              href={viewpaths.home}
+              rel="noopener noreferrer"
               sx={{
                 backgroundColor: theme.palette.primary.darkest,
                 border: `1px solid ${theme.palette.primary.contrastText}`,
