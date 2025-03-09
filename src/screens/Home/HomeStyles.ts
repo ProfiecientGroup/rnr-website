@@ -33,11 +33,11 @@ const HomeStyles = (theme: Theme) => {
       },
     },
     contactBox: {
-      width: "414px",
-      height: "480px",
+      width: "auto",
+      height: "auto",
       borderRadius: "50px",
       backgroundColor: "#0E0E0E",
-      padding: 4,
+      padding: 5,
       background: "url(" + bannerAddressBg.src + ")",
       backgroundSize: "cover",
       backgroundPosition: "center",
@@ -133,6 +133,67 @@ const HomeStyles = (theme: Theme) => {
       display: "flex",
       justifyContent: "center",
       alignItems: "center",
+    },
+    selectMenu: {
+      width: "100%",
+      borderRadius: "25px",
+      border: "0.5px solid #DDB863",
+      "& .MuiInputBase-root": {
+        borderRadius: "25px",
+        border: "0.5px solid #DDB863",
+        "& .MuiOutlinedInput-notchedOutline": {
+          borderColor: "#DDB863",
+          borderRadius: "25px",
+          border: "0.5px solid #DDB863",
+        },
+        "&:hover .MuiOutlinedInput-notchedOutline": {
+          borderColor: "#DDB863",
+          borderRadius: "25px",
+          border: "0.5px solid #DDB863",
+        },
+        "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+          borderColor: "#DDB863",
+          borderRadius: "25px",
+          border: "0.5px solid #DDB863",
+        },
+      },
+      "& .MuiSelect-select": {
+        borderRadius: "25px !important",
+        border: "0.5px solid #DDB863",
+      },
+      "& .MuiInputBase-input": {
+        borderRadius: "25px",
+        padding: "12px 12px",
+        background: "transparent",
+        border: "0.5px solid #DDB863",
+      },
+      "& .MuiMenu-paper": {
+        background: "transparent",
+        borderRadius: "25px",
+        border: "0.5px solid #DDB863",
+      },
+    },
+    optionStyle: {
+      // fontFamily: "Kugile",
+      fontSize: "16px",
+      fontWeight: "400",
+      textAlign: "center",
+      backgroundColor: "#111927",
+      "&:hover": {
+        backgroundColor: "#1D2230",
+      },
+      color: "#FFFFFF",
+      borderRadius: "25px",
+    },
+    menuItems: {
+      backgroundColor: "#111927",
+      color: "#B3B3B3",
+      borderRadius: "25px",
+      boxShadow: "0px 6px 30px rgba(0, 0, 0, 0.08)",
+      maxHeight: "calc(100% - 96px)",
+      overflowY: "auto",
+      overflowX: "hidden",
+      outline: 0,
     },
   };
 };

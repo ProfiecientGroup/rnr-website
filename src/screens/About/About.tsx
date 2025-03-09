@@ -165,12 +165,12 @@ const About = () => {
           >
             <LeaderCard
               src={leader1.src}
-              title="Mercedes S-Class"
+              title="Your Name"
               subtitle="Hourly rate in Central London"
             />
             <LeaderCard
               src={leader2.src}
-              title="Mercedes S-Class"
+              title="Your Name"
               subtitle="Hourly rate in Central London"
             />
           </Stack>

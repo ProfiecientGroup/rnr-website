@@ -62,7 +62,6 @@ interface CustomProps {
 const JourneyDetails = (props: CustomProps) => {
   const theme = useTheme();
   const classes = BookingStyles(theme);
-  const [isLoading, setIsLoading] = useState(false);
 
   const handleTripTypeStepClick = (step: number) => {
     props.setTripTypeActiveStep(step);
@@ -118,18 +117,27 @@ const JourneyDetails = (props: CustomProps) => {
   //   props.setFormData({ ...props.formData, pickups: updatedData });
   // };
 
+  // const handleFieldChange = (index: number, key: string, value: string) => {
+  //   const updatedData = [...props.formData.pickups];
+
+  //   // Ensure the index exists in the array
+  //   if (!updatedData[index]) {
+  //     updatedData[index] = { type: "address", address: "" };
+  //   }
+
+  //   // Update the field
+  //   updatedData[index][key] = value;
+
+  //   props.setFormData({ ...props.formData, pickups: updatedData });
+  // };
+
   const handleFieldChange = (index: number, key: string, value: string) => {
-    const updatedData = [...props.formData.pickups];
+    props.setFormData((prev: any) => {
+      const updatedPickups = [...prev.pickups];
+      updatedPickups[index] = { ...updatedPickups[index], [key]: value };
 
-    // Ensure the index exists in the array
-    if (!updatedData[index]) {
-      updatedData[index] = { type: "address", address: "" };
-    }
-
-    // Update the field
-    updatedData[index][key] = value;
-
-    props.setFormData({ ...props.formData, pickups: updatedData });
+      return { ...prev, pickups: updatedPickups };
+    });
   };
 
   const handleAddField = (
@@ -253,18 +261,17 @@ const JourneyDetails = (props: CustomProps) => {
             <Stack direction="row" spacing={1}>
               {props.formData.pickups[0].type === "address" ? (
                 <GoogleAutocompleteInput
-                  value={props.formData.pickups[0].address || ""}
-                  // placeholder="Enter Pick Up Address"
+                  value={props.formData.pickups[0].address || ""} // Ensure correct value is passed
                   onChange={(newValue: string) =>
                     handleFieldChange(0, "address", newValue)
-                  }
+                  } // Ensure this updates state correctly
                   error={
-                    !isTruthy(props.formData.pickups[0].address) &&
-                    props.errors.pickups[0].address
+                    !props.formData.pickups[0].address &&
+                    props.errors?.pickups?.[0]?.address
                   }
                   helperText={
-                    !isTruthy(props.formData.pickups[0].address) &&
-                    props.errors.pickups[0].address
+                    !props.formData.pickups[0].address &&
+                    props.errors?.pickups?.[0]?.address
                   }
                 />
               ) : (
@@ -273,58 +280,20 @@ const JourneyDetails = (props: CustomProps) => {
                     placeholder="Select airport"
                     id="address"
                     name="address"
-                    value={props.formData.pickups[0].address || ""}
+                    value={props.formData.pickups[0].address || ""} // Corrected to `address`
                     onChange={(e) =>
                       handleFieldChange(0, "address", e.target.value)
                     }
-                    input={<OutlinedInput />}
-                    MenuProps={{
-                      PaperProps: {
-                        sx: {
-                          ...classes.menuItems,
-                        },
-                      },
-                    }}
-                    sx={classes.selectMenu}
-                    style={{
-                      color:
-                        props.formData.pickups[0].address === ""
-                          ? "#B3B3B3"
-                          : "",
-                      width: "100%",
-                      background: "transparent",
-                      borderRadius: "25px",
-                    }}
-                    renderValue={
-                      props.formData.pickups[0].address !== ""
-                        ? () => props.formData.pickups[0].address
-                        : () => "Select address"
-                    }
-                    displayEmpty
-                    error={
-                      !isTruthy(props.formData.pickups[0].address) &&
-                      props.errors.pickups[0].address
-                    }
                   >
-                    {addresses?.map((address: any, index: number) => {
-                      return (
-                        <MenuItem
-                          sx={classes.optionStyle}
-                          value={address}
-                          key={index}
-                        >
-                          {address}
-                        </MenuItem>
-                      );
-                    })}
+                    {addresses?.map((address: any, index: number) => (
+                      <MenuItem key={index} value={address}>
+                        {address}
+                      </MenuItem>
+                    ))}
                   </Select>
-                  {!isTruthy(props.formData.pickups[0].address) && (
-                    <FormHelperText error>
-                      {props.errors.pickups[0].address}
-                    </FormHelperText>
-                  )}
                 </Stack>
               )}
+
               <IconButton onClick={() => handleAddField("pickups", "address")}>
                 <AddCircleOutlineIcon sx={{ color: "#FFD700" }} />
               </IconButton>
@@ -806,10 +775,6 @@ const JourneyDetails = (props: CustomProps) => {
                           : theme.palette.primary.main,
                       },
                     }}
-                    onError={
-                      !isTruthy(props.formData.start_datetime) &&
-                      props.errors.start_datetime
-                    }
                   />
                 </LocalizationProvider>
                 {!isTruthy(props.formData.start_datetime) && (

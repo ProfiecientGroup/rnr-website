@@ -1,42 +1,44 @@
-import React, { useState } from "react";
-import { Autocomplete, useTheme } from "@mui/material";
+import React, { useState, useEffect } from "react";
+import { Autocomplete, InputAdornment, useTheme } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import CircularProgress from "@mui/material/CircularProgress";
 import { googleApi } from "./BookingService";
 import BookingStyles from "../BookingStyles";
-
+import LocationOnIcon from "@mui/icons-material/LocationOn";
 interface GoogleAutocompleteInputProps {
   onChange: (value: string) => void;
   value: string;
-  error?: boolean; // Add error prop
-  helperText?: string; // Add helperText prop
+  error?: boolean;
+  helperText?: string;
 }
 
 const GoogleAutocompleteInput: React.FC<GoogleAutocompleteInputProps> = ({
   onChange,
-  value,
-  error = false, // Default error to false
-  helperText = "", // Default helperText to empty string
+  value, // External prop for input value
+  error = false,
+  helperText = "",
 }) => {
   const theme = useTheme();
   const classes = BookingStyles(theme);
   const [options, setOptions] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
+  const [inputValue, setInputValue] = useState(value); // State for input value
 
-  // Handle the input change to fetch predictions
-  const handleInputChange = async (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    const inputValue = event.target.value;
+  // Sync inputValue with external value
+  useEffect(() => {
+    setInputValue(value);
+  }, [value]);
 
-    if (!inputValue) {
+  // Fetch autocomplete suggestions
+  const fetchPredictions = async (input: string) => {
+    if (!input) {
       setOptions([]);
       return;
     }
 
     setLoading(true);
     try {
-      const response = await googleApi(inputValue); // Fetch predictions from Google API
+      const response = await googleApi(input);
       setOptions(response?.predictions || []);
     } catch (error) {
       console.error("Error fetching Google Places data", error);
@@ -45,43 +47,43 @@ const GoogleAutocompleteInput: React.FC<GoogleAutocompleteInputProps> = ({
     }
   };
 
-  // Handle the selection of an address
-  const handleSelectionChange = (event: any, newValue: string | null) => {
-    if (newValue) {
-      onChange(newValue); // Update the address with the selected value
-    } else {
-      onChange(""); // Handle case when user clears the input (e.g., using backspace)
-    }
-  };
-
   return (
     <Autocomplete
       sx={classes.textInputField}
       freeSolo
-      options={options.map((option: any) => option.description)} // Map predictions to description
-      onInputChange={(_, value) =>
-        handleInputChange({
-          target: { value },
-        } as React.ChangeEvent<HTMLInputElement>)
-      }
-      onChange={handleSelectionChange} // Handle selection change
+      options={options.map((option) => option.description)}
+      inputValue={inputValue} // Ensure controlled input
+      onInputChange={(_, newInputValue) => {
+        setInputValue(newInputValue);
+        fetchPredictions(newInputValue);
+      }}
+      onChange={(_, newValue) => {
+        if (newValue) {
+          onChange(newValue);
+          setInputValue(newValue); // Ensure input field updates
+        } else {
+          onChange("");
+          setInputValue("");
+        }
+      }}
       renderInput={(params) => (
         <TextField
           {...params}
           placeholder="Enter a location"
           variant="outlined"
           fullWidth
-          type="text"
-          value={value} // Bind value here
-          error={error} // Pass error to TextField
-          helperText={helperText} // Pass helperText to TextField
+          error={error}
+          helperText={helperText}
           InputProps={{
             ...params.InputProps,
+            startAdornment: (
+              <InputAdornment position="end">
+                <LocationOnIcon color="primary" />
+              </InputAdornment>
+            ),
             endAdornment: (
               <>
-                {loading ? (
-                  <CircularProgress color="inherit" size={20} />
-                ) : null}
+                {loading && <CircularProgress color="inherit" size={20} />}
                 {params.InputProps.endAdornment}
               </>
             ),

@@ -12,7 +12,7 @@ import {
 } from "@mui/material";
 import whiteStar from "../../assets/images/home/whiteStar.webp";
 import goldStar from "../../assets/images/home/goldStar.webp";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import React from "react";
 import BookingStyles from "screens/Booking/BookingStyles";
 import JourneyDetails from "./components/JourneyDetails";
@@ -27,11 +27,13 @@ import {
 import moment from "moment";
 import { doBooking } from "./components/BookingService";
 import strings from "global/constants/strings";
+import { useRouter } from "next/router";
 
 const steps = ["Journey details", "Choose a Car", "Booking Details", "Payment"];
 
 const Booking = () => {
   const theme = useTheme();
+  const router = useRouter();
   const classes = BookingStyles(theme);
   const lgUp = useMediaQuery(theme.breakpoints.up("md"));
   const [currentStep, setCurrentStep] = useState(0);
@@ -41,6 +43,7 @@ const Booking = () => {
   const [message, setMessage] = useState<string>("");
   const [isButtonClicked, setIsButtonClicked] = useState(false);
   const [bookingData, setBookingData] = useState<any>();
+  const { data }: any = router.query;
   const [formData, setFormData] = useState({
     pickups: [
       {
@@ -177,6 +180,42 @@ const Booking = () => {
     return isValid;
   };
 
+  useEffect(() => {
+    if (data) {
+      try {
+        const parsedData = JSON.parse(data as string);
+
+        // Ensure proper structure with correct key mapping
+        const formattedData = {
+          pickups: parsedData?.pickups?.length
+            ? parsedData.pickups.map(
+                (p: { type: string; address: string }) => ({
+                  type: p.type,
+                  address: p.address || "", // Ensure `address` exists
+                })
+              )
+            : [{ type: "address", address: "" }], // Default value
+
+          dropoffs: parsedData?.dropoffs?.length
+            ? parsedData.dropoffs.map(
+                (d: { type: string; address: string }) => ({
+                  type: d.type,
+                  address: d.address || "", // Ensure `address` exists
+                })
+              )
+            : [{ type: "address", address: "" }], // Default value
+        };
+
+        setFormData((prev) => ({
+          ...prev,
+          ...formattedData,
+        }));
+      } catch (error) {
+        console.error("Error parsing booking data:", error);
+      }
+    }
+  }, [data]);
+
   const bookingJourneyValidate = async () => {
     let newErrors = { ...journeyDetailsErrors };
     let isValid = true;
@@ -309,6 +348,17 @@ const Booking = () => {
     return isValid;
   };
 
+  useEffect(() => {
+    if (data) {
+      try {
+        const parsedData = JSON.parse(data as string);
+        setFormData((prev) => ({ ...prev, ...parsedData }));
+      } catch (error) {
+        console.error("Error parsing booking data:", error);
+      }
+    }
+  }, [data]);
+
   const handleNext = () => {
     setCurrentStep((prevActiveStep) => prevActiveStep + 1);
   };
@@ -321,10 +371,9 @@ const Booking = () => {
     setCurrentStep(step);
   };
 
-
-  const handleCarSelection = (car:any) => {
+  const handleCarSelection = (car: any) => {
     setFormData((prev) => ({ ...prev, selectedCar: car }));
-    handleNext(); 
+    handleNext();
   };
 
   const handleValidationNext = async () => {
@@ -388,7 +437,7 @@ const Booking = () => {
           />
         );
       case 3:
-        return <Payment handleBack={handleBack} formData={formData}/>;
+        return <Payment handleBack={handleBack} formData={formData} />;
       default:
         return null;
     }

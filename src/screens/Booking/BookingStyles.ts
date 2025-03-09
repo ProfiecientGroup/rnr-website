@@ -87,11 +87,16 @@ const BookingStyles = (theme: Theme) => {
         borderRadius: "25px",
         fontSize: 20,
         color: "#fff  !important",
+        paddingRight: "10px !important",
+
       },
       "& input:-webkit-autofill": {
         WebkitBoxShadow: "0 0 0 100px #1a1a1a inset !important",
         WebkitTextFillColor: "#fff !important",
         borderRadius: "inherit",
+      },
+      "& .MuiAutocomplete-inputRoot ": {
+        paddingRight: "10px !important",
       },
       // backgroundColor: "transparent",
       // borderRadius: "100px",
@@ -246,7 +251,7 @@ const BookingStyles = (theme: Theme) => {
       outline: 0,
     },
     timePicker: {
-      width:"100%",
+      width: "100%",
       paddingTop: "12px",
       borderRadius: "25px !important",
       "& .MuiOutlinedInput-root": {

@@ -8,6 +8,8 @@ class Urls {
     "https://ff23-2409-4050-2ebc-f010-fcc6-68e-a00-d8e6.ngrok-free.app/calculate-booking-prices";
   Pricing = `/pricing`;
 
+  contactApiCallEndpoint =
+    "https://e5bf-2405-204-1387-35-8994-bf6d-29ad-4da6.ngrok-free.app/contact";
   // Book a demo
 
   Calendly = "https://calendly.com/rnr";

@@ -83,3 +83,14 @@ export const googleApi = async (input: string) => {
     throw new Error("Failed to fetch Google Autocomplete data");
   }
 };
+
+
+export const doContactUs = async (body: any) => {
+  try {
+    const callParams = getCallParams("POST", body);
+    const response = await makeCall(urls.contactApiCallEndpoint, callParams);
+    return response;
+  } catch (error: any) {
+    throw error;
+  }
+};

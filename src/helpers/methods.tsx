@@ -97,8 +97,6 @@ export const getCallParams = (
 
 // export const makeCall = async (url: string, requestOptions: any) => {
 //   try {
-//     console.log("Making request to:", url);
-
 //     const response = await fetch(url, requestOptions);
 
 //     if (!response.ok) {
@@ -118,10 +116,7 @@ export const getCallParams = (
 
 export const makeCall = async (url: string, requestOptions: any) => {
   try {
-    console.log("Making request to:", url);
-
     const response = await fetch(url, requestOptions);
-
     if (!response.ok) {
       const errorData = await response.json();
       console.error("Fetch error:", response.status, errorData);

@@ -23,6 +23,7 @@ import CustomContactNumberInput from "global/components/CustomContactNumberInput
 import { contactUsForm, validateData } from "./ContactUsStateAndValidation";
 import formBg from "../../assets/images/contactUs/formBg.webp";
 import strings from "global/constants/strings";
+import { doContactUs } from "screens/Booking/components/BookingService";
 
 const TOP_NAV_HEIGHT = 64;
 
@@ -63,28 +64,18 @@ const ContactUs = () => {
     try {
       setIsLoading(true);
       if (validateFormData()) {
-        if (validateFormData()) {
-          const subject = encodeURIComponent("Contact Form Submission");
-          // const body={
-          //   name:"",
-          //   email:"",
-          //   phoneNo:"",
-          //   message:""
-          // }
-          const body = encodeURIComponent(
-            `Name: ${formFields.firstName.value}\nEmail: ${formFields.email.value}\nPhone: ${formFields.phone.value}\nMessage: ${formFields.message.value}`
-          );
-
-          window.location.href = `mailto:seemi0085@gmail.com?subject=${subject}&body=${body}`;
-        }
+        const body = {
+          name: formFields.firstName.value,
+          email: formFields.email.value,
+          phoneNo: formFields.phone.value,
+          message: formFields.message.value,
+        };
+        await doContactUs(body);
         setFormFields(contactUsForm());
         setOpen(true);
         setIsSuccess(true);
       }
     } catch (error: any) {
-      const errorMessage =
-        error.errorMessage || error.message || strings.GENERIC_ERROR;
-      openErrorNotification(errorMessage);
       setMessage(error.message);
       setOpen(true);
       setIsSuccess(false);
