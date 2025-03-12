@@ -4,12 +4,11 @@ class Urls {
   BASE_WEBAPP_URL = this.PROD ? "https://rnr.com/" : "https://rnr.com/";
 
   bookingApiCallEndpoint = "http://13.60.40.222:80/calculate-booking-prices";
-  corporateLoginApiCallEndpoint =
-    "https://ff23-2409-4050-2ebc-f010-fcc6-68e-a00-d8e6.ngrok-free.app/calculate-booking-prices";
+  corporateLoginApiCallEndpoint = "http://13.60.40.222:80/corporate-login";
   Pricing = `/pricing`;
 
   contactApiCallEndpoint =
-    "https://e5bf-2405-204-1387-35-8994-bf6d-29ad-4da6.ngrok-free.app/contact";
+    "http://13.60.40.222:80/contact ";
   // Book a demo
 
   Calendly = "https://calendly.com/rnr";

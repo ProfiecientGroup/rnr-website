@@ -323,7 +323,7 @@ const Booking = () => {
       try {
         setIsLoading(true);
         const response = await fetch(
-          "http://13.60.40.222/calculate-booking-prices",
+          "http://13.60.40.222:80/calculate-booking-prices",
           {
             method: "POST",
             headers: { "Content-Type": "application/json" },
