@@ -10,7 +10,7 @@ import {
   useTheme,
 } from "@mui/material";
 import HomeStyles from "../HomeStyles";
-import aboutCar1 from "../../../assets/images/home/about-car.webp";
+import aboutCar1 from "../../../assets/images/home/new/aboutCar2.webp";
 import urls from "global/constants/urls";
 import strings from "global/constants/strings";
 import viewpaths from "global/constants/viewPathConstants";
@@ -61,7 +61,7 @@ const AboutSection = () => {
             </Typography>
             <Button
               variant="contained"
-              href={viewpaths.bookingViewPath}
+              href={viewpaths.aboutUs}
               rel="noopener noreferrer"
             >
               <Typography variant="button">{strings.readMore}</Typography>

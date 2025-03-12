@@ -7,7 +7,7 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import SClassCar from "../../../assets/images/home/SClass-car.png";
+import SClassCar from "../../../assets/images/home//new/contactCar7.webp";
 import HomeStyles from "../HomeStyles";
 import urls from "global/constants/urls";
 import viewpaths from "global/constants/viewPathConstants";
@@ -29,7 +29,7 @@ const WhatAreWaitingSection = () => {
           <img
             src={SClassCar.src}
             alt="SClassCar"
-            width={isLgUp ? "auto" : "90%"}
+            width= "60%"
           />
           <Stack direction={"column"} spacing={2} alignItems={"center"}>
             <Stack direction={"column"} spacing={0} alignItems={"start"}>
@@ -66,7 +66,7 @@ const WhatAreWaitingSection = () => {
             </Button>
             <Button
               variant="outlined"
-              href={viewpaths.bookingViewPath}
+              href={viewpaths.services}
               rel="noopener noreferrer"
               size="small"
               sx={{

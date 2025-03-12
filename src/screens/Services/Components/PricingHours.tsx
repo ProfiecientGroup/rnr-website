@@ -10,9 +10,9 @@ import {
 } from "@mui/material";
 import ServicesStyles from "../ServicesStyles";
 import viewpaths from "global/constants/viewPathConstants";
-import car1 from "../../../assets/images/home/car1.svg";
-import car2 from "../../../assets/images/home/car2.svg";
-import car3 from "../../../assets/images/home/car3.svg";
+import car1 from "../../../assets/images/services/car3.webp";
+import car2 from "../../../assets/images/services/car4.webp";
+import car3 from "../../../assets/images/services/car5.webp";
 
 const pricingHour = [
   {

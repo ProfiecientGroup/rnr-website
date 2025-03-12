@@ -6,7 +6,7 @@ import {
   useTheme,
   useMediaQuery,
 } from "@mui/material";
-import bannerCar from "../../../assets/images/cars/bannerCar.webp";
+import bannerCar from "../../../assets/images/cars/carBanner.webp";
 
 const CarsBannerSection = () => {
   const theme = useTheme();

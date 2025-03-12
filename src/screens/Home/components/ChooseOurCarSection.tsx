@@ -9,13 +9,13 @@ import {
   useTheme,
   Grid,
 } from "@mui/material";
-import carSection from "../../../assets/images/home/carOurServices.png";
+import carSection from "../../../assets/images/home/new/car6.webp";
 import urls from "global/constants/urls";
 import HomeStyles from "../HomeStyles";
 import TestimonialSection from "./OurPremiumSection";
-import car1 from "../../../assets/images/home/car1.svg";
-import car2 from "../../../assets/images/home/car2.svg";
-import car3 from "../../../assets/images/home/car3.svg";
+import car1 from "../../../assets/images/home/new/opCar3.webp";
+import car2 from "../../../assets/images/home/new/opCar4.webp";
+import car3 from "../../../assets/images/home/new/opCar5.webp";
 import viewpaths from "global/constants/viewPathConstants";
 
 const testimonial = [
@@ -164,6 +164,8 @@ const ChooseOurCarSection = () => {
                       sx={{
                         padding: 0,
                       }}
+                      href={viewpaths.services}
+                      rel="noopener noreferrer"
                     >
                       <Typography
                         variant="body2"
@@ -223,7 +225,7 @@ const ChooseOurCarSection = () => {
                 </Typography>
                 <Button
                   variant="contained"
-                  href={viewpaths.bookingViewPath}
+                  href={viewpaths.services}
                   rel="noopener noreferrer"
                   size="small"
                   sx={{ width: isLgUp ? "20%" : "auto" }}

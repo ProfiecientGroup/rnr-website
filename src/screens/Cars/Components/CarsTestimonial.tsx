@@ -54,7 +54,7 @@ const CarsTestimonialSection = (props: CustomProps) => {
     const data = inViewTestimonialData(carsImages);
     const active = data.length >= 3 ? Math.ceil(data.length / 3) : 0;
     return data.map((step: any, index: number) => {
-      const width = index === active ? "700px" : "450px";
+      const width = index === active ? "600px" : "450px";
       return (
         <Box
           key={index}

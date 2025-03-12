@@ -1,9 +1,16 @@
 import { useTheme, useMediaQuery } from "@mui/material";
 import bannerCar from "../../assets/images/cars/carBanner.webp";
 import HomeStyles from "screens/Home/HomeStyles";
-import CarsBannerSection from "./Components/CarBannerSection";
 import CarsTestimonialSection from "./Components/CarsTestimonial";
-import car1 from "../../assets/images/cars/car1.png";
+import scar1 from "../../assets/images/cars/sCar1.webp";
+import scar2 from "../../assets/images/cars/sCar2.webp";
+import scar3 from "../../assets/images/cars/sCar3.webp";
+import vcar1 from "../../assets/images/cars/vCar1.webp";
+import vcar2 from "../../assets/images/cars/vCar2.webp";
+import vcar3 from "../../assets/images/cars/vCar3.webp";
+import ecar1 from "../../assets/images/cars/eCar1.webp";
+import ecar2 from "../../assets/images/cars/eCar2.webp";
+import ecar3 from "../../assets/images/cars/eCar3.webp";
 import icon1 from "../../assets/images/cars/icon1.svg";
 import icon2 from "../../assets/images/cars/icon2.svg";
 import icon3 from "../../assets/images/cars/icon3.svg";
@@ -11,7 +18,7 @@ import icon4 from "../../assets/images/cars/icon4.svg";
 
 const carTestimonialData = [
   {
-    carsImages: [{ img: car1.src }, { img: car1.src }, { img: car1.src }],
+    carsImages: [{ img: scar1.src }, { img: scar2.src }, { img: scar3.src }],
     title: "Mercedes S-Class",
     des: "The Mercedes S-Class blends sophistication and practicality. With seating for three, it provides a comfortable travel experience, complemented by complimentary Wi-Fi. Ideal for those who appreciate a touch of luxury in a compact setting.",
     keyFeatures: [
@@ -40,7 +47,7 @@ const carTestimonialData = [
     ],
   },
   {
-    carsImages: [{ img: car1.src }, { img: car1.src }, { img: car1.src }],
+    carsImages: [{ img: vcar1.src }, { img: vcar2.src }, { img: vcar3.src }],
     title: "Mercedes V-Class",
     des: "The Mercedes S-Class blends sophistication and practicality. With seating for three, it provides a comfortable travel experience, complemented by complimentary Wi-Fi. Ideal for those who appreciate a touch of luxury in a compact setting.",
     keyFeatures: [
@@ -69,7 +76,7 @@ const carTestimonialData = [
     ],
   },
   {
-    carsImages: [{ img: car1.src }, { img: car1.src }, { img: car1.src }],
+    carsImages: [{ img: ecar1.src }, { img: ecar2.src }, { img: ecar3.src }],
     title: "Mercedes E-Class",
     des: "The Mercedes S-Class blends sophistication and practicality. With seating for three, it provides a comfortable travel experience, complemented by complimentary Wi-Fi. Ideal for those who appreciate a touch of luxury in a compact setting.",
     keyFeatures: [
@@ -113,4 +120,4 @@ const CarsComponent = () => {
     </>
   );
 };
-export default CarsComponent; 
+export default CarsComponent;

@@ -1,6 +1,4 @@
 import { Theme } from "@mui/material";
-import aboutBanner from "../../assets/images/about/aboutBanner.png";
-import outStoryBg from "../../assets/images/home/aboutBg.webp";
 import leadershipBg from "../../assets/images/about/leadershipBg.webp";
 import contactBannerBg from "../../assets/images/contactUs/contactBannerBg.webp";
 import carImage from "../../assets/images/contactUs/carImage.webp";

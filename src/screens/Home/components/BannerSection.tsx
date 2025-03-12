@@ -12,10 +12,9 @@ import {
   useTheme,
   useMediaQuery,
 } from "@mui/material";
-import SClassCar from "../../../assets/images/home/SClass-car.png";
+import SClassCar from "../../../assets/images/home/new/bannerCar1.webp";
 import whiteStar from "../../../assets/images/home/whiteStar.webp";
 import goldStar from "../../../assets/images/home/goldStar.webp";
-import { isTruthy } from "helpers/methods";
 import HomeStyles from "../HomeStyles";
 import GoogleAutocompleteInput from "screens/Booking/components/GoogleAutocompleteInput ";
 import { useRouter } from "next/router";
@@ -103,7 +102,7 @@ const BannerSection = () => {
                   src={whiteStar.src}
                   height={lgUp ? 20 : 13}
                   width={lgUp ? 20 : 13}
-                  style={{ position: "relative", bottom: 3 }}
+                  style={{ position: "relative", bottom: 25,right:10 }}
                 />
                 <span>Experi</span>
                 <span style={{ color: theme.palette.primary.main }}>ence</span>
@@ -117,15 +116,11 @@ const BannerSection = () => {
                   src={goldStar.src}
                   height={lgUp ? 20 : 13}
                   width={lgUp ? 20 : 13}
-                  style={{ position: "relative", top: 3 }}
+                  style={{ position: "relative", top: 10 }}
                 />
               </Typography>
             </Box>
-            <img
-              src={SClassCar.src}
-              alt="S-Class Car"
-              width={lgUp ? "auto" : "100%"}
-            />
+            <img src={SClassCar.src} alt="S-Class Car" width="100%" />
           </Stack>
 
           <Box
@@ -136,116 +131,122 @@ const BannerSection = () => {
           >
             <Box sx={classes.contactBox}>
               <Stack direction="column" spacing={3}>
-
-              {["pickups", "dropoffs"].map((field) => (
-                <Stack key={field} spacing={2}>
-                  <Stack direction="row" spacing={2} >
-                    <Typography
-                      variant="body2"
-                      sx={
-                        formData[field as "pickups" | "dropoffs"][0].type ===
-                        "address"
-                          ? classes.addressBox
-                          : classes.pickupBox
-                      }
-                      onClick={() =>
-                        handleTabChange(
-                          field as "pickups" | "dropoffs",
+                {["pickups", "dropoffs"].map((field) => (
+                  <Stack key={field} spacing={2}>
+                    <Stack direction="row" spacing={2}>
+                      <Typography
+                        variant="body2"
+                        sx={
+                          formData[field as "pickups" | "dropoffs"][0].type ===
                           "address"
-                        )
-                      }
-                    >
-                      Address
-                    </Typography>
-                    <Typography
-                      variant="body2"
-                      sx={
-                        formData[field as "pickups" | "dropoffs"][0].type ===
-                        "airport"
-                          ? classes.addressBox
-                          : classes.pickupBox
-                      }
-                      onClick={() =>
-                        handleTabChange(
-                          field as "pickups" | "dropoffs",
+                            ? classes.addressBox
+                            : classes.pickupBox
+                        }
+                        onClick={() =>
+                          handleTabChange(
+                            field as "pickups" | "dropoffs",
+                            "address"
+                          )
+                        }
+                      >
+                        Address
+                      </Typography>
+                      <Typography
+                        variant="body2"
+                        sx={
+                          formData[field as "pickups" | "dropoffs"][0].type ===
                           "airport"
-                        )
-                      }
-                    >
-                      Airport
-                    </Typography>
-                  </Stack>
-                  {formData[field as "pickups" | "dropoffs"][0].type ===
-                  "address" ? (
-                    <GoogleAutocompleteInput
-                      value={
-                        formData[field as "pickups" | "dropoffs"][0].address
-                      }
-                      onChange={(value) =>
-                        handleFieldChange(
-                          field as "pickups" | "dropoffs",
-                          value
-                        )
-                      }
-                    />
-                  ) : (
-                    <Select
-                      placeholder="Select airport"
-                      id="address"
-                      name="address"
-                      value={
-                        formData[field as "pickups" | "dropoffs"][0].address
-                      }
-                      onChange={(e) =>
-                        handleFieldChange(
-                          field as "pickups" | "dropoffs",
-                          e.target.value
-                        )
-                      }
-                      input={<OutlinedInput />}
-                      MenuProps={{
-                        PaperProps: {
-                          sx: {
-                            ...classes.menuItems,
+                            ? classes.addressBox
+                            : classes.pickupBox
+                        }
+                        onClick={() =>
+                          handleTabChange(
+                            field as "pickups" | "dropoffs",
+                            "airport"
+                          )
+                        }
+                      >
+                        Airport
+                      </Typography>
+                    </Stack>
+                    {formData[field as "pickups" | "dropoffs"][0].type ===
+                    "address" ? (
+                      <GoogleAutocompleteInput
+                        value={
+                          formData[field as "pickups" | "dropoffs"][0].address
+                        }
+                        onChange={(value) =>
+                          handleFieldChange(
+                            field as "pickups" | "dropoffs",
+                            value
+                          )
+                        }
+                      />
+                    ) : (
+                      <Select
+                        placeholder="Select airport"
+                        id="address"
+                        name="address"
+                        value={
+                          formData[field as "pickups" | "dropoffs"][0].address
+                        }
+                        onChange={(e) =>
+                          handleFieldChange(
+                            field as "pickups" | "dropoffs",
+                            e.target.value
+                          )
+                        }
+                        input={<OutlinedInput />}
+                        MenuProps={{
+                          PaperProps: {
+                            sx: {
+                              ...classes.menuItems,
+                            },
                           },
-                        },
-                      }}
-                      sx={classes.selectMenu}
-                      style={{
-                        color: formData[field as "pickups" | "dropoffs"][0].address === "" ? "#B3B3B3" : "",
-                        width: "100%",
-                        background: "transparent",
-                        borderRadius: "25px",
-                      }}
-                      renderValue={
-                        formData[field as "pickups" | "dropoffs"][0].address !== ""
-                          ? () => formData[field as "pickups" | "dropoffs"][0].address
-                          : () => "Select address"
-                      }
-                      displayEmpty
-                    >
-                      {addresses?.map((address: any, index: number) => {
-                        return (
-                          <MenuItem
-                            sx={classes.optionStyle}
-                            value={address}
-                            key={index}
-                          >
-                            {address}
-                          </MenuItem>
-                        );
-                      })}
-                    </Select>
-                  )}
-                </Stack>
-              ))}
-              <Button
-                variant="contained"
-                onClick={handleSubmit}
-                disabled={isLoading}
-              >
-                {isLoading ? <CircularProgress size="1.5rem" /> : "Book Now"}
-              </Button>
+                        }}
+                        sx={classes.selectMenu}
+                        style={{
+                          color:
+                            formData[field as "pickups" | "dropoffs"][0]
+                              .address === ""
+                              ? "#B3B3B3"
+                              : "",
+                          width: "100%",
+                          background: "transparent",
+                          borderRadius: "25px",
+                        }}
+                        renderValue={
+                          formData[field as "pickups" | "dropoffs"][0]
+                            .address !== ""
+                            ? () =>
+                                formData[field as "pickups" | "dropoffs"][0]
+                                  .address
+                            : () => "Select address"
+                        }
+                        displayEmpty
+                      >
+                        {addresses?.map((address: any, index: number) => {
+                          return (
+                            <MenuItem
+                              sx={classes.optionStyle}
+                              value={address}
+                              key={index}
+                            >
+                              {address}
+                            </MenuItem>
+                          );
+                        })}
+                      </Select>
+                    )}
+                  </Stack>
+                ))}
+                <Button
+                  variant="contained"
+                  onClick={handleSubmit}
+                  disabled={isLoading}
+                >
+                  {isLoading ? <CircularProgress size="1.5rem" /> : "Book Now"}
+                </Button>
               </Stack>
             </Box>
           </Box>

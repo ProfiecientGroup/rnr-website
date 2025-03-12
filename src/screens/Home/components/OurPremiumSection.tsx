@@ -10,6 +10,7 @@ import {
 } from "@mui/material";
 import { isTruthy } from "helpers/methods";
 import HomeStyles from "../HomeStyles";
+import viewpaths from "global/constants/viewPathConstants";
 
 interface CustomProps {
   testimonialData?: any[];
@@ -88,7 +89,7 @@ const TestimonialSection = (props: CustomProps) => {
               content: '""',
               position: "absolute",
               inset: 0,
-              padding: "1px", 
+              padding: "1px",
               borderRadius: "50px",
               background:
                 index === 0
@@ -156,6 +157,8 @@ const TestimonialSection = (props: CustomProps) => {
                 </Typography>
               </Stack>
               <Button
+                href={viewpaths.bookingViewPath}
+                rel="noopener noreferrer"
                 sx={{
                   color: theme.palette.primary.main,
                   cursor: "pointer !important",

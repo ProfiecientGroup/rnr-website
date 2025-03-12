@@ -11,8 +11,6 @@ import {
 } from "@mui/material";
 import ServicesStyles from "../ServicesStyles";
 import bannerCar2 from "assets/images/services/bannercar2.webp";
-import Sporting from "assets/images/services/sporting-icon.png";
-import urls from "global/constants/urls";
 import viewpaths from "global/constants/viewPathConstants";
 const eventsData = [
   {
