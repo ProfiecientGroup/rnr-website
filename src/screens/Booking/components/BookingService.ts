@@ -74,7 +74,7 @@ export const googleApi = async (input: string) => {
     }
     
     // Use your new API endpoint instead of calling Google directly
-    const url = `/api/google-autocomplete?input=${encodeURIComponent(input)}`;
+    const url = `https://4a09-2409-4050-d95-c824-d0cb-6d35-508a-c575.ngrok-free.app/autocomplete?query=${encodeURIComponent(input)}`;
     const callParams = getCallParams("GET"); // Make sure getCallParams returns appropriate headers
     const response = await makeCall(url, callParams);
     return response;
