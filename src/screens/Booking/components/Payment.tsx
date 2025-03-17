@@ -128,7 +128,7 @@ const Payment = (props: CustomProps) => {
               },
             }}
           >
-            <Typography variant="body2">GET MY PRICES</Typography>
+            <Typography variant="body2">Pay Now</Typography>
           </Button>
         </Stack>
       </Stack>

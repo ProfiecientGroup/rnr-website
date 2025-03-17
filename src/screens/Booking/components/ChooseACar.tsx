@@ -16,7 +16,7 @@ const carData = [
   {
     model: "E_CLASS",
     description: ["4 adults", "2 suitcases", "2 carry bags", "WiFi"],
-    imgSrc: car1.src,
+    imgSrc: car3.src,
     extraInfo:
       "First class chauffeur Free 60 mins airport parking & waiting Free 15 mins waiting for other journeys Includes meet & greet Free cancellation within 24 hours",
     price: "£290.00",
@@ -24,7 +24,7 @@ const carData = [
   {
     model: "S_CLASS",
     description: ["4 adults", "2 suitcases", "2 carry bags", "WiFi"],
-    imgSrc: car2.src,
+    imgSrc: car1.src,
     extraInfo:
       "First class chauffeur Free 60 mins airport parking & waiting Free 15 mins waiting for other journeys Includes meet & greet Free cancellation within 24 hours",
     price: "£350.00",
@@ -32,7 +32,7 @@ const carData = [
   {
     model: "V_CLASS",
     description: ["4 adults", "2 suitcases", "2 carry bags", "WiFi"],
-    imgSrc: car3.src,
+    imgSrc: car2.src,
     extraInfo:
       "First class chauffeur Free 60 mins airport parking & waiting Free 15 mins waiting for other journeys Includes meet & greet Free cancellation within 24 hours",
     price: "£320.00",
