@@ -25,9 +25,10 @@ import {
   openSuccessNotification,
 } from "helpers/methods";
 import moment from "moment";
-import { doBooking } from "./components/BookingService";
-import strings from "global/constants/strings";
+import { loadStripe } from "@stripe/stripe-js";
+import { Elements } from "@stripe/react-stripe-js";
 import { useRouter } from "next/router";
+import urls from "global/constants/urls";
 
 const steps = ["Journey details", "Choose a Car", "Booking Details", "Payment"];
 
@@ -44,6 +45,8 @@ const Booking = () => {
   const [isButtonClicked, setIsButtonClicked] = useState(false);
   const [bookingData, setBookingData] = useState<any>();
   const { data }: any = router.query;
+  const promise = loadStripe(urls.STRIPE_PUBLIC_KEY);
+
   const [formData, setFormData] = useState({
     pickups: [
       {
@@ -437,7 +440,11 @@ const Booking = () => {
           />
         );
       case 3:
-        return <Payment handleBack={handleBack} formData={formData} />;
+        return (
+          <Elements stripe={promise}>
+            <Payment handleBack={handleBack} formData={formData} />
+          </Elements>
+        );
       default:
         return null;
     }
