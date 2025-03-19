@@ -114,22 +114,60 @@ export const getCallParams = (
 //   }
 // };
 
-export const makeCall = async (url: string, requestOptions: any) => {
-  try {
-    const response = await fetch(url, requestOptions);
-    if (!response.ok) {
-      const errorData = await response.json();
-      console.error("Fetch error:", response.status, errorData);
-      throw new Error(
-        `HTTP ${response.status}: ${errorData.error_message || "Unknown error"}`
-      );
-    }
+// export const makeCall = async (url: string, requestOptions: any) => {
+//   try {
+//     const response = await fetch(url, requestOptions);
+//     if (!response.ok) {
+//       const errorData = await response.json();
+//       console.error("Fetch error:", response.status, errorData);
+//       throw new Error(
+//         `HTTP ${response.status}: ${errorData.error_message || "Unknown error"}`
+//       );
+//     }
 
-    return await response.json();
+//     return await response.json();
+//   } catch (error: any) {
+//     console.error("Network error:", error);
+//     throw new Error("Failed to fetch API data");
+//   }
+// };
+
+export const makeCall = async (
+  callName: string,
+  callParams: any,
+  convertToJSON: boolean = true
+) => {
+  try {
+    let call = fetch(callName, callParams);
+    let timeout = getTimeoutPromise();
+
+    const response: any = await Promise.race([timeout, call]).catch((error) => {
+      throw error;
+    });
+    let json;
+    if (convertToJSON) {
+      json = await response.json();
+    }
+    if (response && response.ok) {
+      return json;
+    }
+    throw json;
   } catch (error: any) {
-    console.error("Network error:", error);
-    throw new Error("Failed to fetch API data");
+    throw error;
   }
+};
+
+export const getTimeoutPromise = () => {
+  return new Promise((resolve, reject) => {
+    setTimeout(
+      () =>
+        reject({
+          error: true,
+          message: "Something went wrong. Please reload the page.",
+        }),
+      30000 // 30 Seconds
+    );
+  });
 };
 export const isPhoneValid = (phone: string) => {
   try {

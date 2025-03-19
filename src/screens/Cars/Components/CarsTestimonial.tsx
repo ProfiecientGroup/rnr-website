@@ -23,38 +23,42 @@ interface CarTestimonialData {
 }
 
 interface CustomProps {
-  carTestimonialData?: CarTestimonialData[];
+  carTestimonialData: CarTestimonialData[];
 }
 
 const CarsTestimonialSection = (props: CustomProps) => {
   const theme = useTheme();
   const classes = HomeStyles(theme);
   const isLgUp = useMediaQuery(theme.breakpoints.up("lg"));
-  const [activeStep, setActiveStep] = useState<number>(0);
+  // const [activeStep, setActiveStep] = useState<number>(0);
+  const [activeSteps, setActiveSteps] = useState<number[]>(
+    new Array(props.carTestimonialData.length).fill(0)
+  );
 
-  const maxSteps = props.carTestimonialData?.[0]?.carsImages?.length || 0;
-
-  const handleStepChange = (step: number) => {
-    setActiveStep(step);
+  const handleStepChange = (sectionIndex: number, step: number) => {
+    setActiveSteps((prevSteps) => {
+      const newSteps = [...prevSteps];
+      newSteps[sectionIndex] = step;
+      return newSteps;
+    });
   };
 
-  const inViewTestimonialData = (carsImages: any[]) => {
-    if (isTruthy(carsImages)) {
-      const dataToView = carsImages!.length >= 3 ? 3 : carsImages!.length;
-      let indices: any[] = [];
+  const inViewTestimonialData = (carsImages: any[], activeStep: number) => {
+    if (carsImages.length) {
+      const dataToView = carsImages.length >= 3 ? 3 : carsImages.length;
+      let indices: number[] = [];
       Array.from(Array(dataToView), (_, x) =>
-        indices.push((activeStep + x) % carsImages!.length)
+        indices.push((activeStep + x) % carsImages.length)
       );
       return indices.map((index) => carsImages[index]);
     }
     return [];
   };
 
-  const renderCarImages = (carsImages: any[]) => {
-    const data = inViewTestimonialData(carsImages);
-    const active = data.length >= 3 ? Math.ceil(data.length / 3) : 0;
+  const renderCarImages = (carsImages: any[], activeStep: number) => {
+    const data = inViewTestimonialData(carsImages, activeStep);
     return data.map((step: any, index: number) => {
-      const width = index === active ? "600px" : "450px";
+      const width = index === 1 ? "600px" : "450px"; 
       return (
         <Box
           key={index}
@@ -63,11 +67,10 @@ const CarsTestimonialSection = (props: CustomProps) => {
             borderRadius: "30px",
             textAlign: "center",
             padding: 2,
-            opacity: index === active ? 1 : 0.3,
+            opacity: index === 1 ? 1 : 0.3,
             transition: "opacity 0.3s ease",
           }}
         >
-          <Typography>{step.text}</Typography>
           <img
             src={step.img}
             width={isLgUp ? width : "100%"}
@@ -78,7 +81,6 @@ const CarsTestimonialSection = (props: CustomProps) => {
       );
     });
   };
-
   const renderKeyFeatures = (features: { icon: string; name: string }[]) => (
     <Stack
       direction="row"
@@ -167,39 +169,32 @@ const CarsTestimonialSection = (props: CustomProps) => {
     </Stack>
   );
 
-  const getDesktopIndicators = (carsImages: any[]) => {
-    const indicators = Array.from(
-      { length: carsImages?.length || 0 },
-      (_, i) => i
-    );
-
+  const getDesktopIndicators = (carsImages: any[], sectionIndex: number) => {
     return (
       <Stack
         direction="row"
         spacing={2}
         alignItems="center"
         justifyContent="center"
-        sx={{
-          marginTop: "20px",
-        }}
+        sx={{ marginTop: "20px" }}
       >
-        <Stack direction="row" spacing={2}>
-          {indicators.map((_, index) => (
-            <Box
-              onClick={() => handleStepChange(index)}
-              key={index}
-              sx={{
-                width: index === activeStep ? "100px" : "30px",
-                height: "5px",
-                borderRadius: "2.5px",
-                backgroundColor:
-                  index === activeStep ? theme.palette.primary.main : "white",
-                transition: "all 0.3s ease",
-                cursor: "pointer",
-              }}
-            />
-          ))}
-        </Stack>
+        {carsImages.map((_, index) => (
+          <Box
+            key={index}
+            onClick={() => handleStepChange(sectionIndex, index)}
+            sx={{
+              width: index === activeSteps[sectionIndex] ? "50px" : "30px",
+              height: "5px",
+              borderRadius: "2.5px",
+              backgroundColor:
+                index === activeSteps[sectionIndex]
+                  ? theme.palette.primary.main
+                  : "white",
+              transition: "all 0.3s ease",
+              cursor: "pointer",
+            }}
+          />
+        ))}
       </Stack>
     );
   };
@@ -214,8 +209,8 @@ const CarsTestimonialSection = (props: CustomProps) => {
       >
         <Stack spacing={4} alignItems="center">
           {props.carTestimonialData &&
-            props.carTestimonialData.map((data, index) => (
-              <Box key={index} sx={{ textAlign: "center" }} pt={2}>
+            props.carTestimonialData.map((data, sectionIndex) => (
+              <Box key={sectionIndex} sx={{ textAlign: "center" }} pt={2}>
                 <Box
                   sx={{
                     width: "100%",
@@ -236,9 +231,9 @@ const CarsTestimonialSection = (props: CustomProps) => {
                   spacing={0}
                   sx={{ overflow: "hidden" }}
                 >
-                  {renderCarImages(data.carsImages)}
+                  {renderCarImages(data.carsImages, activeSteps[sectionIndex])}
                 </Stack>
-                {getDesktopIndicators(data.carsImages)}
+                {getDesktopIndicators(data.carsImages, sectionIndex)}
                 <Container maxWidth="lg">
                   <Stack
                     direction={{ lg: "column", sm: "column" }}

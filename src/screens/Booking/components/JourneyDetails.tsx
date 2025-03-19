@@ -280,17 +280,52 @@ const JourneyDetails = (props: CustomProps) => {
                     placeholder="Select airport"
                     id="address"
                     name="address"
-                    value={props.formData.pickups[0].address || ""} // Corrected to `address`
+                    value={props.formData.pickups[0].address || ""}
                     onChange={(e) =>
                       handleFieldChange(0, "address", e.target.value)
                     }
+                    input={<OutlinedInput />}
+                    MenuProps={{
+                      PaperProps: {
+                        sx: { ...classes.menuItems },
+                      },
+                    }}
+                    sx={classes.selectMenu}
+                    style={{
+                      color:
+                        props.formData.pickups[0].address === ""
+                          ? "#B3B3B3"
+                          : "",
+                      width: "100%",
+                      background: "transparent",
+                      borderRadius: "25px",
+                    }}
+                    renderValue={
+                      props.formData.pickups[0].address !== ""
+                        ? () => props.formData.pickups[0].address
+                        : () => "Select address"
+                    }
+                    displayEmpty
+                    error={
+                      !isTruthy(props.formData.pickups[0].address) &&
+                      props.errors.pickups[0].address
+                    }
                   >
                     {addresses?.map((address: any, index: number) => (
-                      <MenuItem key={index} value={address}>
+                      <MenuItem
+                        sx={classes.optionStyle}
+                        value={address}
+                        key={index}
+                      >
                         {address}
                       </MenuItem>
                     ))}
                   </Select>
+                  {!isTruthy(props.formData.pickups[0].address) && (
+                    <FormHelperText error>
+                      {props.errors.pickups[0].address}
+                    </FormHelperText>
+                  )}
                 </Stack>
               )}
 
@@ -872,6 +907,7 @@ const JourneyDetails = (props: CustomProps) => {
                             borderColor: props.errors.start_datetime
                               ? "#F04438 !important"
                               : theme.palette.primary.main,
+                            borderRadius: "25px !important",
                           },
                         }}
                         onError={

@@ -42,6 +42,30 @@ const LoginPopup: React.FC<LoginPopupProps> = ({ open, onClose }) => {
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+
+    let newErrors = { ...errors };
+
+    if (name === "email") {
+      if (!value) {
+        newErrors.email = "Please enter your email.";
+      } else if (!strings.regex.test(value)) {
+        newErrors.email = "Please enter a valid email address.";
+      } else {
+        newErrors.email = "";
+      }
+    }
+
+    if (name === "password") {
+      if (!value) {
+        newErrors.password = "Please enter your password.";
+      } else if (value.length < 4) {
+        newErrors.password = "Password must be at least 8 characters long.";
+      } else {
+        newErrors.password = "";
+      }
+    }
+
+    setErrors(newErrors);
   };
 
   const validateInputs = async () => {
@@ -79,15 +103,26 @@ const LoginPopup: React.FC<LoginPopupProps> = ({ open, onClose }) => {
         onClose();
         setIsLoading(false);
         setIsSuccess(true);
-      } catch (error: any) {
+      } catch (detail: any) {
+        console.error("Login error:", detail); // Debugging
+
+        const errorMessage =
+          typeof detail === "string"
+            ? detail
+            : typeof detail?.response?.data?.detail === "string"
+            ? detail.response.data.detail
+            : "Invalid email or password. Please try again.";
+
         setFormData({
           email: "",
           password: "",
         });
+
+        setMessage(errorMessage);
         setIsOpen(true);
-        onClose();
         setIsLoading(false);
-        setIsSuccess(true);
+        setIsSuccess(false);
+        onClose();
       }
     }
   };
