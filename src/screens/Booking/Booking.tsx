@@ -181,7 +181,6 @@ const Booking = () => {
     return isValid;
   };
 
-  
   useEffect(() => {
     if (data) {
       try {
@@ -220,10 +219,6 @@ const Booking = () => {
 
   const bookingJourneyValidate = async () => {
     const newUuid = uuid();
-    setFormData({
-      ...formData,
-      sessionId: newUuid,
-    });
     let newErrors = { ...journeyDetailsErrors };
     let isValid = true;
 
@@ -325,15 +320,18 @@ const Booking = () => {
       }
     }
     setJourneyDetailsErrors(newErrors);
+
     if (isValid) {
       try {
         setIsLoading(true);
+        const updatedFormData = { ...formData, sessionId: newUuid };
+        setFormData(updatedFormData);
         const response = await fetch(
           "http://13.60.40.222:80/calculate-booking-prices",
           {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(formData),
+            body: JSON.stringify(updatedFormData),
           }
         );
 
@@ -376,9 +374,7 @@ const Booking = () => {
   const handleStepClick = (step: number) => {
     setCurrentStep(step);
   };
-  const uuidFromUuidV4 = () => {
-   
-  };
+  const uuidFromUuidV4 = () => {};
 
   const handleCarSelection = (car: any) => {
     setFormData((prev) => ({ ...prev, selectedCar: car }));
