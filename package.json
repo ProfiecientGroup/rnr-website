@@ -32,7 +32,8 @@
     "react-router-dom": "^7.1.0",
     "react-swipeable-views": "^0.14.0",
     "react-swipeable-views-utils": "^0.14.0",
-    "react-world-flags": "^1.6.0"
+    "react-world-flags": "^1.6.0",
+    "uuid": "^11.1.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

@@ -65,8 +65,6 @@ const Payment = (props: CustomProps) => {
     const amount = selectedCar?.final_price && typeof selectedCar.final_price === "string"
     ? parseFloat(selectedCar.final_price.replace(/[^0-9.]/g, ""))
     : 0;
-    console.log("amount",amount);
-    
     try {
       const response = await fetch(
         "http://13.60.40.222:80/create-payment-intent",

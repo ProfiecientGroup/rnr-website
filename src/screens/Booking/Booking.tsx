@@ -19,16 +19,13 @@ import JourneyDetails from "./components/JourneyDetails";
 import ChooseACar from "./components/ChooseACar";
 import BookingDetails from "./components/BookingDetails";
 import Payment from "./components/Payment";
-import {
-  isPhoneValid,
-  openErrorNotification,
-  openSuccessNotification,
-} from "helpers/methods";
+import { openErrorNotification } from "helpers/methods";
 import moment from "moment";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import { useRouter } from "next/router";
 import urls from "global/constants/urls";
+import { v4 as uuid } from "uuid";
 
 const steps = ["Journey details", "Choose a Car", "Booking Details", "Payment"];
 
@@ -79,6 +76,7 @@ const Booking = () => {
       message: "",
     },
     selectedCar: null,
+    sessionId: "",
   });
   const [journeyDetailsErrors, setJourneyDetailsErrors] = useState<any>({
     trip_type: "",
@@ -183,6 +181,7 @@ const Booking = () => {
     return isValid;
   };
 
+  
   useEffect(() => {
     if (data) {
       try {
@@ -220,6 +219,11 @@ const Booking = () => {
   }, [data]);
 
   const bookingJourneyValidate = async () => {
+    const newUuid = uuid();
+    setFormData({
+      ...formData,
+      sessionId: newUuid,
+    });
     let newErrors = { ...journeyDetailsErrors };
     let isValid = true;
 
@@ -320,7 +324,6 @@ const Booking = () => {
         newErrors.hours = "";
       }
     }
-
     setJourneyDetailsErrors(newErrors);
     if (isValid) {
       try {
@@ -372,6 +375,9 @@ const Booking = () => {
 
   const handleStepClick = (step: number) => {
     setCurrentStep(step);
+  };
+  const uuidFromUuidV4 = () => {
+   
   };
 
   const handleCarSelection = (car: any) => {
