@@ -74,7 +74,7 @@ export const googleApi = async (input: string) => {
     }
     
     // Use your new API endpoint instead of calling Google directly
-    const url = `http://13.60.40.222:80/autocomplete?query=${encodeURIComponent(input)}`;
+    const url = `https://api.rnrchauffeurs.com/autocomplete?query=${encodeURIComponent(input)}`;
     const callParams = getCallParams("GET"); // Make sure getCallParams returns appropriate headers
     const response = await makeCall(url, callParams);
     return response;

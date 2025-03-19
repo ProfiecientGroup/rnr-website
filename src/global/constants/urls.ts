@@ -3,11 +3,11 @@ class Urls {
 
   BASE_WEBAPP_URL = this.PROD ? "https://rnr.com/" : "https://rnr.com/";
 
-  bookingApiCallEndpoint = "http://13.60.40.222:80/calculate-booking-prices";
-  corporateLoginApiCallEndpoint = "http://13.60.40.222:80/corporate-login";
+  bookingApiCallEndpoint = "https://api.rnrchauffeurs.com/calculate-booking-prices";
+  corporateLoginApiCallEndpoint = "https://api.rnrchauffeurs.com/corporate-login";
   Pricing = `/pricing`;
 
-  contactApiCallEndpoint = "http://13.60.40.222:80/contact ";
+  contactApiCallEndpoint = "https://api.rnrchauffeurs.com/contact ";
   // Book a demo
 
   Calendly = "https://calendly.com/rnr";
