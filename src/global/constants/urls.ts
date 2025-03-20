@@ -5,12 +5,7 @@ class Urls {
 
   bookingApiCallEndpoint = "https://api.rnrchauffeurs.com/calculate-booking-prices";
   corporateLoginApiCallEndpoint = "https://api.rnrchauffeurs.com/corporate-login";
-  Pricing = `/pricing`;
-
   contactApiCallEndpoint = "https://api.rnrchauffeurs.com/contact ";
-  // Book a demo
-
-  Calendly = "https://calendly.com/rnr";
 
   // Social media handles
   STRIPE_PUBLIC_KEY =
