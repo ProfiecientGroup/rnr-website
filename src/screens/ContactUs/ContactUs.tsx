@@ -19,11 +19,11 @@ import {
 } from "@mui/material";
 import ContactUsStyles from "./ContactUsStyles";
 import { isTruthy, openErrorNotification } from "helpers/methods";
-import CustomContactNumberInput from "global/components/CustomContactNumberInput/CustomContactNumberInput";
 import { contactUsForm, validateData } from "./ContactUsStateAndValidation";
 import formBg from "../../assets/images/contactUs/formBg.webp";
 import strings from "global/constants/strings";
 import { doContactUs } from "screens/Booking/components/BookingService";
+import { CustomContactNumberInput } from "global/components/CustomContactNumberInput/CustomContactNumberInput";
 
 const TOP_NAV_HEIGHT = 64;
 
