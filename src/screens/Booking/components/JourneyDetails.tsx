@@ -307,8 +307,8 @@ const JourneyDetails = (props: CustomProps) => {
                     }
                     displayEmpty
                     error={
-                      !isTruthy(props.formData.pickups[0].address) &&
-                      props.errors.pickups[0].address
+                      !isTruthy(props.formData.pickups[0]?.address) &&
+                      props.errors.pickups[0]?.address
                     }
                   >
                     {addresses?.map((address: any, index: number) => (
@@ -323,7 +323,7 @@ const JourneyDetails = (props: CustomProps) => {
                   </Select>
                   {!isTruthy(props.formData.pickups[0].address) && (
                     <FormHelperText error>
-                      {props.errors.pickups[0].address}
+                      {props.errors.pickups[0]?.address}
                     </FormHelperText>
                   )}
                 </Stack>
@@ -456,8 +456,8 @@ const JourneyDetails = (props: CustomProps) => {
                               displayEmpty
                               error={
                                 !isTruthy(
-                                  props.formData.pickups[index + 1].address
-                                ) && props.errors.pickups[index + 1].address
+                                  props.formData.pickups[index + 1]?.address
+                                ) && props.errors.pickups[index + 1]?.address
                               }
                             >
                               {addresses?.map((address: any, index: number) => {
@@ -473,10 +473,10 @@ const JourneyDetails = (props: CustomProps) => {
                               })}
                             </Select>
                             {!isTruthy(
-                              props.formData.pickups[index + 1].address
+                              props.formData.pickups[index + 1]?.address
                             ) && (
                               <FormHelperText error>
-                                {props.errors.pickups[index + 1].address}
+                                {props.errors.pickups[index + 1]?.address}
                               </FormHelperText>
                             )}
                           </Stack>
@@ -513,11 +513,11 @@ const JourneyDetails = (props: CustomProps) => {
                   padding: "8px 16px",
                   borderRadius: "16px",
                   backgroundColor:
-                    props.formData.dropoffs[0].type === "address"
+                    props.formData.dropoffs[0]?.type === "address"
                       ? { ...classes.addressBox, marginRight: 2 }
                       : { ...classes.pickupBox, marginRight: 2 },
                   color:
-                    props.formData.dropoffs[0].type === "address"
+                    props.formData.dropoffs[0]?.type === "address"
                       ? "black"
                       : "white",
                 }}
@@ -532,11 +532,11 @@ const JourneyDetails = (props: CustomProps) => {
                   padding: "8px 16px",
                   borderRadius: "16px",
                   backgroundColor:
-                    props.formData.dropoffs[0].type === "airport"
+                    props.formData.dropoffs[0]?.type === "airport"
                       ? { ...classes.addressBox, marginRight: 2 }
                       : { ...classes.pickupBox, marginRight: 2 },
                   color:
-                    props.formData.dropoffs[0].type === "airport"
+                    props.formData.dropoffs[0]?.type === "airport"
                       ? "black"
                       : "white",
                 }}
@@ -550,16 +550,16 @@ const JourneyDetails = (props: CustomProps) => {
             <Stack direction="row" spacing={1}>
               {props.formData.dropoffs[0].type === "address" ? (
                 <GoogleAutocompleteInput
-                  value={props.formData.dropoffs[0].address || ""}
+                  value={props.formData.dropoffs[0]?.address || ""}
                   onChange={(newValue: string) =>
                     handleFieldChangeDropoffs(0, "address", newValue)
                   }
                   error={
-                    !isTruthy(props.formData.dropoffs[0].address) &&
+                    !isTruthy(props.formData.dropoffs[0]?.address) &&
                     props.errors.dropoffs[0].address
                   }
                   helperText={
-                    !isTruthy(props.formData.dropoffs[0].address) &&
+                    !isTruthy(props.formData.dropoffs[0]?.address) &&
                     props.errors.dropoffs[0].address
                   }
                 />
@@ -569,7 +569,7 @@ const JourneyDetails = (props: CustomProps) => {
                     placeholder="Select airport"
                     id="address"
                     name="address"
-                    value={props.formData.dropoffs[0].address || ""}
+                    value={props.formData.dropoffs[0]?.address || ""}
                     onChange={(e) =>
                       handleFieldChangeDropoffs(0, "address", e.target.value)
                     }
@@ -582,7 +582,7 @@ const JourneyDetails = (props: CustomProps) => {
                     sx={classes.selectMenu}
                     style={{
                       color:
-                        props.formData.dropoffs[0].address === ""
+                        props.formData.dropoffs[0]?.address === ""
                           ? "#B3B3B3"
                           : "",
                       width: "100%",
@@ -590,13 +590,13 @@ const JourneyDetails = (props: CustomProps) => {
                       borderRadius: "25px",
                     }}
                     renderValue={
-                      props.formData.dropoffs[0].address !== ""
-                        ? () => props.formData.dropoffs[0].address
+                      props.formData.dropoffs[0]?.address !== ""
+                        ? () => props.formData.dropoffs[0]?.address
                         : () => "Select address"
                     }
                     displayEmpty
                     error={
-                      !isTruthy(props.formData.dropoffs[0].address) &&
+                      !isTruthy(props.formData.dropoffs[0]?.address) &&
                       props.errors.dropoffs[0].address
                     }
                   >
@@ -610,9 +610,9 @@ const JourneyDetails = (props: CustomProps) => {
                       </MenuItem>
                     ))}
                   </Select>
-                  {!isTruthy(props.formData.dropoffs[0].address) && (
+                  {!isTruthy(props.formData.dropoffs[0]?.address) && (
                     <FormHelperText error>
-                      {props.errors.dropoffs[0].address}
+                      {props.errors.dropoffs[0]?.address}
                     </FormHelperText>
                   )}
                 </Stack>
