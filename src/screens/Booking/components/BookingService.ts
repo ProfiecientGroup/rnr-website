@@ -72,9 +72,10 @@ export const googleApi = async (input: string) => {
     if (!input.trim()) {
       throw new Error("Input is required");
     }
-    
+
     // Use your new API endpoint instead of calling Google directly
-    const url = `https://api.rnrchauffeurs.com/autocomplete?query=${encodeURIComponent(input)}`;
+    // const url = `https://api.rnrchauffeurs.com/autocomplete?query=${encodeURIComponent(input)}`;
+    const url = `/api/google-autocomplete?input=${encodeURIComponent(input)}`;
     const callParams = getCallParams("GET"); // Make sure getCallParams returns appropriate headers
     const response = await makeCall(url, callParams);
     return response;
@@ -83,7 +84,6 @@ export const googleApi = async (input: string) => {
     throw new Error("Failed to fetch Google Autocomplete data");
   }
 };
-
 
 export const doContactUs = async (body: any) => {
   try {
