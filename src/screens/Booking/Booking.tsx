@@ -19,7 +19,7 @@ import JourneyDetails from "./components/JourneyDetails";
 import ChooseACar from "./components/ChooseACar";
 import BookingDetails from "./components/BookingDetails";
 import Payment from "./components/Payment";
-import { openErrorNotification } from "helpers/methods";
+import { isPhoneValid, isTruthy, openErrorNotification } from "helpers/methods";
 import moment from "moment";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
@@ -43,6 +43,7 @@ const Booking = () => {
   const [bookingData, setBookingData] = useState<any>();
   const { data }: any = router.query;
   const promise = loadStripe(urls.STRIPE_PUBLIC_KEY);
+  const { sessionId } = router.query;
 
   const [formData, setFormData] = useState({
     pickups: [
@@ -98,7 +99,7 @@ const Booking = () => {
     firstName: "",
     lastName: "",
     email: "",
-    // phone: "",
+    phone: "",
     noOfPassenger: "",
     noOfSuitcase: "",
     // message: "",
@@ -112,7 +113,7 @@ const Booking = () => {
       firstName,
       lastName,
       email,
-      // phone,
+      phone,
       noOfPassenger,
       noOfSuitcase,
       // message,
@@ -138,6 +139,16 @@ const Booking = () => {
     //   newErrors.phone = "Please enter a valid phone number.";
     //   isValid = false;
     // }
+    if (isTruthy(phone)) {
+      // if (credentials.contactNo.length < 14) {
+      //   errors.contactNo = "Contact must be 10 characters long";
+      // } else
+      if (!isPhoneValid(phone)) {
+        newErrors.phone = "Please enter valid contact number.";
+      }
+    } else {
+      newErrors.phone = "Please enter your contact number.";
+    }
     if (!noOfPassenger) {
       newErrors.noOfPassenger = "Please select number of passengers.";
       isValid = false;
@@ -151,33 +162,6 @@ const Booking = () => {
     //   isValid = false;
     // }
     setBookingErrors(newErrors);
-
-    // if (isValid) {
-    //   try {
-    //     setIsLoading(true);
-    //     const response = await fetch(
-    //       "http://13.60.40.222/calculate-booking-prices",
-    //       {
-    //         method: "POST",
-    //         headers: { "Content-Type": "application/json" },
-    //         body: JSON.stringify(formData),
-    //       }
-    //     );
-
-    //     if (!response.ok) {
-    //       throw new Error("Failed to fetch booking data");
-    //     }
-
-    //     const data = await response.json();
-    //     setBookingData(data);
-    //     setIsLoading(false);
-    //   } catch (error: any) {
-    //     setIsLoading(false);
-    //     openErrorNotification(error.message || "Something went wrong");
-    //   }
-    // } else {
-    //   console.log("Validation failed!", newErrors);
-    // }
     return isValid;
   };
 
@@ -324,7 +308,12 @@ const Booking = () => {
     if (isValid) {
       try {
         setIsLoading(true);
-        const updatedFormData = { ...formData, sessionId: newUuid };
+        let updatedFormData: any;
+        if (isTruthy(sessionId)) {
+          updatedFormData = { ...formData, sessionId: sessionId };
+        } else {
+          updatedFormData = { ...formData, sessionId: newUuid };
+        }
         setFormData(updatedFormData);
         const response = await fetch(
           "https://api.rnrchauffeurs.com/calculate-booking-prices",
@@ -552,7 +541,7 @@ const Booking = () => {
                           }
                     }
                     key={index}
-                    // onClick={() => handleStepClick(index)}
+                    onClick={() => handleStepClick(index)}
                   >
                     {label}
                   </StepLabel>

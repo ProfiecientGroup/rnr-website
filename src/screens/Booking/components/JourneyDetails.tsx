@@ -411,66 +411,75 @@ const JourneyDetails = (props: CustomProps) => {
                               handleFieldChange(index + 1, "address", newValue)
                             }
                             error={
-                              (!isTruthy(pickup.address) &&
-                                (props.errors.pickups[index + 1] || {})
-                                  ?.address) ||
-                              ""
+                              !props.formData.pickups[index + 1].address &&
+                              props.errors?.pickups?.[index + 1]?.address
+                            }
+                            helperText={
+                              !props.formData.pickups[index + 1].address &&
+                              props.errors?.pickups?.[index + 1]?.address
                             }
                           />
                         ) : (
-                          <Select
-                            placeholder="Select airport"
-                            id="address"
-                            name="address"
-                            value={pickup.address || ""}
-                            onChange={(e) =>
-                              handleFieldChange(
-                                index + 1,
-                                "address",
-                                e.target.value
-                              )
-                            }
-                            input={<OutlinedInput />}
-                            MenuProps={{
-                              PaperProps: {
-                                sx: {
-                                  ...classes.menuItems,
+                          <Stack direction="column" spacing={0} width="100%">
+                            <Select
+                              placeholder="Select airport"
+                              id="address"
+                              name="address"
+                              value={pickup.address || ""}
+                              onChange={(e) =>
+                                handleFieldChange(
+                                  index + 1,
+                                  "address",
+                                  e.target.value
+                                )
+                              }
+                              input={<OutlinedInput />}
+                              MenuProps={{
+                                PaperProps: {
+                                  sx: {
+                                    ...classes.menuItems,
+                                  },
                                 },
-                              },
-                            }}
-                            sx={classes.selectMenu}
-                            style={{
-                              color: pickup.address === "" ? "#B3B3B3" : "",
-                              width: "100%",
-                              background: "transparent",
-                              borderRadius: "25px",
-                            }}
-                            renderValue={
-                              pickup.address !== ""
-                                ? () => pickup.address
-                                : () => "Select address"
-                            }
-                            displayEmpty
-                            error={
-                              props.errors.pickups[index + 1]?.address || ""
-                            }
-                            // error={
-                            //   !isTruthy(pickup.address) &&
-                            //   props.errors.pickup[index].address
-                            // }
-                          >
-                            {addresses?.map((address: any, index: number) => {
-                              return (
-                                <MenuItem
-                                  sx={classes.optionStyle}
-                                  value={address}
-                                  key={index}
-                                >
-                                  {address}
-                                </MenuItem>
-                              );
-                            })}
-                          </Select>
+                              }}
+                              sx={classes.selectMenu}
+                              style={{
+                                color: pickup.address === "" ? "#B3B3B3" : "",
+                                width: "100%",
+                                background: "transparent",
+                                borderRadius: "25px",
+                              }}
+                              renderValue={
+                                pickup.address !== ""
+                                  ? () => pickup.address
+                                  : () => "Select address"
+                              }
+                              displayEmpty
+                              error={
+                                !isTruthy(
+                                  props.formData.pickups[index + 1].address
+                                ) && props.errors.pickups[index + 1].address
+                              }
+                            >
+                              {addresses?.map((address: any, index: number) => {
+                                return (
+                                  <MenuItem
+                                    sx={classes.optionStyle}
+                                    value={address}
+                                    key={index}
+                                  >
+                                    {address}
+                                  </MenuItem>
+                                );
+                              })}
+                            </Select>
+                            {!isTruthy(
+                              props.formData.pickups[index + 1].address
+                            ) && (
+                              <FormHelperText error>
+                                {props.errors.pickups[index + 1].address}
+                              </FormHelperText>
+                            )}
+                          </Stack>
                         )}
                         <IconButton
                           onClick={() => handleAddField("pickups", pickup.type)}
@@ -799,24 +808,35 @@ const JourneyDetails = (props: CustomProps) => {
                         ? moment(props.formData.start_datetime)
                         : null
                     }
-                    onChange={(newValue) =>
-                      handleDateAndTimeChange(newValue, "start_datetime")
-                    }
+                    onChange={(newValue) => {
+                      handleDateAndTimeChange(newValue, "start_datetime");
+                      if (newValue) {
+                        props.errors.start_datetime = "";
+                      }
+                    }}
+                    minDate={moment().startOf("day")}
                     sx={{
                       ...classes.timePicker,
                       "& .MuiFilledInput-root": {
                         borderColor: props.errors.start_datetime
                           ? "#F04438 !important"
-                          : theme.palette.primary.main,
+                          : `${theme.palette.primary.main} !important`,
+                      },
+                      "&:hover .MuiFilledInput-root": {
+                        borderColor: `${theme.palette.primary.main} !important`,
+                      },
+                      "&.Mui-focused .MuiFilledInput-root": {
+                        borderColor: `${theme.palette.primary.main} !important`,
                       },
                     }}
                   />
                 </LocalizationProvider>
-                {!isTruthy(props.formData.start_datetime) && (
-                  <FormHelperText error sx={{ ml: 2 }}>
-                    {props.errors.start_datetime}
-                  </FormHelperText>
-                )}
+                {!isTruthy(props.formData.start_datetime) &&
+                  props.errors.start_datetime && (
+                    <FormHelperText error sx={{ ml: 2 }}>
+                      {props.errors.start_datetime}
+                    </FormHelperText>
+                  )}
               </Box>
             )}
             <Stack>
@@ -830,28 +850,35 @@ const JourneyDetails = (props: CustomProps) => {
                             ? moment(props.formData.start_datetime)
                             : null
                         }
-                        onChange={(newValue) =>
-                          handleDateAndTimeChange(newValue, "start_datetime")
-                        }
+                        onChange={(newValue) => {
+                          handleDateAndTimeChange(newValue, "start_datetime");
+                          if (newValue) {
+                            props.errors.start_datetime = "";
+                          }
+                        }}
+                        minDate={moment().startOf("day")}
                         sx={{
                           ...classes.timePicker,
                           "& .MuiFilledInput-root": {
                             borderColor: props.errors.start_datetime
                               ? "#F04438 !important"
-                              : theme.palette.primary.main,
+                              : `${theme.palette.primary.main} !important`,
+                          },
+                          "&:hover .MuiFilledInput-root": {
+                            borderColor: `${theme.palette.primary.main} !important`,
+                          },
+                          "&.Mui-focused .MuiFilledInput-root": {
+                            borderColor: `${theme.palette.primary.main} !important`,
                           },
                         }}
-                        onError={
-                          !isTruthy(props.formData.start_datetime) &&
-                          props.errors.start_datetime
-                        }
                       />
                     </LocalizationProvider>
-                    {!isTruthy(props.formData.start_datetime) && (
-                      <FormHelperText error sx={{ ml: 2 }}>
-                        {props.errors.start_datetime}
-                      </FormHelperText>
-                    )}
+                    {!isTruthy(props.formData.start_datetime) &&
+                      props.errors.start_datetime && (
+                        <FormHelperText error sx={{ ml: 2 }}>
+                          {props.errors.start_datetime}
+                        </FormHelperText>
+                      )}
                   </Box>
                   <Box>
                     <LocalizationProvider dateAdapter={AdapterMoment}>
@@ -861,28 +888,35 @@ const JourneyDetails = (props: CustomProps) => {
                             ? moment(props.formData.end_datetime)
                             : null
                         }
-                        onChange={(newValue) =>
-                          handleDateAndTimeChange(newValue, "end_datetime")
-                        }
+                        onChange={(newValue) => {
+                          handleDateAndTimeChange(newValue, "end_datetime");
+                          if (newValue) {
+                            props.errors.end_datetime = "";
+                          }
+                        }}
+                        minDate={moment().startOf("day")}
                         sx={{
                           ...classes.timePicker,
                           "& .MuiFilledInput-root": {
                             borderColor: props.errors.end_datetime
                               ? "#F04438 !important"
-                              : theme.palette.primary.main,
+                              : `${theme.palette.primary.main} !important`,
+                          },
+                          "&:hover .MuiFilledInput-root": {
+                            borderColor: `${theme.palette.primary.main} !important`,
+                          },
+                          "&.Mui-focused .MuiFilledInput-root": {
+                            borderColor: `${theme.palette.primary.main} !important`,
                           },
                         }}
-                        onError={
-                          !isTruthy(props.formData.end_datetime) &&
-                          props.errors.end_datetime
-                        }
                       />
                     </LocalizationProvider>
-                    {!isTruthy(props.formData.end_datetime) && (
-                      <FormHelperText error sx={{ ml: 2 }}>
-                        {props.errors.end_datetime}
-                      </FormHelperText>
-                    )}
+                    {!isTruthy(props.formData.end_datetime) &&
+                      props.errors.end_datetime && (
+                        <FormHelperText error sx={{ ml: 2 }}>
+                          {props.errors.end_datetime}
+                        </FormHelperText>
+                      )}
                   </Box>
                 </>
               )}
@@ -898,29 +932,35 @@ const JourneyDetails = (props: CustomProps) => {
                             ? moment(props.formData.start_datetime)
                             : null
                         }
-                        onChange={(newValue) =>
-                          handleDateAndTimeChange(newValue, "start_datetime")
-                        }
+                        onChange={(newValue) => {
+                          handleDateAndTimeChange(newValue, "start_datetime");
+                          if (newValue) {
+                            props.errors.start_datetime = "";
+                          }
+                        }}
+                        minDate={moment().startOf("day")}
                         sx={{
                           ...classes.timePicker,
                           "& .MuiFilledInput-root": {
                             borderColor: props.errors.start_datetime
                               ? "#F04438 !important"
-                              : theme.palette.primary.main,
-                            borderRadius: "25px !important",
+                              : `${theme.palette.primary.main} !important`,
+                          },
+                          "&:hover .MuiFilledInput-root": {
+                            borderColor: `${theme.palette.primary.main} !important`,
+                          },
+                          "&.Mui-focused .MuiFilledInput-root": {
+                            borderColor: `${theme.palette.primary.main} !important`,
                           },
                         }}
-                        onError={
-                          !isTruthy(props.formData.start_datetime) &&
-                          props.errors.start_datetime
-                        }
                       />
                     </LocalizationProvider>
-                    {!isTruthy(props.formData.start_datetime) && (
-                      <FormHelperText error sx={{ ml: 2 }}>
-                        {props.errors.start_datetime}
-                      </FormHelperText>
-                    )}
+                    {!isTruthy(props.formData.start_datetime) &&
+                      props.errors.start_datetime && (
+                        <FormHelperText error sx={{ ml: 2 }}>
+                          {props.errors.start_datetime}
+                        </FormHelperText>
+                      )}
                   </Box>
                   <TextField
                     placeholder="Enter Hours"

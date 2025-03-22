@@ -24,7 +24,7 @@ export interface MUIPhoneProps extends BaseTextFieldProps {
   onChange: (phone: string) => void;
 }
 
-const CustomContactNumberInput: React.FC<MUIPhoneProps> = ({
+export const CustomContactNumberInput: React.FC<MUIPhoneProps> = ({
   label,
   value,
   placeHolder,
@@ -48,7 +48,7 @@ const CustomContactNumberInput: React.FC<MUIPhoneProps> = ({
   return (
     <>
       <TextField
-        // sx={classes.textField}
+        sx={classes.textField}
         variant="outlined"
         fullWidth
         value={phone}
@@ -61,20 +61,18 @@ const CustomContactNumberInput: React.FC<MUIPhoneProps> = ({
           startAdornment: (
             <InputAdornment position="start">
               <Select
-                MenuProps={
-                  {
-                    // style: {
-                    //   height: "300px",
-                    //   width: "360px",
-                    //   top: "0px",
-                    //   // left: "-34px",
-                    // },
-                    // transformOrigin: {
-                    //   vertical: "top",
-                    //   horizontal: "left",
-                    // },
-                  }
-                }
+                MenuProps={{
+                  style: {
+                    height: "300px",
+                    width: "360px",
+                    top: "0px",
+                    left: "-34px",
+                  },
+                  transformOrigin: {
+                    vertical: "top",
+                    horizontal: "left",
+                  },
+                }}
                 sx={{
                   // width: "max-content",
                   width: "55px",
@@ -88,15 +86,11 @@ const CustomContactNumberInput: React.FC<MUIPhoneProps> = ({
                       display: "block",
                     },
                   },
-                  "& .MuiOutlinedInput-input": {
-                    border: "1px solid red",
-                  },
                   // Update default spacing
                   ".MuiSelect-select": {
                     padding: "8px",
                     border: "none",
                     paddingRight: "28px !important",
-                    display: "flex",
                     "&.focused": {
                       border: "none",
                       fieldset: {
@@ -147,5 +141,3 @@ const CustomContactNumberInput: React.FC<MUIPhoneProps> = ({
     </>
   );
 };
-
-export default CustomContactNumberInput;

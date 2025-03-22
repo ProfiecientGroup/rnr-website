@@ -11,6 +11,8 @@ import {
 } from "@mui/material";
 import { useStripe, useElements, CardElement } from "@stripe/react-stripe-js";
 import BookingStyles from "../BookingStyles";
+import { useRouter } from "next/router";
+import viewpaths from "global/constants/viewPathConstants";
 
 interface CustomProps {
   handleBack: () => void;
@@ -23,6 +25,7 @@ const Payment = (props: CustomProps) => {
   const isLgUp = useMediaQuery(theme.breakpoints.up("lg"));
   const stripe = useStripe();
   const elements = useElements();
+  const router = useRouter();
 
   const [clientSecret, setClientSecret] = useState<string | null>(null);
   const [processing, setProcessing] = useState(false);
@@ -62,9 +65,10 @@ const Payment = (props: CustomProps) => {
   const fetchClientSecret = async () => {
     setFetchingPrice(true);
     setError(null);
-    const amount = selectedCar?.final_price && typeof selectedCar.final_price === "string"
-    ? parseFloat(selectedCar.final_price.replace(/[^0-9.]/g, ""))
-    : 0;
+    const amount =
+      selectedCar?.final_price && typeof selectedCar.final_price === "string"
+        ? parseFloat(selectedCar.final_price.replace(/[^0-9.]/g, ""))
+        : 0;
     try {
       const response = await fetch(
         "https://api.rnrchauffeurs.com/create-payment-intent",
@@ -72,14 +76,27 @@ const Payment = (props: CustomProps) => {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            amount:  amount
-            // amount: 1000,
+            amount: amount,
+            firstName: bookingDetails.firstName,
+            lastName: bookingDetails.lastName,
+            email: bookingDetails.email,
+            phone: bookingDetails.phone,
+            noOfPassenger: bookingDetails.noOfPassenger,
+            noOfSuitcase: bookingDetails.noOfSuitcase,
+            message: bookingDetails.message,
+            car_class: selectedCar.model,
+            session_id: props.formData.sessionId,
           }),
         }
       );
 
       const data = await response.json();
-      if (data.clientSecret) {
+      if (!data.clientSecret) {
+        alert("Booking done successful!");
+        router.push({
+          pathname: viewpaths.home,
+        });
+      } else if (data.clientSecret) {
         setClientSecret(data.clientSecret);
       } else {
         setError("Failed to get client secret.");
@@ -155,10 +172,15 @@ const Payment = (props: CustomProps) => {
         </Typography>
         {selectedCar && (
           <Stack direction="column" spacing={2} sx={carItemStyle}>
-            <Stack direction={isLgUp ? "row" : "column"} spacing={2}>
+            <Stack
+              direction={isLgUp ? "row" : "column"}
+              spacing={2}
+              justifyContent="center"
+              alignItems="center"
+            >
               <img
                 src={selectedCar.imgSrc}
-                width={isLgUp ? "300px" : "100%"}
+                width={isLgUp ? "50%" : "100%"}
                 alt={selectedCar.model}
               />
               <Stack direction="column" spacing={2}>
@@ -172,8 +194,12 @@ const Payment = (props: CustomProps) => {
                   {bookingDetails.firstName} {bookingDetails.lastName}
                 </Typography>
                 <Typography>{bookingDetails.email}</Typography>
-                <Typography>{bookingDetails.phone ? bookingDetails.phone : " - "}</Typography>
-                <Typography>{selectedCar.final_price ? selectedCar.final_price : " - "}</Typography>
+                <Typography>
+                  {bookingDetails.phone ? bookingDetails.phone : " - "}
+                </Typography>
+                <Typography>
+                  {selectedCar.final_price ? selectedCar.final_price : " - "}
+                </Typography>
               </Stack>
             </Stack>
           </Stack>
@@ -219,7 +245,7 @@ const Payment = (props: CustomProps) => {
             {fetchingPrice ? (
               <CircularProgress size={20} color="inherit" />
             ) : (
-              <Typography variant="body2">Pay Now</Typography>
+              <Typography variant="body2">Submit</Typography>
             )}
           </Button>
         </Stack>
@@ -231,10 +257,7 @@ const Payment = (props: CustomProps) => {
             style={{ marginTop: "20px", width: "100%" }}
           >
             {/* <CardElement options={{ hidePostalCode: true }} /> */}
-            <Grid
-              container
-              sx={{ padding: "1%" }}
-            >
+            <Grid container sx={{ padding: "1%" }}>
               <Grid item xs={12} sm={12} md={12} xl={12} lg={12}>
                 <Typography
                   sx={{
@@ -282,7 +305,7 @@ const Payment = (props: CustomProps) => {
               {processing ? (
                 <CircularProgress size={20} color="inherit" />
               ) : (
-                <Typography variant="body2">Submit</Typography>
+                <Typography variant="body2">Pay Now</Typography>
               )}
             </Button>
           </form>

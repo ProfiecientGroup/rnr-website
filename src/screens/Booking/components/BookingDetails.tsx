@@ -23,10 +23,10 @@ import {
 } from "@mui/material";
 import BookingStyles from "../BookingStyles";
 import { isPhoneValid, isTruthy } from "helpers/methods";
-import CustomContactNumberInput from "global/components/CustomContactNumberInput/CustomContactNumberInput";
+import { CustomContactNumberInput } from "global/components/CustomContactNumberInput/CustomContactNumberInput";
 
-const noOfPassenger = ["1", "2", "3"];
-const noOfSuitcase = ["1", "2", "3"];
+const noOfPassenger = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"];
+const noOfSuitcase = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"];
 
 interface CustomProps {
   handleBack: Function;
@@ -188,12 +188,14 @@ const BookingDetails = (props: CustomProps) => {
         {/* Phone Number */}
         <Grid item lg={6} xl={6} md={12} sm={12} xs={12}>
           <CustomContactNumberInput
+            required={true}
+            placeholder="Enter your Contact Number"
             label="Phone Number"
             id="phone-number"
             value={props.formData.bookingDetails?.phone || ""}
             placeHolder="(999) 999-9999"
             sx={classes.textInputField}
-            onChange={(value) => {
+            onChange={(value: any) => {
               props.setFormData({
                 ...props.formData,
                 bookingDetails: {
@@ -207,18 +209,7 @@ const BookingDetails = (props: CustomProps) => {
               });
             }}
             fullWidth
-            // error={
-            //   !isTruthy(props.formData.bookingDetails.phone) &&
-            //   props.error.phone
-            // }
-            // onError={
-            //   !isTruthy(props.formData.bookingDetails.phone) &&
-            //   props.error.phone
-            // }
-            // helperText={
-            //   !isTruthy(props.formData.bookingDetails.phone) &&
-            //   props.error.phone
-            // } // Display error message
+            error={isTruthy(props.error.phone) && props.error.phone}
           />
         </Grid>
 

@@ -17,6 +17,8 @@ import BookingStyles from "screens/Booking/BookingStyles";
 import strings from "global/constants/strings";
 import { isTruthy, openSuccessNotification } from "helpers/methods";
 import { doCorporateLogin } from "screens/Booking/components/BookingService";
+import viewpaths from "global/constants/viewPathConstants";
+import { useRouter } from "next/router";
 
 interface LoginPopupProps {
   open: boolean;
@@ -38,6 +40,7 @@ const LoginPopup: React.FC<LoginPopupProps> = ({ open, onClose }) => {
   const theme = useTheme();
   const classes = BookingStyles(theme);
   const [isOpen, setIsOpen] = useState(false);
+  const router = useRouter();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -94,17 +97,21 @@ const LoginPopup: React.FC<LoginPopupProps> = ({ open, onClose }) => {
     if (isValid) {
       try {
         setIsLoading(true);
-        await doCorporateLogin(formData);
+        const response = await doCorporateLogin(formData);
         setFormData({
           email: "",
           password: "",
         });
         setIsOpen(true);
         onClose();
+        router.push({
+          pathname: viewpaths.bookingViewPath,
+          query: { sessionId: response.session_id },
+        });
         setIsLoading(false);
         setIsSuccess(true);
       } catch (detail: any) {
-        console.error("Login error:", detail); // Debugging
+        console.error("Login error:", detail);
 
         const errorMessage =
           typeof detail === "string"
