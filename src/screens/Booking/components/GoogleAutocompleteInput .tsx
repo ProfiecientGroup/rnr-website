@@ -25,8 +25,7 @@ const GoogleAutocompleteInput: React.FC<GoogleAutocompleteInputProps> = ({
   const [options, setOptions] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
   const [inputValue, setInputValue] = useState(value);
-  const [sessionId, setSessionId] = useState<string>(uuidv4()); // Generate sessionId
-
+  
   // Sync inputValue with external value
   useEffect(() => {
     setInputValue(value);
@@ -40,11 +39,9 @@ const GoogleAutocompleteInput: React.FC<GoogleAutocompleteInputProps> = ({
     }
 
     setLoading(true);
-    const currentSessionId = uuidv4(); // Generate a new session ID
-    setSessionId(currentSessionId); // Store it in state
-
+    const currentSessionId = uuidv4(); 
     try {
-      const response = await googleApi(input, currentSessionId); // Pass session ID
+      const response = await googleApi(input, currentSessionId);
       if (response?.session_id === currentSessionId) {
         // Validate session ID before updating state
         setOptions(response?.results?.predictions || []);

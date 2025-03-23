@@ -106,7 +106,7 @@ const LoginPopup: React.FC<LoginPopupProps> = ({ open, onClose }) => {
         onClose();
         router.push({
           pathname: viewpaths.bookingViewPath,
-          query: { sessionId: response.session_id },
+          query: { session_id: response.session_id },
         });
         setIsLoading(false);
         setIsSuccess(true);

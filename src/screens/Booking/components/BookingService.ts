@@ -84,15 +84,17 @@ export const doCorporateLogin = async (body: any) => {
 //   }
 // };
 
-export const googleApi = async (query: string, sessionId: string) => {
+export const googleApi = async (query: string, session_id: string) => {
   try {
     const response = await fetch(
-      `https://4134-2409-4050-d95-c824-708d-8e9-9634-fc12.ngrok-free.app/autocomplete?query=${encodeURIComponent(query)}`,
+      `https://api.rnrchauffeurs.com/autocomplete?query=${encodeURIComponent(
+        query
+      )}`,
       {
         method: "GET",
         headers: {
-          "Accept": "application/json",
-          "session_id": sessionId,
+          Accept: "application/json",
+          session_id: session_id,
         },
       }
     );
@@ -107,7 +109,6 @@ export const googleApi = async (query: string, sessionId: string) => {
     return null;
   }
 };
-
 
 export const doContactUs = async (body: any) => {
   try {

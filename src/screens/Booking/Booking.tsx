@@ -43,7 +43,7 @@ const Booking = () => {
   const [bookingData, setBookingData] = useState<any>();
   const { data }: any = router.query;
   const promise = loadStripe(urls.STRIPE_PUBLIC_KEY);
-  const { sessionId } = router.query;
+  const { session_id } = router.query;
 
   const [formData, setFormData] = useState({
     pickups: [
@@ -77,7 +77,7 @@ const Booking = () => {
       message: "",
     },
     selectedCar: null,
-    sessionId: "",
+    session_id: "",
   });
   const [journeyDetailsErrors, setJourneyDetailsErrors] = useState<any>({
     trip_type: "",
@@ -309,10 +309,10 @@ const Booking = () => {
       try {
         setIsLoading(true);
         let updatedFormData: any;
-        if (isTruthy(sessionId)) {
-          updatedFormData = { ...formData, sessionId: sessionId };
+        if (isTruthy(session_id)) {
+          updatedFormData = { ...formData, session_id: session_id };
         } else {
-          updatedFormData = { ...formData, sessionId: newUuid };
+          updatedFormData = { ...formData, session_id: newUuid };
         }
         setFormData(updatedFormData);
         const response = await fetch(

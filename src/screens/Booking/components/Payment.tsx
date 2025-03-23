@@ -85,7 +85,7 @@ const Payment = (props: CustomProps) => {
             noOfSuitcase: bookingDetails.noOfSuitcase,
             message: bookingDetails.message,
             car_class: selectedCar.model,
-            session_id: props.formData.sessionId,
+            session_id: props.formData.session_id,
           }),
         }
       );
