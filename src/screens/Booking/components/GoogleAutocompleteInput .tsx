@@ -5,6 +5,8 @@ import CircularProgress from "@mui/material/CircularProgress";
 import { googleApi } from "./BookingService";
 import BookingStyles from "../BookingStyles";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
+import { v4 as uuidv4 } from "uuid"; 
+
 interface GoogleAutocompleteInputProps {
   onChange: (value: string) => void;
   value: string;
@@ -14,7 +16,7 @@ interface GoogleAutocompleteInputProps {
 
 const GoogleAutocompleteInput: React.FC<GoogleAutocompleteInputProps> = ({
   onChange,
-  value, // External prop for input value
+  value,
   error = false,
   helperText = "",
 }) => {
@@ -22,14 +24,15 @@ const GoogleAutocompleteInput: React.FC<GoogleAutocompleteInputProps> = ({
   const classes = BookingStyles(theme);
   const [options, setOptions] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
-  const [inputValue, setInputValue] = useState(value); // State for input value
+  const [inputValue, setInputValue] = useState(value);
+  const [sessionId, setSessionId] = useState<string>(uuidv4()); // Generate sessionId
 
   // Sync inputValue with external value
   useEffect(() => {
     setInputValue(value);
   }, [value]);
 
-  // Fetch autocomplete suggestions
+  // Fetch autocomplete suggestions with session ID validation
   const fetchPredictions = async (input: string) => {
     if (!input) {
       setOptions([]);
@@ -37,9 +40,17 @@ const GoogleAutocompleteInput: React.FC<GoogleAutocompleteInputProps> = ({
     }
 
     setLoading(true);
+    const currentSessionId = uuidv4(); // Generate a new session ID
+    setSessionId(currentSessionId); // Store it in state
+
     try {
-      const response = await googleApi(input);
-      setOptions(response?.predictions || []);
+      const response = await googleApi(input, currentSessionId); // Pass session ID
+      if (response?.session_id === currentSessionId) {
+        // Validate session ID before updating state
+        setOptions(response?.results?.predictions || []);
+      } else {
+        console.warn("Session ID mismatch. Ignoring response.");
+      }
     } catch (error) {
       console.error("Error fetching Google Places data", error);
     } finally {
@@ -52,7 +63,7 @@ const GoogleAutocompleteInput: React.FC<GoogleAutocompleteInputProps> = ({
       sx={classes.textInputField}
       freeSolo
       options={options.map((option) => option.description)}
-      inputValue={inputValue} // Ensure controlled input
+      inputValue={inputValue}
       onInputChange={(_, newInputValue) => {
         setInputValue(newInputValue);
         fetchPredictions(newInputValue);
@@ -60,7 +71,7 @@ const GoogleAutocompleteInput: React.FC<GoogleAutocompleteInputProps> = ({
       onChange={(_, newValue) => {
         if (newValue) {
           onChange(newValue);
-          setInputValue(newValue); // Ensure input field updates
+          setInputValue(newValue);
         } else {
           onChange("");
           setInputValue("");

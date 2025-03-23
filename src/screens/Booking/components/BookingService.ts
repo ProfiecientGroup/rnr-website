@@ -67,22 +67,47 @@ export const doCorporateLogin = async (body: any) => {
 //   }
 // };
 
-export const googleApi = async (input: string) => {
+// export const googleApi = async (input: string) => {
+//   try {
+//     if (!input.trim()) {
+//       throw new Error("Input is required");
+//     }
+
+//     // Use your new API endpoint instead of calling Google directly
+//     const url = `https://api.rnrchauffeurs.com/autocomplete?query=${encodeURIComponent(input)}`;
+//     const callParams = getCallParams("GET"); // Make sure getCallParams returns appropriate headers
+//     const response = await makeCall(url, callParams);
+//     return response;
+//   } catch (error: any) {
+//     console.error("Error fetching Google Autocomplete data:", error);
+//     throw new Error("Failed to fetch Google Autocomplete data");
+//   }
+// };
+
+export const googleApi = async (query: string, sessionId: string) => {
   try {
-    if (!input.trim()) {
-      throw new Error("Input is required");
+    const response = await fetch(
+      `https://4134-2409-4050-d95-c824-708d-8e9-9634-fc12.ngrok-free.app/autocomplete?query=${encodeURIComponent(query)}`,
+      {
+        method: "GET",
+        headers: {
+          "Accept": "application/json",
+          "session_id": sessionId,
+        },
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
     }
 
-    // Use your new API endpoint instead of calling Google directly
-    const url = `https://api.rnrchauffeurs.com/autocomplete?query=${encodeURIComponent(input)}`;
-    const callParams = getCallParams("GET"); // Make sure getCallParams returns appropriate headers
-    const response = await makeCall(url, callParams);
-    return response;
-  } catch (error: any) {
-    console.error("Error fetching Google Autocomplete data:", error);
-    throw new Error("Failed to fetch Google Autocomplete data");
+    return await response.json();
+  } catch (error) {
+    console.error("Google API request failed:", error);
+    return null;
   }
 };
+
 
 export const doContactUs = async (body: any) => {
   try {
