@@ -132,7 +132,7 @@ const ChooseOurCarSection = () => {
                       backgroundColor: theme.palette.primary.dark,
                       color: "#fff",
                       boxShadow: "0px 6px 15px rgba(0, 0, 0, 0.5)",
-                      maxWidth: "280px",
+                      maxWidth:isLgUp ?  "280px" : "auto",
                       position: "relative",
                       "&:before": {
                         content: '""',
@@ -281,7 +281,7 @@ const ChooseOurCarSection = () => {
                       backgroundColor: theme.palette.primary.dark,
                       color: "#fff",
                       boxShadow: "0px 6px 15px rgba(0, 0, 0, 0.5)",
-                      maxWidth: "280px",
+                      maxWidth:isLgUp ?  "280px" : "auto",
                       position: "relative",
                       "&:before": {
                         content: '""',

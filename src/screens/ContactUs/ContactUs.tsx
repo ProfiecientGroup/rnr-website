@@ -136,7 +136,7 @@ const ContactUs = () => {
                         textAlign={"start"}
                       >
                         <Typography
-                          variant="body2"
+                          variant="body1"
                           sx={{ color: "#DDB863" }}
                           mt={1}
                         >
@@ -144,7 +144,7 @@ const ContactUs = () => {
                         </Typography>
 
                         <Typography
-                          variant="body2"
+                          variant="body1"
                           sx={{ color: theme.palette.text.secondary, mb: 2 }}
                         >
                           {i.title}
@@ -156,7 +156,7 @@ const ContactUs = () => {
                               width: "100%",
                               backgroundColor: "rgba(221, 184, 99, 0.5)",
                               margin: "4px auto",
-                              borderColor: theme.palette.primary.main,
+                              borderColor: "rgba(221, 184, 99, 0.5)",
                             }}
                           />
                         )}

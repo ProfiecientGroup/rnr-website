@@ -147,7 +147,7 @@ const Testimonial = (props: CustomProps) => {
       if (active === 0) {
         opacity = 1;
       } else {
-        opacity = index === active ? 0.9 : 0.20;
+        opacity = index === active ? 0.9 : 0.2;
       }
       return (
         <Box
@@ -286,6 +286,7 @@ const Testimonial = (props: CustomProps) => {
             sx={{
               wordBreak: "break-all",
               width: isDesktop ? "26%" : "auto",
+              textAlign: isDesktop ? "start" : "center",
             }}
           >
             Our client sent a bunch of smiles with our services and we love

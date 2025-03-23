@@ -21,7 +21,6 @@ import { getCurrentYear, isTruthy } from "helpers/methods";
 import Logo from "assets/images/rnr-logo.svg";
 import mainIcon from "assets/icons/Navbar/mail_icon.svg";
 import uk_flag_icon from "assets/icons/Navbar/uk_flag_icon.svg";
-import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import footerBg from "assets/images/footerBg.webp";
 
 const Footer = () => {
@@ -96,7 +95,7 @@ const Footer = () => {
           }}
         >
           <Typography
-            variant="body2"
+            variant="body1"
             color={theme.palette.primary.light}
             sx={{ color: color }}
           >
@@ -121,8 +120,10 @@ const Footer = () => {
         borderTopLeftRadius: "50px",
         background: "url(" + footerBg.src + ")",
         backgroundSize: "cover",
-        // backgroundPosition: "center",
         backgroundColor: theme.palette.primary.darkest,
+        [theme.breakpoints.down("md")]: {
+          backgroundPosition: "center",
+        },
       }}
     >
       <Container maxWidth="lg">
@@ -151,7 +152,7 @@ const Footer = () => {
               sx={{ paddingLeft: "0 !important" }}
             >
               <Stack spacing={2.5}>
-                <Typography variant="body2">
+                <Typography variant="body1">
                   Unparalleled levels of service for a surprisingly affordable
                   price. The finest selection of vehicles – coupled with the
                   best chauffeurs in the business.
@@ -171,7 +172,7 @@ const Footer = () => {
                     <Stack direction="row" spacing={1}>
                       <img src={mainIcon.src} alt="Contact Us" />{" "}
                       <Typography
-                        variant="body2"
+                        variant="body1"
                         sx={{ color: theme.palette.primary.light }}
                       >
                         {strings.EMAIL}
@@ -194,7 +195,7 @@ const Footer = () => {
                     <Stack direction="row" spacing={1}>
                       <img src={uk_flag_icon.src} alt="Contact Us" />{" "}
                       <Typography
-                        variant="body2"
+                        variant="body1"
                         sx={{ color: theme.palette.primary.light }}
                       >
                         {strings.PHONE}
@@ -217,7 +218,7 @@ const Footer = () => {
               <Stack spacing={1}>
                 <Typography
                   color={theme.palette.primary.lightest}
-                  variant="body2"
+                  variant="body1"
                   sx={{
                     textTransform: "uppercase",
                   }}
@@ -244,7 +245,7 @@ const Footer = () => {
               <Stack spacing={1}>
                 <Typography
                   color={theme.palette.primary.lightest}
-                  variant="body2"
+                  variant="body1"
                   sx={{
                     textTransform: "uppercase",
                   }}
@@ -269,12 +270,13 @@ const Footer = () => {
             direction={{ xs: "column", md: "row" }}
             justifyContent="space-between"
             alignItems="center"
+            textAlign="center"
             spacing={2}
           >
-            <Typography variant="body2" color={theme.palette.primary.lightest}>
+            <Typography variant="body1" color={theme.palette.primary.lightest}>
               &copy; Copyright {getCurrentYear()} RNR. All Rights Reserved
             </Typography>
-            <Stack direction="row" spacing={2}>
+            {/* <Stack direction="row" spacing={2}>
               {getLinkItem(
                 "Terms of Service",
                 viewpaths.terms,
@@ -285,7 +287,7 @@ const Footer = () => {
                 viewpaths.privacyPolicy,
                 theme.palette.primary.lightest
               )}
-            </Stack>
+            </Stack> */}
           </Stack>
         </Stack>
       </Container>

@@ -46,7 +46,6 @@ export const doCorporateLogin = async (body: any) => {
 // export const googleApi = async (input: string) => {
 //   try {
 //     const GOOGLE_MAPS_API_KEY = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
-//     console.log("Google API Key:", process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY);
 
 //     if (!GOOGLE_MAPS_API_KEY) {
 //       throw new Error("Google Maps API key is missing");

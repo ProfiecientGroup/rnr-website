@@ -80,7 +80,7 @@ const About = () => {
   );
 
   const getOurStorySection = () => (
-    <Box sx={classes.ourStoryBox} p={"131px 14px 0 14px "}>
+    <Box sx={classes.ourStoryBox} p={isLgUp ? "131px 14px 0 14px " : "10px"}>
       <Box
         sx={{
           height: "100%",

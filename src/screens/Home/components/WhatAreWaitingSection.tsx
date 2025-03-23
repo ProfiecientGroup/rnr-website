@@ -25,14 +25,22 @@ const WhatAreWaitingSection = () => {
       }}
     >
       <Container maxWidth="xl">
-        <Stack direction={isLgUp ? "row" : "column"} spacing={2} justifyContent="space-evenly">
+        <Stack
+          direction={isLgUp ? "row" : "column"}
+          spacing={2}
+          justifyContent="space-evenly"
+        >
           <img
             src={SClassCar.src}
             alt="SClassCar"
-            width= "60%"
+            width={isLgUp ? "60%" : "100%"}
           />
           <Stack direction={"column"} spacing={2} alignItems={"center"}>
-            <Stack direction={"column"} spacing={0} alignItems={"start"}>
+            <Stack
+              direction={isLgUp ? "column" : "row"}
+              spacing={isLgUp ? 0 : 1}
+              alignItems={"start"}
+            >
               <Typography
                 sx={{
                   fontFamily: "kugile",
@@ -52,7 +60,7 @@ const WhatAreWaitingSection = () => {
                   color: theme.palette.primary.main,
                 }}
               >
-                Waiting for?
+                waiting for?
               </Typography>
             </Stack>
             <Button

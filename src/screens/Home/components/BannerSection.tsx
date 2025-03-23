@@ -102,7 +102,7 @@ const BannerSection = () => {
                   src={whiteStar.src}
                   height={lgUp ? 20 : 13}
                   width={lgUp ? 20 : 13}
-                  style={{ position: "relative", bottom: 25,right:10 }}
+                  style={{ position: "relative", bottom: lgUp ? 25 :15,right:10 }}
                 />
                 <span>Experi</span>
                 <span style={{ color: theme.palette.primary.main }}>ence</span>

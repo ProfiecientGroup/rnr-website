@@ -16,6 +16,10 @@ const ContactUsStyles = (theme: Theme) => {
       display: "flex",
       justifyContent: "center",
       alignItems: "center",
+      [theme.breakpoints.down("md")]: {
+        backgroundSize: "cover",
+        height: "20%",
+      },
     },
     carImages: {
       background: "url(" + carImage.src + ")",
@@ -30,8 +34,7 @@ const ContactUsStyles = (theme: Theme) => {
       justifyContent: "center",
       alignItems: "center",
       [theme.breakpoints.down("lg")]: {
-        height: "100%",
-        backgroundSize: "contain",
+        height: "50vh",
       },
     },
     textBox: {

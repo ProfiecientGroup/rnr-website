@@ -37,6 +37,7 @@ const AbouStyles = (theme: Theme) => {
         justifyContent: "center",
         alignItems: "center",
         flexDirection: "column",
+        height: "auto",
       },
     },
     textBox: {

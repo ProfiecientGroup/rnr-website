@@ -19,6 +19,7 @@ const HomeStyles = (theme: Theme) => {
       alignItems: "center",
       [theme.breakpoints.down("md")]: {
         height: "auto",
+        marginBottom: 5,
       },
     },
     experiFont: {
