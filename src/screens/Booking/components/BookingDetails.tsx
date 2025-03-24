@@ -122,7 +122,7 @@ const BookingDetails = (props: CustomProps) => {
               !isTruthy(props.formData.bookingDetails.firstName) &&
               props.error.firstName
             } // Apply error state
-            // helperText={props.error.firstName} // Display error message
+            helperText={props.error.firstName}
           />
         </Grid>
 
@@ -151,7 +151,7 @@ const BookingDetails = (props: CustomProps) => {
               !isTruthy(props.formData.bookingDetails.lastName) &&
               props.error.lastName
             }
-            // helperText={props.error.lastName} // Display error message
+            helperText={props.error.lastName} // Display error message
           />
         </Grid>
 
@@ -176,12 +176,8 @@ const BookingDetails = (props: CustomProps) => {
                 email: "",
               });
             }}
-            error={
-              !isTruthy(props.formData.bookingDetails.email) &&
-              props.error.email
-            }
-
-            // helperText={props.error.email} // Display error message
+            error={Boolean(props.error.email)} // Ensures proper error handling
+            helperText={props.error.email ? props.error.email : ""} // Shows error message in red
           />
         </Grid>
 
@@ -195,25 +191,39 @@ const BookingDetails = (props: CustomProps) => {
             value={props.formData.bookingDetails?.phone || ""}
             placeHolder="(999) 999-9999"
             sx={classes.textInputField}
-            onChange={(value: any) => {
-              props.setFormData({
-                ...props.formData,
+            onChange={(value: string) => {
+              const nationalNumber = value
+                .replace(/\D/g, "")
+                .replace(/^44/, ""); // Removes non-digits and UK country code (if applicable)
+
+              props.setFormData((prevState: any) => ({
+                ...prevState,
                 bookingDetails: {
-                  ...props.formData.bookingDetails,
+                  ...prevState.bookingDetails, // Ensure previous state is preserved
                   phone: value,
                 },
-              });
-              props.setError({
-                ...props.error,
-                phone: "",
-              });
+              }));
+
+              // Validate only if user has entered something
+              if (nationalNumber.length > 0 && nationalNumber.length < 10) {
+                props.setError((prevState: any) => ({
+                  ...prevState,
+                  phone:
+                    "Please enter a valid contact number (at least 10 digits).",
+                }));
+              } else {
+                props.setError((prevState: any) => ({
+                  ...prevState,
+                  phone: "",
+                }));
+              }
             }}
             fullWidth
-            error={isTruthy(props.error.phone) && props.error.phone}
+            error={Boolean(props.error.phone)}
+            helperText={props.error.phone || ""}
           />
         </Grid>
 
-        {/* Number of Passengers */}
         <Grid item lg={6} xl={6} md={12} sm={12} xs={12}>
           <FormControl fullWidth sx={classes.selectInputField}>
             <Select

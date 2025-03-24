@@ -83,7 +83,10 @@ export const doCorporateLogin = async (body: any) => {
 //   }
 // };
 
-export const googleApi = async (query: string, session_id: string) => {
+export const googleApi = async (
+  query: string
+  // session_id: string
+) => {
   try {
     const response = await fetch(
       `https://api.rnrchauffeurs.com/autocomplete?query=${encodeURIComponent(
@@ -93,7 +96,7 @@ export const googleApi = async (query: string, session_id: string) => {
         method: "GET",
         headers: {
           Accept: "application/json",
-          session_id: session_id,
+          // session_id: session_id,
         },
       }
     );

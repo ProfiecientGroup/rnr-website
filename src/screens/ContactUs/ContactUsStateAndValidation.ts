@@ -22,12 +22,14 @@ export const contactUsForm = () => {
 };
 
 export const validateData = (formFields: any) => {
-  let errors = formFields;
+  let errors = { ...formFields };
   let isValid = true;
-  const email = formFields.email.value;
-  const firstName = formFields.firstName.value;
-  const message = formFields.message.value;
-  const phone = formFields.phone.value;
+
+  const email = formFields.email.value.trim();
+  const firstName = formFields.firstName.value.trim();
+  const message = formFields.message.value.trim();
+  const phone = formFields.phone.value.trim();
+
   if (!email && !firstName && !message && !phone) {
     errors.firstName.error = "Please enter first name.";
     errors.email.error = "Please enter email.";
@@ -42,17 +44,21 @@ export const validateData = (formFields: any) => {
   if (!email) {
     errors.email.error = "Please enter email.";
     isValid = false;
+  } else if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email)) {
+    errors.email.error = "Please enter a valid email.";
+    isValid = false;
   }
   if (!message) {
-    errors.message.error = "Please enter message.";
+    errors.message.error = "Please enter a message.";
     isValid = false;
   }
-  if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
-    errors.email.error = "Please enter valid email.";
-    isValid = false;
-  }
-  if (!isPhoneValid(phone)) {
+  const numericPhone = phone.replace(/\D/g, ""); // Remove all non-numeric characters
+  if (!numericPhone) {
     errors.phone.error = "Please enter phone number.";
+    isValid = false;
+  } else if (numericPhone.length < 11) {
+    errors.phone.error =
+      "Please enter a valid phone number (at least 10 digits).";
     isValid = false;
   }
   return { isValid, errors };

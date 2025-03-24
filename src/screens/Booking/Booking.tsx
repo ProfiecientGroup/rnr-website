@@ -108,7 +108,7 @@ const Booking = () => {
   const BookingDetailsValidate = async (): Promise<boolean> => {
     let newErrors = { ...bookingErrors };
     let isValid = true;
-
+  
     const {
       firstName,
       lastName,
@@ -116,9 +116,14 @@ const Booking = () => {
       phone,
       noOfPassenger,
       noOfSuitcase,
-      // message,
     } = formData.bookingDetails;
-
+  
+    // Helper function for phone validation
+    const isPhoneValid = (phone: string): boolean => {
+      const numericPhone = phone.replace(/\D/g, ""); // Remove all non-numeric characters
+      return numericPhone.length >= 10; // Ensure at least 10 digits
+    };
+  
     if (!firstName) {
       newErrors.firstName = "Please enter first name.";
       isValid = false;
@@ -130,40 +135,32 @@ const Booking = () => {
     if (!email) {
       newErrors.email = "Please enter email.";
       isValid = false;
-    }
-    if (email && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
-      newErrors.email = "Please enter a valid email.";
+    } else if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email)) {
+      newErrors.email = "Please enter a valid email address.";
       isValid = false;
     }
-    // if (!phone || !isPhoneValid(phone)) {
-    //   newErrors.phone = "Please enter a valid phone number.";
-    //   isValid = false;
-    // }
-    if (isTruthy(phone)) {
-      // if (credentials.contactNo.length < 14) {
-      //   errors.contactNo = "Contact must be 10 characters long";
-      // } else
-      if (!isPhoneValid(phone)) {
-        newErrors.phone = "Please enter valid contact number.";
-      }
-    } else {
+  
+    if (!phone) {
       newErrors.phone = "Please enter your contact number.";
+      isValid = false;
+    } else if (!isPhoneValid(phone)) {
+      newErrors.phone = "Please enter a valid contact number (at least 10 digits).";
+      isValid = false;
     }
+  
     if (!noOfPassenger) {
-      newErrors.noOfPassenger = "Please select number of passengers.";
+      newErrors.noOfPassenger = "Please select the number of passengers.";
       isValid = false;
     }
     if (!noOfSuitcase) {
-      newErrors.noOfSuitcase = "Please select number of suitcases.";
+      newErrors.noOfSuitcase = "Please select the number of suitcases.";
       isValid = false;
     }
-    // if (!message) {
-    //   newErrors.message = "Please enter a message.";
-    //   isValid = false;
-    // }
+  
     setBookingErrors(newErrors);
     return isValid;
   };
+  
 
   useEffect(() => {
     if (data) {
@@ -541,7 +538,7 @@ const Booking = () => {
                           }
                     }
                     key={index}
-                    onClick={() => handleStepClick(index)}
+                    // onClick={() => handleStepClick(index)}
                   >
                     {label}
                   </StepLabel>

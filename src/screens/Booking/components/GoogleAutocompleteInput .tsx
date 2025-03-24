@@ -5,7 +5,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import { googleApi } from "./BookingService";
 import BookingStyles from "../BookingStyles";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
-import { v4 as uuidv4 } from "uuid"; 
+// import { v4 as uuidv4 } from "uuid";
 
 interface GoogleAutocompleteInputProps {
   onChange: (value: string) => void;
@@ -25,7 +25,7 @@ const GoogleAutocompleteInput: React.FC<GoogleAutocompleteInputProps> = ({
   const [options, setOptions] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
   const [inputValue, setInputValue] = useState(value);
-  
+
   // Sync inputValue with external value
   useEffect(() => {
     setInputValue(value);
@@ -39,15 +39,19 @@ const GoogleAutocompleteInput: React.FC<GoogleAutocompleteInputProps> = ({
     }
 
     setLoading(true);
-    const currentSessionId = uuidv4(); 
+    // const currentSessionId = uuidv4();
     try {
-      const response = await googleApi(input, currentSessionId);
-      if (response?.session_id === currentSessionId) {
-        // Validate session ID before updating state
-        setOptions(response?.results?.predictions || []);
-      } else {
-        console.warn("Session ID mismatch. Ignoring response.");
-      }
+      const response = await googleApi(
+        input
+        // currentSessionId
+      );
+      // if (response?.session_id === currentSessionId) {
+      //   // Validate session ID before updating state
+      //   setOptions(response?.results?.predictions || []);
+      // } else {
+      //   console.warn("Session ID mismatch. Ignoring response.");
+      // }
+      setOptions(response?.predictions || []);
     } catch (error) {
       console.error("Error fetching Google Places data", error);
     } finally {

@@ -18,7 +18,7 @@ import {
   useTheme,
 } from "@mui/material";
 import ContactUsStyles from "./ContactUsStyles";
-import { isTruthy, openErrorNotification } from "helpers/methods";
+import { isPhoneValid, isTruthy, openErrorNotification } from "helpers/methods";
 import { contactUsForm, validateData } from "./ContactUsStateAndValidation";
 import formBg from "../../assets/images/contactUs/formBg.webp";
 import strings from "global/constants/strings";
@@ -231,16 +231,29 @@ const ContactUs = () => {
             value={formFields.email.value}
             fullWidth
             onChange={(event) => {
-              setFormFields({
-                ...formFields,
+              const emailValue = event.target.value;
+
+              setFormFields((prevState) => ({
+                ...prevState,
                 email: {
-                  value: event.target.value,
-                  error: "",
+                  value: emailValue,
+                  error: "", // Reset email error on change
                 },
-              });
+              }));
+
+              // Email validation logic
+              if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(emailValue)) {
+                setFormFields((prevState) => ({
+                  ...prevState,
+                  email: {
+                    ...prevState.email,
+                    error: "Please enter a valid email address.",
+                  },
+                }));
+              }
             }}
-            error={isTruthy(formFields.email.error)}
-            helperText={formFields.email.error}
+            error={Boolean(formFields.email.error)}
+            helperText={formFields.email.error || ""}
             sx={classes.textInputField}
           />
         </Grid>
@@ -251,19 +264,34 @@ const ContactUs = () => {
             value={formFields.phone.value}
             placeHolder="(999) 999-9999"
             onChange={(value: string) => {
-              setFormFields({
-                ...formFields,
+              const nationalNumber = value
+                .replace(/\D/g, "")
+                .replace(/^44/, "");
+
+              setFormFields((prevState) => ({
+                ...prevState,
                 phone: {
-                  ...formFields.phone,
                   value: value,
-                  error: "",
+                  error: prevState.phone.error
+                    ? nationalNumber.length < 10
+                      ? "Please enter a valid contact number (at least 10 digits)."
+                      : ""
+                    : "", 
                 },
-              });
+              }));
+            }}
+            onBlur={() => {
+              setFormFields((prevState) => ({
+                ...prevState,
+                phone: {
+                  ...prevState.phone,
+                  touched: true, 
+                },
+              }));
             }}
             fullWidth
-            error={
-              isTruthy(formFields?.phone?.error) && formFields?.phone?.error
-            }
+            error={Boolean(formFields.phone.error)}
+            helperText={formFields.phone.error || ""}
             sx={classes.textInputField}
           />
         </Grid>
